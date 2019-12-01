@@ -1,10 +1,7 @@
-"""
-https://adventofcode.com/2019/day/1
-
-"""
+# https://adventofcode.com/2019/day/1
 
 # takes part as argument, int 1 or 2, depending on which task to run.
-def main(part) -> None:
+def FuelCalculator(part) -> int:
     filename = "day1input.txt"
     planets = open(filename).read().split()
     
@@ -23,8 +20,9 @@ def main(part) -> None:
                 
             for f in fuel: sum += f
         
-    print(str(sum))
+    return sum
 
 if __name__ == '__main__':
-    part = 1
-    main(part)
+
+    print("Task 1: ", FuelCalculator(1))
+    print("Task 2: ", FuelCalculator(2))
