@@ -4,15 +4,19 @@ def IntcodeCompiler(ints) -> int:
 
     for i in range(0, len(ints), 4):
         opcode = ints[i]
+        addr1 = ints[i+1]
+        addr2 = ints[i+2]
+        addr3 = ints[i+3]
 
         try:
             if opcode == 99:
                 return ints[0]
             elif opcode == 1:
-                ints[ints[i+3]] = ints[ints[i+1]] + ints[ints[i+2]]
+                ints[addr3] = ints[addr1] + ints[addr2]
             else:
-                ints[ints[i+3]] = ints[ints[i+1]] * ints[ints[i+2]]
+                ints[addr3] = ints[addr1] * ints[addr2]
         except:
+            # IndexOutOfBounds
             return 0
 
 def readIntcodesFromFile() -> []:
@@ -33,7 +37,6 @@ def part1() -> None:
     
     return IntcodeCompiler(ints)
 
-    
 def part2() -> []:
 
     ints = readIntcodesFromFile()
