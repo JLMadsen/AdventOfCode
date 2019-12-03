@@ -26,7 +26,7 @@ def readIntcodesFromFile() -> []:
     
     return list(map(int, ints))
 
-def part1() -> None:
+def part1() -> int:
     
     ints = readIntcodesFromFile()
     

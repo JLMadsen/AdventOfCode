@@ -1,8 +1,8 @@
 def draw(map, cmd, cur) -> []:
     dir = cmd[0]
     dist = int(''.join(cmd[1::]))
+    
     vec = [1,0]
-
     if(dir == 'U'):
         vec = [0,1]
     elif(dir == 'D'):
@@ -27,24 +27,23 @@ def draw(map, cmd, cur) -> []:
         try:
             map[cur[0]][cur[1]] += 1
         except:
-            exit('dir: '+ dir +' cur: '+ str(cur[0]) +' '+ str(cur[1]) +' size: '+ str(len(map)) +' '+ str(len(map[0])))
+            exit('Error, Index out of bounds\ndir: '+ dir +' cur: ['+ str(cur[0]) +', '+ str(cur[1]) +'] size: ['+ str(len(map)) +', '+ str(len(map[0])) +']')
 
     return [map, cur]
 
 def readMap() -> []:
     cmds = open('day3input.txt').read().split(',')
 
-    map = [[0]*5,[0]*5,[0]*5,[0]*5,[0]*5] #[[0]*5]*5 doesnt work
+    map = [[0]*5,[0]*5,[0]*5,[0]*5,[0]*5]
+    
     # start
     map[1][1] = -1
-
     cur = [1,1]
 
     for cmd in cmds:
+        
         if '\n' in cmd:
-
             c1, c2 = cmd.split('\n')
-
             map, cur = draw(map, c1, cur)
             cur = [1,1]
             map, cur = draw(map, c2, cur)
@@ -83,13 +82,14 @@ def BFS(map) -> []:
                 return [cur[0], cur[1]]
             cur[0] += 1
 
+def taxiCab(start, goal) -> int:
+    return abs(goal[0]-start[0]) + abs(goal[1]-start[1])
+
 def main() -> None:
     map = readMap()
-    closest = BFS(map)
 
-    start = [1,1]
-    dist = abs(closest[0]-start[0]) + abs(closest[1]-start[1])
-    print(dist)
+    dist = taxiCab([1,1], BFS(map))
+    print('Distance =', dist)
     
 if __name__ == '__main__':
     main()
