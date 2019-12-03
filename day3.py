@@ -1,6 +1,3 @@
-# Warning! if you run this program you should know that it is not fast, but it will give right answer.
-# Some optimizations have been made.
-
 BIG_NUMBER = 9999999999999999
 
 def draw(path1, path2, cmd, cur, wire2) -> []:
