@@ -27,7 +27,7 @@ def draw(map, cmd, cur) -> []:
         try:
             map[cur[0]][cur[1]] += 1
         except:
-            exit(dir)
+            exit('dir: '+ dir +' cur: '+ str(cur[0]) +' '+ str(cur[1]) +' size: '+ str(len(map)) +' '+ str(len(map[0])))
 
     return [map, cur]
 
@@ -90,7 +90,6 @@ def main() -> None:
     start = [1,1]
     dist = closest[0]-start[0] + closest[1]-start[1]
     print(dist)
-    
     
 if __name__ == '__main__':
     main()
