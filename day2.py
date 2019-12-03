@@ -53,6 +53,7 @@ def part2() -> []:
                 return [a, b]
 
 def main() -> None:
+    print('Day 2')
     print('Task 1:', part1())
     print('Task 2:', part2())
     

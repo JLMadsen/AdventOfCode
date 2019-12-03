@@ -14,11 +14,13 @@ def FuelCalculator(part) -> int:
         else:
             while fuel[-1] > 0:
                 fuel.append(int(fuel[-1]/3)-2)
+            if fuel[-1] < 0: fuel[-1] = 0
             totalFuel += sum(fuel)
     
     return totalFuel
 
 def main() -> None:
+    print('Day 1')
     print("Task 1: ", FuelCalculator(1))
     print("Task 2: ", FuelCalculator(2))
 
