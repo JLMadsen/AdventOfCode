@@ -4,6 +4,7 @@
 BIG_NUMBER = 9999999999999999
 
 def draw(path1, path2, cmd, cur, wire2) -> []:
+
     try:
         dir = cmd[0]
         dist = int(''.join(cmd[1::]))
@@ -31,7 +32,7 @@ def draw(path1, path2, cmd, cur, wire2) -> []:
     return [path1, path2, cur]
 
 def readMap() -> []:
-    cmds = open('day3input.txt').read().split(',')
+    cmds = open('input/day3input.txt').read().split(',')
 
     path1 = []
     path2 = []
@@ -88,12 +89,14 @@ def stepIntersection(path1, path2, intersections) -> int:
         if (len1+len2) < totalDistance:
             totalDistance = (len1+len2)
 
+    if totalDistance == BIG_NUMBER:
+        exit('No intersection found')
     return totalDistance
 
 def taxiCab(start, goal) -> int:
     return abs(goal[0]-start[0]) + abs(goal[1]-start[1])
 
-def findClosestInt(intersections):
+def skylineIntersection(intersections):
     closest = [1,1]
     dist = BIG_NUMBER
     for inter in intersections:
@@ -105,25 +108,16 @@ def findClosestInt(intersections):
         exit('No intersection found')
     return dist
 
-def part1() -> []:
-    print('part 1')
+def main() -> None:
+
     path1, path2 = readMap()
     intersections = findIntersections(path1, path2)
-    dist = findClosestInt(intersections)
 
-    print('Distance =', dist)
-    return intersections
+    print('part 1')
+    print('Closest by skyline:', skylineIntersection(intersections))
 
-def part2(intersections) -> None:
     print('part 2')
-    path1, path2 = readMap()
-    dist = stepIntersection(path1, path2, intersections)
-
-    print('Distance =', dist)
-    
-def main() -> None:
-    intersections = part1()
-    part2(intersections)
+    print('Closest by step:', stepIntersection(path1, path2, intersections))
 
 if __name__ == '__main__':
     main()

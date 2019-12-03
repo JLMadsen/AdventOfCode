@@ -2,7 +2,7 @@
 
 # takes part as argument, int 1 or 2, depending on which task to run.
 def FuelCalculator(part) -> int:
-    filename = "day1input.txt"
+    filename = "input/day1input.txt"
     planets = open(filename).read().split()
     
     totalFuel = 0

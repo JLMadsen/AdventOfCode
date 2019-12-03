@@ -21,7 +21,7 @@ def IntcodeCompiler(ints) -> int:
 
 def readIntcodesFromFile() -> []:
     
-    filename = 'day2input.txt'
+    filename = 'input/day2input.txt'
     ints = open(filename).read().split(',')
     
     return list(map(int, ints))
