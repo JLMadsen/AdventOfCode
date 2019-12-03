@@ -88,7 +88,7 @@ def main() -> None:
     closest = BFS(map)
 
     start = [1,1]
-    dist = closest[0]-start[0] + closest[1]-start[1]
+    dist = abs(closest[0]-start[0]) + abs(closest[1]-start[1])
     print(dist)
     
 if __name__ == '__main__':
