@@ -1,6 +1,14 @@
-def draw(map, cmd, cur) -> []:
-    dir = cmd[0]
-    dist = int(''.join(cmd[1::]))
+# Warning! if you run this program you should know that it is not fast, but it will give right answer.
+# Some optimizations have been made.
+
+BIG_NUMBER = 9999999999999999
+
+def draw(path1, path2, cmd, cur, wire2) -> []:
+    try:
+        dir = cmd[0]
+        dist = int(''.join(cmd[1::]))
+    except:
+        exit(cmd)
     
     vec = [1,0]
     if(dir == 'U'):
@@ -15,81 +23,107 @@ def draw(map, cmd, cur) -> []:
         cur[0] += 1 * vec[0]
         cur[1] += 1 * vec[1]
 
-        if cur[0] >= len(map):
-            for j in range(dist):
-                map.append([0]*len(map[0]))
-
-        if cur[1] >= len(map[0]):
-            for j in range(len(map)):
-                for h in range(dist):
-                    map[j].append(0)
-
-        try:
-            map[cur[0]][cur[1]] += 1
-        except:
-            exit('Error, Index out of bounds\ndir: '+ dir +' cur: ['+ str(cur[0]) +', '+ str(cur[1]) +'] size: ['+ str(len(map)) +', '+ str(len(map[0])) +']')
-
-    return [map, cur]
+        if not wire2:
+            path1.append(cur.copy())
+        else:
+            path2.append(cur.copy())
+            
+    return [path1, path2, cur]
 
 def readMap() -> []:
     cmds = open('day3input.txt').read().split(',')
 
-    map = [[0]*5,[0]*5,[0]*5,[0]*5,[0]*5]
+    path1 = []
+    path2 = []
     
     # start
-    map[1][1] = -1
     cur = [1,1]
-
+    wire2 = False
     for cmd in cmds:
         
         if '\n' in cmd:
             c1, c2 = cmd.split('\n')
-            map, cur = draw(map, c1, cur)
+            path1, path2, cur = draw(path1, path2, c1, cur, wire2)
             cur = [1,1]
-            map, cur = draw(map, c2, cur)
+            wire2 = True
+            path1, path2, cur = draw(path1, path2, c2, cur, wire2)
             continue
 
-        map, cur = draw(map, cmd, cur)
+        path1, path2, cur = draw(path1, path2, cmd, cur, wire2)
 
-    return map
+    return [path1, path2]
 
-# bfs search ish, dont care about edges
-def BFS(map) -> []:
+def findIntersections(path1, path2) -> []:
 
-    side = 0
-    if len(map) > len(map[0]):
-        side = len(map)
-    else:
-        side = len(map[0])
+    res = []
+    for pos in path1:
+        if pos == [1,1] or pos in res: continue
+        if pos in path2:
+            res.append(pos)
+    return res
 
-    for i in range(1, side):
-        offset = i
-        length = i + 1
+def stepIntersection(path1, path2, intersections) -> int:
 
-        cur = [offset, 1]
-        for j in range(length):
-            count = map[cur[0]][cur[1]]
+    p1 = [0]*len(intersections)
+    p2 = [0]*len(intersections)
 
-            if count > 1:
-                return [cur[0], cur[1]]
-            cur[1] += 1
+    dist = 1
+    for pos in path1:
+        for i in range(len(intersections)):
+            if pos == intersections[i]:
+                p1[i] = dist
+                break
+        dist += 1
 
-        cur = [1, offset]
-        for j in range(length):
-            count = map[cur[0]][cur[1]]
+    dist = 1
+    for pos in path2:
+        for i in range(len(intersections)):
+            if pos == intersections[i]:
+                p2[i] = dist
+                break
+        dist += 1
 
-            if count > 1:
-                return [cur[0], cur[1]]
-            cur[0] += 1
+    totalDistance = BIG_NUMBER
+    for len1, len2 in zip(p1, p2):
+        if (len1+len2) < totalDistance:
+            totalDistance = (len1+len2)
+
+    return totalDistance
 
 def taxiCab(start, goal) -> int:
     return abs(goal[0]-start[0]) + abs(goal[1]-start[1])
 
-def main() -> None:
-    map = readMap()
+def findClosestInt(intersections):
+    closest = [1,1]
+    dist = BIG_NUMBER
+    for inter in intersections:
+        if taxiCab([1,1], inter) < dist:
+            closest = inter
+            dist = taxiCab([1,1], inter)
+            
+    if dist == BIG_NUMBER:
+        exit('No intersection found')
+    return dist
 
-    dist = taxiCab([1,1], BFS(map))
+def part1() -> []:
+    print('part 1')
+    path1, path2 = readMap()
+    intersections = findIntersections(path1, path2)
+    dist = findClosestInt(intersections)
+
+    print('Distance =', dist)
+    return intersections
+
+def part2(intersections) -> None:
+    print('part 2')
+    path1, path2 = readMap()
+    dist = stepIntersection(path1, path2, intersections)
+
     print('Distance =', dist)
     
+def main() -> None:
+    intersections = part1()
+    part2(intersections)
+
 if __name__ == '__main__':
     main()
