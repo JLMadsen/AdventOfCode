@@ -1,32 +1,42 @@
+import re
+
 LOW = 136760
 HIGH = 595730
 
-def passwordCracker() -> int:
+def passwordCracker(part2 = False) -> int:
     res = []
 
     for i in range(LOW, HIGH):
         text = str(i)
+        valid = False
 
         # check double
-        if text[1] != text[2]: continue
+        regexp = r'1+|2+|3+|4+|5+|6+|7+|8+|9+|0+|'
+        for match in re.findall(regexp, text):
+            if part2:
+                if len(match) == 2:
+                    valid = True
+            else:
+                if len(match) > 1:
+                    valid = True
 
         # check increasing
-        ok = True
         for j in range(1, len(text)):
             if int(text[j-1]) > int(text[j]):
-                #print(int(text[j-1]),int(text[j]))
-                ok = False
+                valid = False
                 break
 
-        if ok: res.append(i)
+        if valid: res.append(i)
 
-    print(res)
     return len(res)
 
 def main() -> None:
 
-    result = passwordCracker()
-    print('Task 1:', result)
+    result1 = passwordCracker()
+    result2 = passwordCracker(True)
+
+    print('Task 1:', result1)
+    print('Task 2:', result2)
 
 if __name__ == '__main__':
     main()
