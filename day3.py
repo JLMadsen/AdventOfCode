@@ -1,3 +1,5 @@
+# https://adventofcode.com/2019/day/3
+
 BIG_NUMBER = 9999999999999999
 
 def draw(path1, path2, cmd, cur, wire2) -> []:
