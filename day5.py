@@ -1,63 +1,62 @@
 # https://adventofcode.com/2019/day/5
 
-def compiler(ints):
+def compiler(program):
+    opcodes = [1,2,3,4]
 
-    it = iter(range(len(ints)))
+    it = iter(range(len(program)))
     for i in it:
 
         # get opcode and parameter mode
         # turns "01" into "00001"
-        command = str(ints[i]).split()
+        command = str(program[i]).split()
         while len(command) != 5:
             command.insert(0,'0')
         command = list(map(int, command))
         a, b, c, d, e = command
-        opcode = e
+        opcode = int(str(d).join(str(e)))
+        params = [c,b,a]
 
-        if opcode > 4 or opcode < 0:
+        # exit condition
+        if opcode not in opcodes:
+            print('Returned at index',i)
+            print(command)
             return
 
-        # get value, either position or value
-        param1, param2 = 0, 0
-        if a == 0:
-            param1 = ints[ints[i+1]]
-        else:
-            param1 = ints[i+1]
-        if b == 0:
-            param2 = ints[ints[i+2]]
-        else:
-            param2 = ints[i+2]
+        # get arguments
+        args = []
+        if opcode == 1 or opcode == 2:
+            args = [next(it), next(it), next(it)]
+        if opcode == 3 or opcode == 4: 
+            args = [next(it)]
 
-        param3 = ints[i+3]
-        step = 0
+        # get positional or immediate
+        for i in range(len(args)):
+            if params[i] == 0: 
+                args[i] = program[args[i]]
+
+        print(params, opcode, args)
 
         try:
             if(opcode == 1):
-                ints[param3] = param1 + param2
-                step = 3
+                program[args[2]] = args[0] + args[1]
             elif opcode == 2:
-                ints[param3] = param1 * param2
-                step = 3
+                program[args[2]] = args[0] * args[1]
             elif opcode == 3:
-                ints[param1] = 1 #input()
-                step = 1
+                program[args[0]] = 1 #input()
             elif opcode == 4:
-                print(ints[param1])
-                step = 1
+                print('Out: '+ str(program[args[0]]))
             else:
                 exit('Invalid opcode '+ str(opcode))
         except:
-            exit('IndexOutOfBounds '+ str(param3))
-        
-        for j in range(step):
-            next(it)
+            exit('IndexOutOfBounds '+ str(len(program)) +' < '+ str(args[0]) +', '+ str(args[1]) +', '+ str(args[2]))           
 
-    print(ints)
+    print(program)
 
 def main() -> None:
     ints = list(map(int, open('input/day5input.txt').read().split(',')))
 
     compiler(ints)
+    print('done')
 
 if __name__ == '__main__':
     main()
