@@ -29,8 +29,10 @@ def compiler(program):
         if opcode == 3 or opcode == 4: 
             args = [next(it)]
 
+        print(params, opcode, args)
+
         # get positional or immediate
-        for i in range(len(args)):
+        for i in range(len(args)-1):
             if params[i] == 0: 
                 args[i] = program[args[i]]
 
