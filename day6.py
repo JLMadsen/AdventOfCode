@@ -7,7 +7,7 @@ def createGraph(spaceMap) -> {}:
         p1, p2 = relation.split(')')
         
         if p1 not in graph.keys():
-            # neighbors, direct, indirect
+            # neighbors, indirect
             graph[p1] = [[],0]
         if p2 not in graph.keys():
             graph[p2] = [[],0]
@@ -20,23 +20,20 @@ def orbitChecksum(graph) -> int:
     checksum = 0
 
     # start at Center Of Mass
-    queue = [graph['COM']]
+    queue = ['COM']
+    visited = []
 
     while queue:
-        current = queue.pop(0)
-        
+        planetName = queue.pop(0)
+        current = graph[planetName]
+
         for neighbor in current[0]:
-            next = graph[neighbor]
 
-            # direct and indirect
-            indirect = current[1]+1
-            next[1] = indirect
-            checksum += 1 + indirect
+            graph[neighbor][1] = current[1]+1
+            checksum += current[1]+1
+            queue.append(neighbor)
 
-            for n in next[0]:
-                queue.append(graph[n])
-
-    for thing in graph.items(): print(thing)
+    #for n in graph.items(): print(n)
     return checksum
 
 def main() -> None:
