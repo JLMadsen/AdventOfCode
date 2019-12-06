@@ -8,9 +8,9 @@ def createGraph(spaceMap) -> {}:
         
         if p1 not in graph.keys():
             # neighbors, direct, indirect
-            graph[p1] = [[],0,0]
+            graph[p1] = [[],0]
         if p2 not in graph.keys():
-            graph[p2] = [[],0,0]
+            graph[p2] = [[],0]
 
         graph[p1][0].append(p2)
 
@@ -29,15 +29,14 @@ def orbitChecksum(graph) -> int:
             next = graph[neighbor]
 
             # direct and indirect
-            direct = len(next[0])+1
-            indirect = current[2]+1
-            next[1] = direct
-            next[2] = indirect
-            checksum += direct + indirect
+            indirect = current[1]+1
+            next[1] = indirect
+            checksum += 1 + indirect
 
             for n in next[0]:
                 queue.append(graph[n])
 
+    for thing in graph.items(): print(thing)
     return checksum
 
 def main() -> None:
