@@ -8,7 +8,7 @@ def compiler(program, systemID = 0, day2 = False):
         # turns "01" into "00001"
         command = list(map(int, str(i)))
         a,b,c,d,e = 0,0,0,0,0
-
+        #aa
         if len(command) == 5: a = command[-5]
         if len(command) >= 4: b = command[-4]
         if len(command) >= 3: c = command[-3]
