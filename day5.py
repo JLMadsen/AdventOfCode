@@ -1,6 +1,6 @@
 # https://adventofcode.com/2019/day/5
 
-from IntcodeCompiler import compiler
+from IntcodeCompilerWithJump import compiler
 
 def main() -> None:
     program = list(map(int, open('input/day5input.txt').read().split(',')))
@@ -9,7 +9,7 @@ def main() -> None:
     compiler(program.copy(), 1)
 
     print('Part 2')
-    compiler(program.copy(), 5)
+    compiler(program.copy(), 10)
 
 if __name__ == '__main__':
     main()
