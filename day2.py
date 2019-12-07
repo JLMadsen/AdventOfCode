@@ -1,41 +1,24 @@
 # https://adventofcode.com/2019/day/2
 
-def IntcodeCompiler(ints) -> int:
-
-    for i in range(0, len(ints), 4):
-        opcode = ints[i]
-        addr1 = ints[i+1]
-        addr2 = ints[i+2]
-        addr3 = ints[i+3]
-
-        try:
-            if opcode == 99:
-                return ints[0]
-            elif opcode == 1:
-                ints[addr3] = ints[addr1] + ints[addr2]
-            else:
-                ints[addr3] = ints[addr1] * ints[addr2]
-        except:
-            # IndexOutOfBounds
-            return 0
+from IntcodeCompiler import compiler
 
 def readIntcodesFromFile() -> []:
     
     filename = 'input/day2input.txt'
-    ints = open(filename).read().split(',')
+    program = open(filename).read().split(',')
     
-    return list(map(int, ints))
+    return list(map(int, program))
 
 def part1() -> int:
     
-    ints = readIntcodesFromFile()
+    program = readIntcodesFromFile()
     
     # replace position 1 with the value 12 
     # replace position 2 with the value 2.
-    ints[1] = 12
-    ints[2] = 2
+    program[1] = 12
+    program[2] = 2
     
-    return IntcodeCompiler(ints)
+    return compiler(program, day2=True)
 
 def part2() -> []:
 
@@ -45,11 +28,11 @@ def part2() -> []:
     for a in range(100):
         for b in range(100):
             
-            cpy = ints.copy()
-            cpy[1] = a
-            cpy[2] = b
+            program = ints.copy()
+            program[1] = a
+            program[2] = b
 
-            if IntcodeCompiler(cpy) == 19690720:
+            if compiler(program, day2=True) == 19690720:
                 return [a, b]
 
 def main() -> None:
