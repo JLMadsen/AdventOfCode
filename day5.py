@@ -3,23 +3,28 @@
 def compiler(program):
     opcodes = [1,2,3,4]
 
-    it = iter(range(len(program)))
+    it = iter(program)
     for i in it:
 
         # get opcode and parameter mode
         # turns "01" into "00001"
-        command = str(program[i]).split()
-        while len(command) != 5:
-            command.insert(0,'0')
-        command = list(map(int, command))
-        a, b, c, d, e = command
+        command = list(map(int, str(i)))
+        a,b,c,d,e = 0,0,0,0,0
+
+        if len(command) == 5: a = command[-5]
+        if len(command) >= 4: b = command[-4]
+        if len(command) >= 3: c = command[-3]
+        if len(command) >= 2: d = command[-2]
+        if len(command) >= 1: e = command[-1]
+
         opcode = int(str(d).join(str(e)))
         params = [c,b,a]
 
         # exit condition
         if opcode not in opcodes:
-            print('Returned at index',i)
+            print('Returned',opcode)
             print(command)
+            print(a,b,c,d,e)
             return
 
         # get arguments

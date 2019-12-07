@@ -1,4 +1,3 @@
-# 1735 too low
 
 def createGraph(spaceMap) -> {}:
 
@@ -7,12 +6,13 @@ def createGraph(spaceMap) -> {}:
         p1, p2 = relation.split(')')
         
         if p1 not in graph.keys():
-            # neighbors, indirect
-            graph[p1] = [[],0]
+            # neighbors, indirect, predecessor
+            graph[p1] = [[],0,'']
         if p2 not in graph.keys():
-            graph[p2] = [[],0]
+            graph[p2] = [[],0,'']
 
         graph[p1][0].append(p2)
+        graph[p2][2] = p1
 
     return graph
 
@@ -36,12 +36,58 @@ def orbitChecksum(graph) -> int:
     #for n in graph.items(): print(n)
     return checksum
 
+def makeGraphUndirected(graph_) -> {}:
+    graph = {}
+    for node in graph_.keys():
+        graph[node] = []
+        oldNode = graph_[node]
+        for neighbor in oldNode[0]: graph[node].append(neighbor)
+        graph[node].append(oldNode[2])
+    
+    return graph
+
+def pathToSanta(graph_, visited = [], predecessors = {}) -> int:
+
+    graph = makeGraphUndirected(graph_.copy())
+    
+    queue = ['YOU']
+    goal = 'SAN'
+
+    visited.append('YOU')
+    predecessors['YOU'] = -1
+
+    while queue:
+        planetName = queue.pop(0)
+        if planetName == '': continue
+        if planetName == goal: break # optimization
+
+        current = graph[planetName]
+        visited.append(planetName)
+
+        for neighbor in current:
+
+            if neighbor not in visited:
+                predecessors[neighbor] = planetName
+                queue.append(neighbor)
+
+    path = ['SAN']
+    current = predecessors[goal]
+    while current != -1:
+        path.append(current)
+        current = predecessors[current]
+
+    print(path)
+    return len(path)
+
 def main() -> None:
     spaceMap = open('input/day6input.txt').read().split()
     spaceTree = createGraph(spaceMap)
-    totalOrbit = orbitChecksum(spaceTree)
+    totalOrbit = orbitChecksum(spaceTree)    
 
-    print(totalOrbit)
+    print('Part 1 =', totalOrbit)
+
+    pathLength = pathToSanta(spaceTree)
+    print('Part 2 =', pathLength)
 
 if __name__ == '__main__':
     main()
