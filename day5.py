@@ -3,10 +3,13 @@
 from IntcodeCompiler import compiler
 
 def main() -> None:
-    ints = list(map(int, open('input/day5input.txt').read().split(',')))
+    program = list(map(int, open('input/day5input.txt').read().split(',')))
 
-    compiler(ints)
-    print('done')
+    print('Part 1')
+    compiler(program.copy(), 1)
+
+    print('Part 2')
+    compiler(program.copy(), 5)
 
 if __name__ == '__main__':
     main()

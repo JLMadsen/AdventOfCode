@@ -1,4 +1,4 @@
-def compiler(program, day2 = False):
+def compiler(program, systemID = 0, day2 = False):
     opcodes = [1,2,3,4]
 
     it = iter(program)
@@ -46,9 +46,12 @@ def compiler(program, day2 = False):
             elif opcode == 2:
                 program[args[2]] = args[0] * args[1]
             elif opcode == 3:
-                program[args[0]] = 1 #input()
+                program[args[0]] = systemID #input()
             elif opcode == 4:
                 print('Out: '+ str(program[args[0]]))
+            elif opcode == 5:
+                if args[0] != 0:
+                    pass
             else:
                 exit('Invalid opcode '+ str(opcode))
         except:
