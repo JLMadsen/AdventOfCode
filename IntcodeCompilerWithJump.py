@@ -1,11 +1,11 @@
 def compiler(program, systemID = 0, day2 = False):
+    print('Start program')
     opcodes = [1,2,3,4,5,6,7,8]
 
     # instruction register
     ir = 0
     
     while True:
-
         # get opcode and parameter mode
         # turns "01" into "00001"
         command = list(map(int, str(program[ir])))
@@ -29,7 +29,7 @@ def compiler(program, systemID = 0, day2 = False):
             print(a,b,c,d,e)
             return
 
-        # how many arguments to get
+        # get arguments
         args = []
         length = [[3,4],[5,6],[1,2,7,8]]
         for i in range(len(length)):
@@ -38,9 +38,14 @@ def compiler(program, systemID = 0, day2 = False):
                     args.append(program[ir+1+j])
 
         # get positional or immediate
-        for i in range(len(args)-1):
+        foo = len(args)-1 if not opcode in length[1] else len(args)
+        for i in range(foo):
             if params[i] == 0: 
                 args[i] = program[args[i]]
+
+        #print('\nprog', program)
+        #print('code', ir, params, opcode, args)
+        #if opcode == 3: print('input', systemID)
 
         jump = False
         try:
@@ -68,16 +73,18 @@ def compiler(program, systemID = 0, day2 = False):
                     ir = args[1]
             # less than
             elif opcode == 7:
-                args[2] = 1 if args[0] < args[1] else 0   
+                program[args[2]] = 1 if args[0] < args[1] else 0   
             # equals 
             elif opcode == 8:
-                args[2] = 1 if args[0] == args[1] else 0
+                program[args[2]] = 1 if args[0] == args[1] else 0
             else:
                 print(args, flush=True)
                 exit('Invalid opcode '+ str(opcode))
         except:
             print(args, flush=True)
             exit('IndexOutOfBounds '+ str(opcode))
+
+        #print('prog', program,'\n')
         
         if not jump:
             ir += len(args)+1

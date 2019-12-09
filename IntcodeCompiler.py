@@ -51,7 +51,7 @@ def compiler(program, systemID = 0, day2 = False):
             elif opcode == 3:
                 program[args[0]] = systemID #input()
             elif opcode == 4:
-                print('Out: '+ str(program[args[0]]))
+                print('Out: '+ str(args[0]))
             elif opcode == 5:
                 if args[0] != 0:
                     pass
