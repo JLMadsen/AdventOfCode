@@ -34,20 +34,29 @@ def printImage(image) -> None:
         print(row)
 
 def decodeImage(layers) -> []:
-    image = [[-1]*WIDTH]*HEIGHT
+    image = []
+    for u in range(HEIGHT):
+        image.append([])
+        for y in range(WIDTH):
+            image[u].append(-1)
 
     try:
         for layer in layers:
-            j = 0
-            for i in range(len(layer)):
-                if image[j][i] != -1: continue
-                if i != 0 and i % WIDTH == 0:j += 1
-                i = i % WIDTH
+            h = 0
+            for w in range(0,len(layer)):
+                if w % WIDTH == 0: 
+                    print('%',w)
+                    h += 1
 
-                if layer[i] == 2: continue
-                image[j][i] = layer[i]
+                w = w%WIDTH
+                
+                if h == HEIGHT: break
+                if image[h][w] != -1: continue
+                if layer[w] == 2: continue
+                image[h][w] = layer[w]
+                print(h,w)
     except:
-        print(i,j)
+        print('e',h,w)
         printImage(image)
         return
 
