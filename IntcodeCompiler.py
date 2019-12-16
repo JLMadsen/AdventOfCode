@@ -13,14 +13,14 @@ Parameters that an instruction writes to will never be in immediate mode.
 class Compiler:
 
     def __init__(self):
-        self.opcodes = [1,2,3,4,5,6,7,8]
+        self.opcodes = [1,2,3,4,5,6,7,8,9]
         self.input = []
 
     def reset(self):
         self.index = 0
 
-    def load(self, program):
-        self.program = program
+    def load(self, program, size = 1000):
+        self.program = program + [0 for i in range(size)]
         self.index = 0
 
     def getProgram(self, filename = ''):
@@ -41,6 +41,7 @@ class Compiler:
     def run(self, input = [], debug = False):
         output = []
         inputCounter = 0
+        relativeBase = 0
 
         if debug: print('a b c |de | 1 2 3')
 
@@ -68,6 +69,16 @@ class Compiler:
                 value1 = addr1 if c == 1 else self.program[addr1]
                 value2 = addr2 if b == 1 else self.program[addr2]
                 value3 = addr3 if a == 1 else self.program[addr3]
+
+                if c == 2: 
+                    relativeBase += addr1
+                    value1 = self.program[relativeBase]
+                if b == 2:
+                    relativeBase += addr2
+                    value2 = self.program[relativeBase]
+                if a == 2:
+                    relativeBase += addr3
+                    value3 = self.program[relativeBase]
             except:
                 pass
 
@@ -75,16 +86,17 @@ class Compiler:
 
             # run opcode
             if de == 1:
+                if addr3 < 0: exit('Negative address')
                 self.program[addr3] = value1 + value2
                 self.index += 4
 
             elif de == 2:
+                if addr3 < 0: exit('Negative address')
                 self.program[addr3] = value1 * value2
                 self.index += 4
 
             elif de == 3:
-                if inputCounter > len(input)-1:
-                    return
+                if addr1 < 0: exit('Negative address')                
                 self.program[addr1] = input[inputCounter]
                 inputCounter += 1
                 self.index += 2
@@ -106,12 +118,18 @@ class Compiler:
                     self.index += 3
             
             elif de == 7:
+                if addr3 < 0: exit('Negative address')
                 self.program[addr3] = 1 if value1 < value2 else 0
                 self.index += 4
             
             elif de == 8:
+                if addr3 < 0: exit('Negative address')
                 self.program[addr3] = 1 if value1 == value2 else 0
                 self.index += 4
+
+            elif de == 9:
+                relativeBase += value1
+                self.index += 2
 
 # run test
 import os

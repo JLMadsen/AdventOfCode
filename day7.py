@@ -40,14 +40,6 @@ def amplify2():
 
             counter = counter & len(instances)
             instance = instances[counter]
-            
-
-
-
-
-
-
-
 
         if out > highest_signal: highest_signal = out
 
