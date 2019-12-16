@@ -77,7 +77,12 @@ def pathToSanta(graph_, visited = [], predecessors = {}) -> int:
         path.append(current)
         current = predecessors[current]
 
-    print(path)
+    for i in range(len(path)):
+        for j in range(i+1, len(path)):
+            if path[i] == path[j]:
+                print('e', path[i], i)
+
+    #print(path)
     return len(path)
 
 def main() -> None:
@@ -88,7 +93,7 @@ def main() -> None:
     print('Part 1 =', totalOrbit)
 
     pathLength = pathToSanta(spaceTree)
-    print('Part 2 =', pathLength)
+    print('Part 2 =', pathLength) # not 376
 
 if __name__ == '__main__':
     main()

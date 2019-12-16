@@ -20,8 +20,13 @@ class Compiler:
         self.program = program
         self.index = 0
 
+    def loadFilename(self, filename):
+        self.program = list(map(int, open(filename).read().split(',')))
+        self.index = 0
+
     def run(self, input = [], debug = False):
         output = []
+        inputCounter = 0
 
         if debug: print('a b c |de | 1 2 3')
 
@@ -64,7 +69,8 @@ class Compiler:
                 self.index += 4
 
             elif de == 3:
-                self.program[addr1] = input[0]
+                self.program[addr1] = input[inputCounter]
+                inputCounter += 1
                 self.index += 2
 
             elif de == 4:
@@ -94,4 +100,4 @@ class Compiler:
 # run test
 import os
 if __name__ == '__main__':
-    os.system('python CompilerTest.py')
+    os.system('python IntcodeCompilerTest.py')

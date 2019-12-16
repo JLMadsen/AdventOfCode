@@ -16,30 +16,21 @@ def Test():
     compiler.load(day2.copy())
     result, output = compiler.run()
 
-    if (res := result[0]) == 3562624:
-        print('Day 2 passed')
-    else:
-        print('Day 2 failed,', res)
+    assert result[0] == 3562624, 'Day 2 failed'
 
     #_______________________________ day 5.1
     input = [1]
     compiler.load(day5.copy())
     result, output = compiler.run(input)
 
-    if (res := output[-1]) == 16434972:
-        print('Day 5 part 1 passed')
-    else:
-        print('Day 5 part 2 failed,', res)
+    assert output[-1] == 16434972, 'Day 5 part 1 failed'
 
     #_______________________________ day 5.2
     input = [5]
     compiler.load(day5.copy())
     result, output = compiler.run(input)
     
-    if (res := output[-1]) == 16694270:
-        print('Day 5 part 2 passed')
-    else:
-        print('Day 5 part 2 failed', res)
+    assert output[-1] == 16694270, 'Day 5 part 2 failed'
 
     #_______________________________ Comparator
     less = [7]
@@ -49,27 +40,21 @@ def Test():
     compiler.load(comparator.copy())
     result, output = compiler.run(less)
 
-    if (res := output[-1]) == 999:
-        print('Comparator less passed')
-    else:
-        print('Comparator less failed', res)
+    assert output[-1] == 999, 'Comparator less failed'
 
     compiler.load(comparator.copy())
     result, output = compiler.run(equals)
 
-    if (res := output[-1]) == 1000:
-        print('Comparator equals passed')
-    else:
-        print('Comparator equals failed', res)
+    assert output[-1] == 1000, 'Comparator equals failed'
 
     compiler.load(comparator.copy())
     result, output = compiler.run(greater)
 
-    if (res := output[-1]) == 1001:
-        print('Comparator greater passed')
-    else:
-        print('Comparator greater failed', res)
+    assert output[-1] == 1001, 'Comparator greater failed'
 
+    import re
+    tests = len(re.findall(r'assert', open('IntcodeCompilerTest.py').read()))
+    print('Ran', tests,'tests.\nAll passed')
 
 
 if __name__ == '__main__':
