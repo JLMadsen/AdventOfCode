@@ -1,3 +1,5 @@
+# https://adventofcode.com/2019/day/8
+
 HEIGHT = 6
 WIDTH = 25
 SIZE = HEIGHT*WIDTH

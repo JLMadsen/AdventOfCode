@@ -1,3 +1,4 @@
+# https://adventofcode.com/2019/day/6
 
 def createGraph(spaceMap) -> {}:
 

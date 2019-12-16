@@ -1,6 +1,7 @@
 # https://adventofcode.com/2019/day/2
 
-from IntcodeCompiler import compiler
+from IntcodeCompiler import Compiler
+compiler = Compiler()
 
 def readIntcodesFromFile() -> []:
     
@@ -17,8 +18,11 @@ def part1() -> int:
     # replace position 2 with the value 2.
     program[1] = 12
     program[2] = 2
-    
-    return compiler(program, day2=True)
+
+    compiler.load(program)
+    result, output = compiler.run()
+
+    return result[0]
 
 def part2() -> []:
 
@@ -32,7 +36,10 @@ def part2() -> []:
             program[1] = a
             program[2] = b
 
-            if compiler(program, day2=True) == 19690720:
+            compiler.load(program)
+            result, output = compiler.run()
+
+            if result[0] == 19690720:
                 return [a, b]
 
 def main() -> None:
