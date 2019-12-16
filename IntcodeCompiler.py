@@ -1,3 +1,5 @@
+import types
+
 """
 Notes:
 
@@ -12,6 +14,7 @@ class Compiler:
 
     def __init__(self):
         self.opcodes = [1,2,3,4,5,6,7,8]
+        self.input = []
 
     def reset(self):
         self.index = 0
@@ -20,9 +23,20 @@ class Compiler:
         self.program = program
         self.index = 0
 
+    def getProgram(self, filename = ''):
+        if filename != '':
+            return list(map(int, open(filename).read().split(',')))
+        return self.program
+
     def loadFilename(self, filename):
         self.program = list(map(int, open(filename).read().split(',')))
         self.index = 0
+
+    def addInput(self, n):
+        if isinstance(n, list):
+            self.input += n
+        else:
+            self.input.append(n)
 
     def run(self, input = [], debug = False):
         output = []
@@ -69,6 +83,8 @@ class Compiler:
                 self.index += 4
 
             elif de == 3:
+                if inputCounter > len(input)-1:
+                    return
                 self.program[addr1] = input[inputCounter]
                 inputCounter += 1
                 self.index += 2
