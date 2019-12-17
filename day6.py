@@ -82,7 +82,7 @@ def pathToSanta(graph_, visited = [], predecessors = {}) -> int:
             if path[i] == path[j]:
                 print('e', path[i], i)
 
-    #print(path)
+    print(path)
     return len(path)
 
 def main() -> None:

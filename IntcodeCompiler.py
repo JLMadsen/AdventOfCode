@@ -73,12 +73,15 @@ class Compiler:
                 if c == 2: 
                     relativeBase += addr1
                     value1 = self.program[relativeBase]
+                    addr1 = value1
                 if b == 2:
                     relativeBase += addr2
                     value2 = self.program[relativeBase]
+                    addr2 = value2
                 if a == 2:
                     relativeBase += addr3
                     value3 = self.program[relativeBase]
+                    addr3 = value3
             except:
                 pass
 
