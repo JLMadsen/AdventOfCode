@@ -3,7 +3,7 @@ import math
 def getLineOfSigth(tab, pos):
     
     asteroids = {}
-            
+    
     # check other asteroids for Line of sight angle
     for y1 in range(len(tab)):
         for x1 in range(len(tab[y1])):
@@ -30,12 +30,12 @@ def detectorPos(tab):
     # traverse asteroids
     for y in range(len(tab)):
         for x in range(len(tab[y])):
-                                    
+            
             if tab[y][x] != '#':
                 continue
             
             asteroids = getLineOfSigth(tab, [x,y])
-                                                
+            
             total = len(asteroids)
             if total > highest[0]:
                 highest = [total, [x,y]]
@@ -58,7 +58,7 @@ def vaporize(tab, pos):
         for i in range(len(angles)-1):
             if angles[i] < -0.5*math.pi and angles[i+1] >= -0.5*math.pi:
                 mid = i+1
-                
+        
         angles2 = angles[mid:] + angles[:mid]
         
         for angle in angles2:
@@ -69,7 +69,7 @@ def vaporize(tab, pos):
                 return pos
             
             tab[pos[1]][pos[0]] = str(shotCount%10)
-                                
+
 def Test():
     test1 = ["......#.#.",
              "#..#.#....",
