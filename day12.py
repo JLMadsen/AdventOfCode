@@ -73,51 +73,45 @@ def calcEnergy(moons, steps):
     return energy
     
 def timeForLoop(moons):
+    history = []
     time = 0
     
-    # get all orignal positions
-    original = []
+    checkstring = ""
     for moon in moons:
-        original.append([moon.x, moon.y, moon.z])
+        checkstring += str(moon.x) + " " + str(moon.y) + " "+ str(moon.z) + " "
+    history.append(checkstring)
         
-    print('\nstart')
-    for moon in moons:
-        printMoon(moon, False)
+    #print('\nstart')
+    #for moon in moons:
+    #    printMoon(moon, False)
         
     while 1:
         time += 1
         
         calcGravity(moons)
         moveMoons(moons)
-        
-        # assume it is true
-        fin = True
-        
-        # check if false, easier to disprove sometimes
-        for i in range(len(moons)):
-            if (moons[i].x != original[i][0]
-             or moons[i].y != original[i][1]
-             or moons[i].z != original[i][2]): 
-                fin = False
-                break
 
-            
-        if fin:
+        checkstring = ""
+        for moon in moons:
+            checkstring += str(moon.x) + " " + str(moon.y) + " "+ str(moon.z) + " "
+        
+
+        if checkstring in history:
             print('\nend')
             for moon in moons:
                 printMoon(moon, False)
+                
+            print(history)
             
             return time
-            
+        else:
+            history.append(checkstring)
+                      
         # check for test so it dont loop
         if time > 2772:
             exit('not working')
 
-            
-def main():    
-    filename = 'input/day12test.txt'
-    steps = 10
-    
+def getMoons(filename):
     text = open(filename).read()
     numbers = re.findall(r'-?\d+', text)
     num = list( map(int, numbers))
@@ -125,6 +119,14 @@ def main():
     moons = []
     for i in range(0,len(num),3):
         moons.append( moon(num[i], num[i+1], num[i+2]))
+        
+    return moons
+            
+def main():
+    filename = 'input/day12test.txt'
+    steps = 10
+           
+    moons = getMoons(filename)
         
     energy = calcEnergy(moons.copy(), steps)
     print('Part 1', energy)
