@@ -118,3 +118,4 @@ C++ intcode compiler/IntcodeCompiler/.vs/IntcodeCompiler/v16/.suo
 *.user
 *.vcxproj
 C++ intcode compiler/IntcodeCompiler/IntcodeCompiler.vcxproj.filters
+other/testing.go
