@@ -34,27 +34,33 @@ def createFuel(recipes):
     counter = defaultdict(lambda: 0)
     oreCount = 0
     
-    while queue:
-        current = queue.pop()
-        
-        recipe = recipes[current]
-        
-        amount = recipe[0]
-        ingredients = recipe[1:]
-        
-        multiplier = 1 if not counter[current] else counter[current]//amount
-        counter[current] -= amount*multiplier
-                
-        for num, name in ingredients:
-            if name == 'ORE':
-                oreCount += num*multiplier
-            else:
+    while 1:
+    
+        while queue:
+            current = queue.pop()
+            
+            recipe = recipes[current]
+            
+            amount = recipe[0]
+            ingredients = recipe[1:]
+            
+            multiplier = 1 if not counter[current] else counter[current]//amount
+            counter[current] -= amount*multiplier
+                    
+            for num, name in ingredients:
+                if name == 'ORE':
+                    oreCount += num*multiplier
+                else:
+                    queue.append(name)
+                    counter[name] += num*multiplier
+                    
+        for name, amount in counter.items():
+            if amount > 0:
                 queue.append(name)
-                counter[name] += num*multiplier
-        
-        print(amount)
-        print(ingredients)
-        
+                
+        if not queue:
+            break
+
     print(counter)
     return oreCount
         
