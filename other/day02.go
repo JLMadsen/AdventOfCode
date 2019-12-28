@@ -13,7 +13,7 @@ func check(e error) {
 	}
 }
 
-func compiler(program []int) (result []int) {
+func compiler(program []int) (result int) {
 	i := 0
 
 	for true {
@@ -25,12 +25,13 @@ func compiler(program []int) (result []int) {
 		opcode = opcode % 100
 
 		if opcode == 99 {
+			result = program[0]
 			return
 		}
 
 		value1 := program[program[i+1]]
 		value2 := program[program[i+2]]
-		value3 := program[program[i+3]]
+		value3 := program[i+3]
 
 		if opcode == 1 {
 			program[value3] = value1 + value2
@@ -40,20 +41,38 @@ func compiler(program []int) (result []int) {
 			i += 4
 		}
 	}
+	result = program[0]
 	return
 }
 
-func part1(program []int) (answer int) {
+func part1(program []int) (result int) {
 
 	program[1] = 12
 	program[2] = 2
 
-	result := compiler(program)
-	answer = result[0]
+	result = compiler(program)
 	return
 }
 
 func part2(program []int) (answer int) {
+	expected := 19690720
+
+	for noun := 80; noun < 100; noun++ {
+		for verb := 80; verb < 100; verb++ {
+
+			newProgram := program
+
+			newProgram[1] = noun
+			newProgram[2] = verb
+
+			result := compiler(newProgram)
+			fmt.Println(result)
+			if result == expected {
+				answer = noun*100 + verb
+				return
+			}
+		}
+	}
 	return
 }
 
@@ -69,10 +88,6 @@ func main() {
 		num, err := strconv.Atoi(element)
 		check(err)
 		arr2 = append(arr2, num)
-	}
-
-	for _, num := range arr2 {
-		fmt.Print(num, ", ")
 	}
 
 	program1 := arr2
