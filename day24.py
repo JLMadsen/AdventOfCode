@@ -29,7 +29,6 @@ def step(layout) -> []:
                 
             # A bug dies unless there is exactly one bug adjacent to it.
             # An empty space becomes infested with a bug if exactly one or two bugs are adjacent to it.
-
             if layout[y][x] == '#' and bugCount != 1:       newLayout[y][x] = '.'
             elif layout[y][x] == '.' and bugCount in [1,2]: newLayout[y][x] = '#'
                 
