@@ -65,12 +65,7 @@ def bioDiversity(layout) -> int:
 def part1(layout) -> None:
     previous = []
     minutes = 0
-    while 1:
-        
-        #print("After", minutes,"minutes")
-        #printLayout(layout)
-        #print('')
-        
+    while 1:        
         if previous:
             for layout2 in previous:
                 if equals(layout, layout2):
