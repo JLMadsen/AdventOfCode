@@ -1,7 +1,7 @@
 # https://adventofcode.com/2019/day/1
 
 # takes part as argument, int 1 or 2, depending on which task to run.
-def FuelCalculator(part) -> int:
+def FuelCalculator() -> int:
     filename = "input/day1input.txt"
     planets = open(filename).read().split()
     
@@ -9,20 +9,17 @@ def FuelCalculator(part) -> int:
     # planet = mass
     for planet in planets:
         fuel = [int(int(planet)/3)-2]
-        if part == 1:
-            totalFuel += fuel[0]
-        else:
-            while fuel[-1] > 0:
-                fuel.append(int(fuel[-1]/3)-2)
-            if fuel[-1] < 0: fuel[-1] = 0
-            totalFuel += sum(fuel)
+        while fuel[-1] > 0:
+            fuel.append(int(fuel[-1]/3)-2)
+        if fuel[-1] < 0: fuel[-1] = 0
+        totalFuel += sum(fuel)
     
     return totalFuel
 
 def main() -> None:
     print('Day 1')
-    print("Task 1: ", FuelCalculator(1))
-    print("Task 2: ", FuelCalculator(2))
+    print("Task 1: ", sum(map(lambda x: x//3-2,list(map(int,open("input/day1input.txt").read().split('\n'))))))
+    print("Task 2: ", FuelCalculator())
 
 if __name__ == '__main__':
     main()
