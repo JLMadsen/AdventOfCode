@@ -119,3 +119,15 @@ C++ intcode compiler/IntcodeCompiler/.vs/IntcodeCompiler/v16/.suo
 *.vcxproj
 C++ intcode compiler/IntcodeCompiler/IntcodeCompiler.vcxproj.filters
 other/testing.go
+*.csproj
+2019/other/Aoc2019CS/bin/Debug/netcoreapp3.1/Aoc2019CS.deps.json
+*.dll
+2019/other/Aoc2019CS/bin/Debug/netcoreapp3.1/Aoc2019CS.runtimeconfig.dev.json
+2019/other/Aoc2019CS/bin/Debug/netcoreapp3.1/Aoc2019CS.runtimeconfig.json
+2019/other/Aoc2019CS/obj/Aoc2019CS.csproj.nuget.dgspec.json
+2019/other/Aoc2019CS/obj/Aoc2019CS.csproj.nuget.g.props
+2019/other/Aoc2019CS/obj/Aoc2019CS.csproj.nuget.g.targets
+2019/other/Aoc2019CS/obj/Debug/netcoreapp3.1/Aoc2019CS.AssemblyInfo.cs
+*.cache
+2019/other/Aoc2019CS/obj/Debug/netcoreapp3.1/Aoc2019CS.csproj.FileListAbsolute.txt
+2019/other/Aoc2019CS/obj/project.assets.json
