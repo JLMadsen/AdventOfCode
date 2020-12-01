@@ -32,8 +32,12 @@ def checkCorruption(codedImage) -> []:
     return layers
 
 def printImage(image) -> None:
-    for row in image:
-        print(row)
+    import matplotlib.pyplot as plt
+
+    plt.imshow(image, interpolation='nearest', 
+                 extent=[0.5, 0.5+WIDTH, 0.5, 0.5+HEIGHT],
+                 cmap='bwr')
+    plt.show()
 
 def decodeImage(layers) -> []:
 
@@ -52,7 +56,7 @@ def decodeImage(layers) -> []:
     printImage(image)
 
 def main() -> None:
-    codedImage = open('input/day8input.txt').read()
+    codedImage = open('2019/input/day8input.txt').read()
 
     print('Part 1')
     layers = checkCorruption(codedImage)
