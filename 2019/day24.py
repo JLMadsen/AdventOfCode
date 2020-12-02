@@ -57,7 +57,7 @@ def part1(layout) -> None:
         layout = step(layout)
 
 def main() -> None:
-    filename = 'input/day24input.txt'
+    filename = '2019/input/day24input.txt'
     layout = open(filename).read().split()
     
     # string -> char array

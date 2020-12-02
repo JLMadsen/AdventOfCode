@@ -66,7 +66,7 @@ def createFuel(recipes):
         
     
 def main():
-    filename = 'input/day14input.txt'
+    filename = '2019/input/day14input.txt'
     recipes = getRecipe(filename)
     oreCount = createFuel(recipes)
     

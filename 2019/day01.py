@@ -2,7 +2,7 @@
 
 # takes part as argument, int 1 or 2, depending on which task to run.
 def FuelCalculator() -> int:
-    filename = "input/day1input.txt"
+    filename = '2019/input/day1input.txt'
     planets = open(filename).read().split()
     
     totalFuel = 0
@@ -18,7 +18,7 @@ def FuelCalculator() -> int:
 
 def main() -> None:
     print('Day 1')
-    print("Task 1: ", sum(map(lambda x: x//3-2,list(map(int,open("input/day1input.txt").read().split('\n'))))))
+    print("Task 1: ", sum(map(lambda x: x//3-2,list(map(int,open('2019/input/day1input.txt').read().split('\n'))))))
     print("Task 2: ", FuelCalculator())
 
 if __name__ == '__main__':

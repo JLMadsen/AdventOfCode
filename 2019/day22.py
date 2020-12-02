@@ -2,7 +2,7 @@ import re
 DECK_SIZE = 10006
 
 def part1(deck) -> int:
-    filename = 'input/day22input.txt'
+    filename = '2019/input/day22input.txt'
     instructions = open(filename).read().split('\n')
         
     for instruction in instructions:

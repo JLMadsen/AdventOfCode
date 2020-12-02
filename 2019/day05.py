@@ -4,7 +4,7 @@ from IntcodeCompiler import Compiler
 compiler = Compiler()
 
 def main() -> None:
-    program = list(map(int, open('input/day5input.txt').read().split(',')))
+    program = list(map(int, open('2019/input/day5input.txt').read().split(',')))
 
     compiler.load(program.copy())
     result, output = compiler.run([1])

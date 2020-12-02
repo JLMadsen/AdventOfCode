@@ -12,7 +12,7 @@ def amplify1():
         out = 0
         for setting in perm:
 
-            compiler.loadFilename('input/day7input.txt')
+            compiler.loadFilename('2019/input/day7input.txt')
             input = [setting, out]
             program, output = compiler.run(input)
             out = output[-1]
@@ -23,7 +23,7 @@ def amplify1():
 
 def amplify2():
     
-    original = compiler.getProgram('input/day7input.txt')
+    original = compiler.getProgram('2019/input/day7input.txt')
     phase_settings = [5,6,7,8,9]
     highest_signal = 0
 

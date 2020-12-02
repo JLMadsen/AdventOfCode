@@ -87,7 +87,7 @@ def Test():
 
 def main():
     Test()
-    filename = 'input/day10input.txt'
+    filename = '2019/input/day10input.txt'
     tab = open(filename).read().split('\n')
     
     ntab = []

@@ -5,7 +5,7 @@ compiler = Compiler()
 
 def readIntcodesFromFile() -> []:
     
-    filename = 'input/day2input.txt'
+    filename = '2019/input/day2input.txt'
     program = open(filename).read().split(',')
     
     return list(map(int, program))

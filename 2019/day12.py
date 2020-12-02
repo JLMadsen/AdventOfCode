@@ -123,7 +123,7 @@ def getMoons(filename):
     return moons
             
 def main():
-    filename = 'input/day12test.txt'
+    filename = '2019/input/day12test.txt'
     steps = 10
            
     moons = getMoons(filename)

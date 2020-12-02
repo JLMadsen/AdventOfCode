@@ -5,9 +5,9 @@ def Test():
 
     compiler = Compiler()
 
-    day2 = readIntcode('input/day2input.txt')
-    day5 = readIntcode('input/day5input.txt')
-    day9 = readIntcode('input/day9input.txt')
+    day2 = readIntcode('2019/input/day2input.txt')
+    day5 = readIntcode('2019/input/day5input.txt')
+    day9 = readIntcode('2019/input/day9input.txt')
     comparator = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
 
     #_______________________________ day 2

@@ -86,7 +86,7 @@ def pathToSanta(graph_, visited = [], predecessors = {}) -> int:
     return len(path)
 
 def main() -> None:
-    spaceMap = open('input/day6input.txt').read().split()
+    spaceMap = open('2019/input/day6input.txt').read().split()
     spaceTree = createGraph(spaceMap)
     totalOrbit = orbitChecksum(spaceTree)    
 

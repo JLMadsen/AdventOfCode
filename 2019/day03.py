@@ -31,7 +31,7 @@ def draw(path1, path2, cmd, cur, wire2) -> []:
     return [path1, path2, cur]
 
 def readMap() -> []:
-    cmds = open('input/day3input.txt').read().split(',')
+    cmds = open('2019/input/day3input.txt').read().split(',')
 
     path1 = []
     path2 = []

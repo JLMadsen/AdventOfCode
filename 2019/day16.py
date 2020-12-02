@@ -35,7 +35,7 @@ def getAns(tab, jump = 0):
     return ans  
 
 def main():
-    filename = 'input/day16input.txt'
+    filename = '2019/input/day16input.txt'
     phases = 100
     
     #numbers = list(map(int, list(open(filename).read())))
