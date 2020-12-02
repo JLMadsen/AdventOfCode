@@ -2,7 +2,7 @@ from itertools import permutations
 import math
 
 def prod_if_sum_equals(e, l, g):
-    [print(math.prod(p)) for p in permutations(e,l) if sum(p)==g]
+    print([math.prod(p) for p in permutations(e,l) if sum(p)==g][0])
 
 if __name__ == "__main__":
     with open('2020/inputs/day01.txt') as f:
