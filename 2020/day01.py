@@ -1,5 +1,4 @@
 from itertools import permutations
-import get_input
 import math
 
 def prod_if_sum_equals(e, l, g):

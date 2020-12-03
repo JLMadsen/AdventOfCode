@@ -1,5 +1,3 @@
-import get_input
-
 def validate_count(d):
     print(len([0 for e in d if((c:=e[2].count(e[1]))>e[0][0])and(c<e[0][1])]))
 
