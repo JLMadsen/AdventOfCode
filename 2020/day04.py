@@ -1,9 +1,9 @@
 import re
 
-data = { 'byr': lambda x: int(x) <= 2002 and int(x) >= 1920,
-         'iyr': lambda x: int(x) <= 2020 and int(x) >= 2010,
-         'eyr': lambda x: int(x) <= 2030 and int(x) >= 2020,
-         'hgt': lambda x: int(x[:-2]) <= 76 and int(x[:-2]) >= 59 if 'in' in x else int(x[:-2]) <= 193 and int(x[:-2]) >= 150 if 'in' in x or 'cm' in x else False,
+data = { 'byr': lambda x: x <= '2002' and x >= '1920',
+         'iyr': lambda x: x <= '2020' and x >= '2010',
+         'eyr': lambda x: x <= '2030' and x >= '2020',
+         'hgt': lambda x: (x:=x[:-2]) <= '76' and x >= '59' if 'in' in x else (x:=x[:-2]) <= '193' and x >= '150' if x[-2:] in ['cm','in'] else False,
          'hcl': lambda x: re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', x),
          'ecl': lambda x: x in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'],
          'pid': lambda x: len(x)==9 and not re.search(r'\D', x) }
