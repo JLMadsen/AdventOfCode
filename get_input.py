@@ -12,7 +12,9 @@ def get_input(year, day):
     data = requests.get(url, cookies={'session': TOKEN})
     
     day = day if day > 10 else '0'+str(day)
-    with open(f'{year}/input/day{day}.txt', 'w') as f:
+    filename = f'{year}/input/day{day}.txt'
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w') as f:
         f.write(data.text)
 
 # run as main to download todays input
