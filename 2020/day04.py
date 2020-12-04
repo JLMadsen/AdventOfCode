@@ -1,6 +1,5 @@
 import re
 
-fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 data = { 'byr': lambda x: int(x) <= 2002 and int(x) >= 1920,
          'iyr': lambda x: int(x) <= 2020 and int(x) >= 2010,
          'eyr': lambda x: int(x) <= 2030 and int(x) >= 2020,
@@ -10,10 +9,10 @@ data = { 'byr': lambda x: int(x) <= 2002 and int(x) >= 1920,
          'pid': lambda x: len(x)==9 and not re.search(r'\D', x) }
 
 def validate_password_fields(passports):
-    print(len([0 for p in passports if all([f in p.keys() for f in fields])]))
+    print(len([0 for p in passports if all([f in p.keys() for f in data.keys()])]))
 
 def validate_password_data(passports):
-    print(len([0 for p in passports if all([f in p.keys() for f in fields]) and all(data[k](v) for k, v in p.items() if k!='cid')]))
+    print(len([0 for p in passports if all([f in p.keys() for f in data.keys()]) and all(data[k](v) for k, v in p.items() if k!='cid')]))
 
 if __name__ == "__main__":
     with open('2020/input/day04.txt') as f:
