@@ -11,7 +11,7 @@ def get_input(year, day):
     url = f"https://adventofcode.com/{year}/day/{day}/input"
     data = requests.get(url, cookies={'session': TOKEN})
     
-    day = day if day > 10 else '0'+str(day)
+    day = day if day >= 10 else '0'+str(day)
     filename = f'{year}/input/day{day}.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w') as f:
