@@ -24,11 +24,7 @@ def find_seat(code, size=(128, 8)):
 
 
 def find_my_seat(seats):
-    seats = sorted(seats)
-    for i in range(min(seats), max(seats)):
-        if i-1 in seats and i+1 in seats and not i in seats:
-            print(i)
-            return
+    print([i for i in range(min(seats), max(seats)) if i-1 in seats and i+1 in seats and not i in seats][0])
 
 if __name__ == "__main__":
     with open('2020/input/day05.txt') as f:
