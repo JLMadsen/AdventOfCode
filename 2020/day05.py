@@ -1,13 +1,13 @@
 import math
 
-def find_seat(code, size=(128, 8)):
+def find_seat(codes, size=(128, 8)):
     seats = []
-    for seat in code:
+    for code in codes:
         row_min, row_max = 0, size[0]-1
         col_min, col_max = 0, size[1]-1
         row_fin, col_fin = 0, 0
         
-        for char in seat:
+        for char in code:
 
             if char == 'F':   row_max = ( (row_max-row_min) // 2 ) + row_min
             elif char == 'B': row_min = ( (row_max-row_min) // 2 ) + row_min + 1
@@ -29,7 +29,7 @@ def find_my_seat(seats):
 if __name__ == "__main__":
     with open('2020/input/day05.txt') as f:
 
-        data = [d for d in f.read().splitlines()]
+        data = f.read().splitlines()
 
         seats = find_seat(data) # 842
         find_my_seat(seats)     # 617
