@@ -1,71 +1,58 @@
-import time
 from copy import deepcopy
-per_boot = 0.0008392333984375 * 4
 
+def run(code):
 
+    hist = set() # all seen pointers
+    accu = 0     # accumulator
+    curr = 0     # current pointer
+    fail = False
 
-def run_once(code):
-    acc = 0
-    hist = []
-    index = 0
-    while 1:
+    while True:
 
-        op, num = code[index].split(' ')
+        # if pointer hits previous or out of bounds
+        if curr in hist or 0 > curr > len(code):
+            fail = True
+            break
+
+        # if pointer reaches end
+        if curr == len(code):
+            break
+
+        hist.add(curr)
+
+        op, num = code[curr].split(' ')
         num = int(num)
 
         if op == 'acc':
-            acc += num
-            index += 1
-            if index in hist:
-                break
-            hist.append(index)
+            accu += num
+            curr += 1
+
         elif op == 'jmp':
-            index += num
-            if index in hist:
-                break
-            hist.append(index)
+            curr += num
+
         elif op == 'nop':
-            index += 1
+            curr += 1
 
-    print(acc)
+    return accu, fail
 
-def fix_jump(code):
-    for i in range(len(code)):
-        code_2 = deepcopy(code)
-        op, num = code[i].split(' ')
-        code_2[i] = 'jmp '+num if op == 'nop' else 'nop '+num
-
-        time_limit = False
-        acc = 0
-        index = 0
-        start = time.time()
-
-        while not time_limit:
-            if time.time() - start > per_boot:
-                time_limit = True
-
-            if index == len(code_2):
-                break
-
-            op, num = code_2[index].split(' ')
-            num = int(num)
-
-            if op == 'acc':
-                acc += num
-                index += 1
-            elif op == 'jmp':
-                index += num
-            elif op == 'nop':
-                index += 1
-
-        if not time_limit and index == len(code_2):
-            print(acc)
-            return
 
 if __name__ == "__main__":
     with open('2020/input/day08.txt') as f:
 
-        data = f.read().splitlines()
+        code = f.read().splitlines()
 
-        run_once(data) # 1548
-        fix_jump(data) # 1375
+        print( run(code)[0] ) # 1548
+
+        for i in range(len(code)):
+            new_code = deepcopy(code)
+            op, num = new_code[i].split(' ')
+
+            # changing acc doesnt change anything
+            # a jmp 0 results in infinite loop
+            # a nop 0 doesnt change anything
+            if 'acc' in op or not int(num): continue
+            new_code[i] = 'jmp '+ num if 'nop' in op else 'nop '+ num
+
+            val, fail = run(new_code)
+            if not fail:
+                print(val) # 1375
