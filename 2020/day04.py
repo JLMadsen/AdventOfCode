@@ -8,10 +8,10 @@ data = { 'byr': lambda x: '1920' <= x <= '2002',
          'ecl': lambda x: x in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'],
          'pid': lambda x: len(x)==9 and not re.search(r'\D', x) }
 
-def validate_password_fields(passports):
+def validate_passport_fields(passports):
     print(len([0 for p in passports if all(f in p.keys() for f in data.keys())]))
 
-def validate_password_data(passports):
+def validate_passport_data(passports):
     print(len([0 for p in passports if all(f in p.keys() for f in data.keys()) and all(data[k](v) for k, v in p.items() if k!='cid')]))
 
 if __name__ == "__main__":
@@ -19,5 +19,5 @@ if __name__ == "__main__":
 
         passports = [{(kv:=pp.split(':'))[0]:kv[1] for pp in p.replace('\n', ' ').split(' ')} for p in f.read().split('\n\n')]
                 
-        validate_password_fields(passports) # 239
-        validate_password_data(passports)   # 188
+        validate_passport_fields(passports) # 239
+        validate_passport_data(passports)   # 188
