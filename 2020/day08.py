@@ -56,3 +56,4 @@ if __name__ == "__main__":
             val, fail = run(new_code)
             if not fail:
                 print(val) # 1375
+                break
