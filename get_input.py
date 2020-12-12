@@ -21,6 +21,6 @@ def get_input(year, day):
 if __name__ == "__main__":
     today = datetime.today()
     get_input(today.year, today.day)
-    #get_input(2015, 10)
+    #get_input(2020, 11)
 
 sys.modules[__name__] = get_input

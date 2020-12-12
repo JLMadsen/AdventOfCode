@@ -1,30 +1,12 @@
 from copy import deepcopy
-import random
 
 class state:
     empty = 'L'
     occupied = '#'
     floor = '.'
 
-def direction(i, j, data):
-    pos = []
-    for d in [[1,0],[0,1],[-1,0],[0,-1],[-1,-1],[1,1],[1,-1],[-1,+1]]:
-        n = deepcopy(d)
-        try:
-            while data[i+n[0]][j+n[1]] == state.floor:
-                n[0] += n[0]
-                n[1] += n[1]
-        except:
-            pass
-        pos.append([i+n[0],j+n[1]])
-
-    return pos
-
-def cellular_automata(data, criteria, lower):
-
+def cellular_automata(data, lower, count_floor=True):
     done = False
-    it, tr = 0, 1
-
     while not done:
 
         done = True # false if seat changes again
@@ -36,47 +18,40 @@ def cellular_automata(data, criteria, lower):
                     continue
 
                 count = 0
-
-                for n in criteria(i, j, data):
+                for n in [(1,0),(0,1),(-1,0),(0,-1),(-1,-1),(1,1),(1,-1),(-1,1)]:
                     try:
                         i_2, j_2 = n
-                        #print(i,j,i_2, j_2)
 
-                        if (len(data)    > i_2 >= 0 and 
-                            len(data[0]) > j_2 >= 0): 
+                        while 1:
+                            if (len(data)    > (i+i_2) >= 0 and 
+                                len(data[0]) > (j+j_2) >= 0): 
 
-                            tmp = data[i_2][j_2]
-                            if tmp == state.occupied: 
-                                count += 1
+                                looking_at = data[i+i_2][j+j_2]
+
+                                if looking_at == state.floor and not count_floor:
+                                    i_2 += n[0]
+                                    j_2 += n[1]
+                                    continue
+
+                                if looking_at == state.occupied: 
+                                    count += 1
+                                break
+                            else:
+                                break
                     except:
                         pass
 
                 if count == 0 and cell == state.empty:
                     next_state[i][j] = state.occupied
                     done = False
-                
+                    
                 elif count > lower and cell == state.occupied:
                     next_state[i][j] = state.empty
                     done = False
 
         data = next_state
 
-        it+=1
-        if it == tr:
-            for row in data:
-                print(''.join(row))
-            exit()
-
-    res = (''.join([''.join(r) for r in data])).count(state.occupied)
-
-    for row in data:
-        continue
-        print(''.join(row))
-
-    print(res)
-
-    if res >= 1890:
-        print('too high')
+    print((''.join([''.join(r) for r in data])).count(state.occupied))
 
 if __name__ == "__main__":
     with open('2020/input/day11.txt') as f:
@@ -84,7 +59,5 @@ if __name__ == "__main__":
         data = f.read().splitlines()
         data = [[c for c in r] for r in data]
 
-        adjacent  = lambda x, y, *_: [(x+1,y),(x,y+1),(x-1,y),(x,y-1),(x-1,y-1),(x+1,y+1),(x+1,y-1),(x-1,y+1)]
-
-        #cellular_automata(data, adjacent, 3)  # 2093
-        cellular_automata(data, direction, 4) #
+        cellular_automata(data, 3)        # 2093
+        cellular_automata(data, 4, False) # 1862
