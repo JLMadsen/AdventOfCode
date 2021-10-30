@@ -1,3 +1,3 @@
-# AdventOfCode
+# <a href="https://adventofcode.com/">AdventOfCode</a>
 
-https://adventofcode.com/
+My solutions for Advent of Code!
