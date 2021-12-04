@@ -9,25 +9,19 @@ def reverse_bingo(draws, cards):
 
     for num in draws:
 
-        # cards = [ newCard for card in cards if not check_win((newCard := mark(card, num)))]
-        # print(len(cards))
-        # if len(cards) == 1:
-        #     return [cards[0], num]
-
         if not len(nCards) :
             return last_winner
 
         temp_cards = []        
 
         for i, card in enumerate(nCards):
-
             if check_win((newCard:=mark(card, num))):
                 last_winner = [newCard, num]
             else:
                 temp_cards.append(newCard)
 
         nCards = temp_cards
-        
+
 def bingo(draws, cards):
     for num in draws:
         for i, card in enumerate(cards):
