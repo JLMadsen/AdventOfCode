@@ -20,20 +20,19 @@ def check_win(card):
 def reverse_bingo(draws, cards):
     last_winner = []
     nCards = [*cards]
-    for idx, num in enumerate(draws):
-        if len(nCards) == 0:
-            return [last_winner, draws[idx-1]]
+
+    for num in draws:
+        if not len(nCards) :
+            return last_winner
 
         temp_cards = []        
 
         for i, card in enumerate(nCards):
-            newCard = [*card]
 
-            for j, row in enumerate(card):
-                newCard[j] = ['x' if val == num else val for val in row]      
+            newCard = [ ['x' if val == num else val for val in row] for row in card ]
 
             if check_win(newCard):
-                last_winner = newCard
+                last_winner = [newCard, num]
             else:
                 temp_cards.append(newCard)
 
@@ -42,13 +41,12 @@ def reverse_bingo(draws, cards):
 def bingo(draws, cards):
     for num in draws:
         for i, card in enumerate(cards):
-            newCard = [*card]
 
-            for j, row in enumerate(card):
-                newCard[j] = newCard[j] = ['x' if val == num else val for val in row]   
+            newCard = [ ['x' if val == num else val for val in row] for row in card ] 
 
             if check_win(newCard):
                 return [newCard, num]
+
             cards[i] = newCard
 
 if __name__ == "__main__":
