@@ -1,27 +1,19 @@
-def nth(arr, n):
-    return [*zip(*arr)][n]
-
-def score(card, last_num):
-    score = 0
-    for line in card:
-        score += sum([*map(lambda x: int(x) if x != 'x' else 0, line)])
-    score *= int(last_num)
-    return score
-
-def check_win(card):
-    for row in card:
-        if all([x == 'x' for x in row]):
-            return True
-    for j in range(len(card[0])):
-        if all([x == 'x' for x in nth(card, j)]):
-            return True
-    return False
+nth         = lambda arr, n: [*zip(*arr)][n]
+score       = lambda card, num: sum([sum([*map(lambda x: int(x) if x != 'x' else 0, line)]) for line in card ])*int(num)
+check_win   = lambda card: any( [*[all([x == 'x' for x in row]) for row in card], *[all([x == 'x' for x in nth(card, j)]) for j in range(len(card[0]))]] )
+mark        = lambda card, num: [ ['x' if val == num else val for val in row] for row in card ]
 
 def reverse_bingo(draws, cards):
     last_winner = []
     nCards = [*cards]
 
     for num in draws:
+
+        # cards = [ newCard for card in cards if not check_win((newCard := mark(card, num)))]
+        # print(len(cards))
+        # if len(cards) == 1:
+        #     return [cards[0], num]
+
         if not len(nCards) :
             return last_winner
 
@@ -29,9 +21,7 @@ def reverse_bingo(draws, cards):
 
         for i, card in enumerate(nCards):
 
-            newCard = [ ['x' if val == num else val for val in row] for row in card ]
-
-            if check_win(newCard):
+            if check_win((newCard:=mark(card, num))):
                 last_winner = [newCard, num]
             else:
                 temp_cards.append(newCard)
@@ -41,12 +31,8 @@ def reverse_bingo(draws, cards):
 def bingo(draws, cards):
     for num in draws:
         for i, card in enumerate(cards):
-
-            newCard = [ ['x' if val == num else val for val in row] for row in card ] 
-
-            if check_win(newCard):
+            if check_win((newCard:=mark(card, num))):
                 return [newCard, num]
-
             cards[i] = newCard
 
 if __name__ == "__main__":
