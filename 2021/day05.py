@@ -35,7 +35,7 @@ def find_vents(coords, diag=False):
             for i in range(0, (b1 - a1 + 1)):
                 vents[(a1 + (xd * i), a2 + (yd * i))] += 1
 
-    return sum([ 1 if value > 1 else 0 for value in vents.values() ])
+    return sum([ (value > 1) * 1 for value in vents.values() ])
 
 if __name__ == "__main__":
     with open('input/day05.txt') as f:
