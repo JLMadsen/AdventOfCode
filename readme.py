@@ -11,6 +11,15 @@ TOKEN = os.environ['AOC_TOKEN']
 nth = lambda arr, n: [*zip(*arr)][n-1]
 char = [' ', '✨', '✔']
 
+# ty https://gist.github.com/dbzm/68256c86c60d70072576
+def to_markdown_table(pt):
+    _junc = pt.junction_char
+    if _junc != "|":
+        pt.junction_char = "|"
+    markdown = [row[1:-1] for row in pt.get_string().split("\n")[1:-1]]
+    pt.junction_char = _junc
+    return "\n".join(markdown)
+
 if __name__ == "__main__":
     current_year = datetime.today().year
     start_year = 2015
@@ -30,4 +39,4 @@ if __name__ == "__main__":
     for i in range(1, 26):
         t.add_row( [str(i), * map(lambda x: char[x], reversed(nth( stats.values() ,i))) ] )
 
-    print(t)
+    print(to_markdown_table(t))
