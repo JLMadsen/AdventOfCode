@@ -11,6 +11,10 @@ TOKEN = os.environ['AOC_TOKEN']
 nth = lambda arr, n: [*zip(*arr)][n-1]
 char = [' ', '✨', '✔']
 
+header = """# <a href="https://adventofcode.com/">AdventOfCode</a>
+
+My solutions for Advent of Code!\n\n"""
+
 # ty https://gist.github.com/dbzm/68256c86c60d70072576
 def to_markdown_table(pt):
     _junc = pt.junction_char
@@ -18,7 +22,7 @@ def to_markdown_table(pt):
         pt.junction_char = "|"
     markdown = [row[1:-1] for row in pt.get_string().split("\n")[1:-1]]
     pt.junction_char = _junc
-    return "\n".join(markdown)
+    return "\n|".join(markdown)
 
 if __name__ == "__main__":
     current_year = datetime.today().year
@@ -39,4 +43,8 @@ if __name__ == "__main__":
     for i in range(1, 26):
         t.add_row( [str(i), * map(lambda x: char[x], reversed(nth( stats.values() ,i))) ] )
 
-    print(to_markdown_table(t))
+    table = '|' + to_markdown_table(t)
+
+    with open('README.md', 'wb') as f:
+        f.write(header.encode('utf8'))
+        f.write(table.encode('utf8'))
