@@ -9,7 +9,7 @@ import json
 TOKEN = os.environ['AOC_TOKEN']
 
 nth = lambda arr, n: [*zip(*arr)][n-1]
-emoji = [' ', '<div style="filter: grayscale(100%)">⭐</div>', '⭐']
+emoji = [' ', '🥈', '🥇']
 
 header = """# <a href="https://adventofcode.com/">AdventOfCode</a>
 
