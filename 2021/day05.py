@@ -9,15 +9,15 @@ def find_vents(coords, diag=False):
         x2, y2 = map(int, b.split(','))
 
         if x1 == x2:
-            l, h = sorted([y1, y2])
+            l = min(y1, y2)
             vents[(x1, l)] += 1
-            for i in range(1, h-l+1):
+            for i in range(1, max(y1, y2) - l + 1):
                 vents[(x1, l + i)] += 1
 
         elif y1 == y2:
-            l, h = sorted([x1, x2])
+            l = min(x1, x2)
             vents[(l, y1)] += 1
-            for i in range(1, h-l+1):
+            for i in range(1, max(x1, x2) - l + 1):
                 vents[(l + i, y1)] += 1
 
         elif diag:
@@ -27,20 +27,15 @@ def find_vents(coords, diag=False):
             yd = a1 - b1
             xd = a2 - b2
 
-            xd, yd = xd//abs(xd), yd//abs(yd)
+            xd, yd = xd // abs(xd), yd // abs(yd)
 
             if xd == -1 and yd == -1:
                 xd, yd = 1, 1 
 
             for i in range(0, (b1 - a1 + 1)):
-                vents[(a1+(xd*i), a2+(yd*i))] += 1
+                vents[(a1 + (xd * i), a2 + (yd * i))] += 1
 
-    count = 0
-    for key, value in vents.items():
-        if value > 1:
-            count += 1
-
-    return count
+    return sum([ 1 if value > 1 else 0 for value in vents.values() ])
 
 if __name__ == "__main__":
     with open('input/day05.txt') as f:
