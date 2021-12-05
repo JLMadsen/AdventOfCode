@@ -47,8 +47,7 @@ def find_vents2(coords):
             vents[(l, y1)] += 1
             for i in range(1, h-l+1):
                 vents[(l + i, y1)] += 1
-        else:
-            print('diagonal', x1, y1, x2, y2)
+        else:          
             a1, a2 = [x1, y1] if x1 < x2 else [x2, y2]
             b1, b2 = [x1, y1] if x1 > x2 else [x2, y2]
 
@@ -57,16 +56,13 @@ def find_vents2(coords):
 
             xd, yd = xd//abs(xd), yd//abs(yd)
 
-            print('delta', xd, yd)
+            if xd == -1 and yd == -1:
+                xd, yd = 1, 1
 
-            l, h = sorted([a1, b1])
-            diff = h - l
-
-            print('difference', diff)
+            diff = b1 - a1
 
             for i in range(0, (diff+1)):
                 pos = (a1+(xd*i), a2+(yd*i))
-                print(pos)
                 vents[pos] += 1
 
     count = 0
@@ -84,21 +80,9 @@ def print_map(vents):
                 f.write( str(vents[(j, i)] or '.') )
             f.write("\n")
 
-test = """0,9 -> 5,9
-8,0 -> 0,8
-9,4 -> 3,4
-2,2 -> 2,1
-7,0 -> 7,4
-6,4 -> 2,0
-0,9 -> 2,9
-3,4 -> 1,4
-0,0 -> 8,8
-5,5 -> 8,2"""
-
 if __name__ == "__main__":
     with open('input/day05.txt') as f:
-        #content = f.read().split('\n')[:-1]
-        content = test.split('\n')
+        content = f.read().split('\n')[:-1]
 
-        #print(find_vents(content)) # 6572
+        print(find_vents(content)) # 6572
         print(find_vents2(content))
