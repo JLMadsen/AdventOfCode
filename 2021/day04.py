@@ -4,6 +4,15 @@ check_win   = lambda card: any( [*[all([x == 'x' for x in row]) for row in card]
 mark        = lambda card, num: [ ['x' if val == num else val for val in row] for row in card ]
 
 def reverse_bingo(draws, cards):
+    # for num in draws:
+    #     for i, card in enumerate(cards):
+    #         if check_win((newCard:=mark(card, num))):
+    #             del cards[i]
+    #             continue
+    #         cards[i] = newCard
+    #     if len(cards) == 1:
+    #         return [cards[0], num]
+    
     last_winner = []
     nCards = [*cards]
 
@@ -12,7 +21,7 @@ def reverse_bingo(draws, cards):
         if not len(nCards) :
             return last_winner
 
-        temp_cards = []        
+        temp_cards = []
 
         for i, card in enumerate(nCards):
             if check_win((newCard:=mark(card, num))):
