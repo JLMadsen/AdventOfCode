@@ -33,7 +33,7 @@ if __name__ == "__main__":
         stats[yr] = [0 for _ in range(25)]
 
         res = requests.get(f"https://adventofcode.com/{yr}/leaderboard/private/view/639017.json", cookies={'session': TOKEN}).json()
-        me = res['members']['639017']
+        me = res['members'][str(0b10011100000000101001)]
 
         for day in (arr := me['completion_day_level']):
             stats[yr][int(day) - 1] = len(arr[day])
