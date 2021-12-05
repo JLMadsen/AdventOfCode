@@ -10,14 +10,12 @@ def find_vents(coords, diag=False):
 
         if x1 == x2:
             l = min(y1, y2)
-            vents[(x1, l)] += 1
-            for i in range(1, max(y1, y2) - l + 1):
+            for i in range(max(y1, y2) - l + 1):
                 vents[(x1, l + i)] += 1
 
         elif y1 == y2:
             l = min(x1, x2)
-            vents[(l, y1)] += 1
-            for i in range(1, max(x1, x2) - l + 1):
+            for i in range(max(x1, x2) - l + 1):
                 vents[(l + i, y1)] += 1
 
         elif diag:
