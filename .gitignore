@@ -131,3 +131,4 @@ other/testing.go
 *.cache
 2019/other/Aoc2019CS/obj/Debug/netcoreapp3.1/Aoc2019CS.csproj.FileListAbsolute.txt
 2019/other/Aoc2019CS/obj/project.assets.json
+2021/map.txt
