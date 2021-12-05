@@ -9,7 +9,7 @@ import json
 TOKEN = os.environ['AOC_TOKEN']
 
 nth = lambda arr, n: [*zip(*arr)][n-1]
-char = [' ', '✨', '✔']
+emoji = [' ', '🥈', '🥇']
 
 header = """# <a href="https://adventofcode.com/">AdventOfCode</a>
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     t = PrettyTable([' ', *[str(yr) for yr in range(current_year, start_year-1, -1)]])
     
     for i in range(1, 26):
-        t.add_row( [str(i), * map(lambda x: char[x], reversed(nth( stats.values() ,i))) ] )
+        t.add_row( [str(i), * map(lambda x: emoji[x], reversed(nth( stats.values() ,i))) ] )
 
     table = '|' + to_markdown_table(t)
 
