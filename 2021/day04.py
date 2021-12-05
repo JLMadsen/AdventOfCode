@@ -3,16 +3,7 @@ score       = lambda card, num: sum([sum([*map(lambda x: int(x) if x != 'x' else
 check_win   = lambda card: any( [*[all([x == 'x' for x in row]) for row in card], *[all([x == 'x' for x in nth(card, j)]) for j in range(len(card[0]))]] )
 mark        = lambda card, num: [ ['x' if val == num else val for val in row] for row in card ]
 
-def reverse_bingo(draws, cards):
-    # for num in draws:
-    #     for i, card in enumerate(cards):
-    #         if check_win((newCard:=mark(card, num))):
-    #             del cards[i]
-    #             continue
-    #         cards[i] = newCard
-    #     if len(cards) == 1:
-    #         return [cards[0], num]
-    
+def reverse_bingo(draws, cards):    
     last_winner = []
     nCards = [*cards]
 
