@@ -16,5 +16,5 @@ if __name__ == "__main__":
         fish = defaultdict(lambda: 0)
         [(lambda n: fish.__setitem__(n, fish[n] + 1))(n) for n in [*map(int,content[0].split(','))]]
 
-        print(simulate(fish)) # 383160
+        print(simulate(fish.copy())) # 383160
         print(simulate(fish, 256)) # 1721148811504
