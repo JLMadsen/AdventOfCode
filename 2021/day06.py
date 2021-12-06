@@ -1,3 +1,5 @@
+import time
+
 from collections import defaultdict
 
 def simulate(fish, days=80):
@@ -14,7 +16,7 @@ if __name__ == "__main__":
     with open('input/day06.txt') as f:
         content = f.read().split('\n')[:-1]
         fish = defaultdict(lambda: 0)
-        [(lambda n: fish.__setitem__(n, fish[n] + 1))(n) for n in [*map(int,content[0].split(','))]]
+        [fish.__setitem__(n, fish[n] + 1) for n in [*map(int,content[0].split(','))]]
 
         print(simulate(fish.copy())) # 383160
         print(simulate(fish, 256)) # 1721148811504
