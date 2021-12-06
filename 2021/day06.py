@@ -1,5 +1,3 @@
-import time
-
 from collections import defaultdict
 
 def simulate(fish, days=80):
