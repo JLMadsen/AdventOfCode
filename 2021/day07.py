@@ -6,7 +6,7 @@ def calc_fuel(crabs, nthTriangleNumber = False ):
         
         for crab in crabs:
             diff = abs(pos - crab)
-            temp_fuel += diff if not nthTriangleNumber else ((diff**2)+(diff))//2
+            temp_fuel += diff if not nthTriangleNumber else diff * (1 + diff) // 2
 
         if temp_fuel < fuel:
             fuel = temp_fuel
