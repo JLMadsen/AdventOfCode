@@ -18,5 +18,5 @@ if __name__ == "__main__":
         content = f.read().split('\n')[:-1]
         crabs = [*map(int, content[0].split(','))]
 
-        print(calc_fuel(crabs))
-        print(calc_fuel(crabs, True))
+        print(calc_fuel(crabs)) # 349812
+        print(calc_fuel(crabs, True)) # 99763899
