@@ -12,6 +12,7 @@ def part2(numbers):
         signal, output = line.split('|')
 
         for string in signal.split(' '):
+            string = "".join(sorted(string))
             if (length := len(string)) == 2:
                 digits[1] = string
             elif length == 3:
