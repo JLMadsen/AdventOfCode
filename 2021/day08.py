@@ -32,35 +32,31 @@ def part2(numbers):
             if (intersect[1] == 2 and
                 intersect[4] == 3 and
                 intersect[7] == 3 and
-                intersect[8] == 6 and
                 len(string) == 6):
                 digits[0] = string
 
             elif (intersect[1] == 1 and
                   intersect[4] == 2 and
-                  intersect[7] == 2 and
-                  intersect[8] == 5 and
                   len(string) == 5):
                 digits[2] = string
 
-            elif intersect[1] == 2 and len(string) == 5:
+            elif (intersect[1] == 2 and 
+                  len(string) == 5):
                 digits[3] = string
 
             elif (intersect[1] == 1 and
                   intersect[4] == 3 and
-                  intersect[7] == 2 and
-                  intersect[8] == 5 and
                   len(string) == 5):
                 digits[5] = string
 
             elif (intersect[1] == 1 and
                   intersect[4] == 3 and
                   intersect[7] == 2 and
-                  intersect[8] == 6 and
                   len(string) == 6):
                 digits[6] = string
 
-            elif intersect[4] == 4 and len(string) == 6:
+            elif (intersect[4] == 4 and 
+                  len(string) == 6):
                 digits[9] = string
 
         buffer = ""
