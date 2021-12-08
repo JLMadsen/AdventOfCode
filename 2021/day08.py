@@ -34,49 +34,41 @@ def part2(numbers):
                 continue
 
             string = "".join(sorted(s))
+            common_digits = [ count_common(string, digits[i]) if i in [1,4,7,8] else 0 for i in range(10) ]
 
-            # 3
-            if count_common(string, digits[1]) == 2 and len(string) == 5:
-                digits[3] = string
-            
-            # 9
-            if count_common(string, digits[4]) == 4 and len(string) == 6:
-                digits[9] = string
-
-            # 2
-            if (count_common(string, digits[1]) == 1 and
-                count_common(string, digits[4]) == 2 and
-                count_common(string, digits[7]) == 2 and
-                count_common(string, digits[8]) == 5 and
-                len(string) == 5):
-                digits[2] = string
-
-            # 0
-            if (count_common(string, digits[1]) == 2 and
-                count_common(string, digits[4]) == 3 and
-                count_common(string, digits[7]) == 3 and
-                count_common(string, digits[8]) == 6 and
+            if (common_digits[1] == 2 and
+                common_digits[4] == 3 and
+                common_digits[7] == 3 and
+                common_digits[8] == 6 and
                 len(string) == 6):
                 digits[0] = string
 
-            # 5
-            if (count_common(string, digits[1]) == 1 and
-                count_common(string, digits[4]) == 3 and
-                count_common(string, digits[7]) == 2 and
-                count_common(string, digits[8]) == 5 and
-                len(string) == 5):
+            elif (common_digits[1] == 1 and
+                  common_digits[4] == 2 and
+                  common_digits[7] == 2 and
+                  common_digits[8] == 5 and
+                  len(string) == 5):
+                digits[2] = string
+
+            elif common_digits[1] == 2 and len(string) == 5:
+                digits[3] = string
+
+            elif (common_digits[1] == 1 and
+                 common_digits[4] == 3 and
+                 common_digits[7] == 2 and
+                 common_digits[8] == 5 and
+                 len(string) == 5):
                 digits[5] = string
 
-            # 6
-            if (count_common(string, digits[1]) == 1 and
-                count_common(string, digits[4]) == 3 and
-                count_common(string, digits[7]) == 2 and
-                count_common(string, digits[8]) == 6 and
-                len(string) == 6):
+            elif (common_digits[1] == 1 and
+                  common_digits[4] == 3 and
+                  common_digits[7] == 2 and
+                  common_digits[8] == 6 and
+                  len(string) == 6):
                 digits[6] = string
 
-        #print("  ".join([ (str(i)+" "*8)[:8] for i in range(len(digits))]))
-        #print("  ".join([ (d+" "*8)[:8] for d in digits]))
+            elif common_digits[4] == 4 and len(string) == 6:
+                digits[9] = string
 
         buffer = ""
         for o in output.split(' '):
