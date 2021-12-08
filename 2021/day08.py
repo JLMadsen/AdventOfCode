@@ -13,13 +13,13 @@ def part2(numbers):
 
         for s in signal.split(' '):
             string = "".join(sorted(s))
-            if len(s) == 2:
+            if (length := len(s)) == 2:
                 digits[1] = string
-            elif len(s) == 3:
+            elif length == 3:
                 digits[7] = string
-            elif len(s) == 4:
+            elif length == 4:
                 digits[4] = string
-            elif len(s) == 7:
+            elif length == 7:
                 digits[8] = string
 
         for s in signal.split(' '):
