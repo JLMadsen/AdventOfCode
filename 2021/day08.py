@@ -11,9 +11,8 @@ def part2(numbers):
         digits = [""]*10
         signal, output = line.split('|')
 
-        for s in signal.split(' '):
-            string = "".join(sorted(s))
-            if (length := len(s)) == 2:
+        for string in signal.split(' '):
+            if (length := len(string)) == 2:
                 digits[1] = string
             elif length == 3:
                 digits[7] = string
@@ -22,14 +21,14 @@ def part2(numbers):
             elif length == 7:
                 digits[8] = string
 
-        for s in signal.split(' '):
-            if len(s) in [0,2,3,4,7]:
+        for string in signal.split(' '):
+            if (length := len(string)) in [0,2,3,4,7]:
                 continue
-
-            string = "".join(sorted(s))
+            
+            string = "".join(sorted(string))
             intersect = [ count_common(string, digits[i]) if i in [1,4,7] else 0 for i in range(10) ]
 
-            if ( (length := len(string) ) == 6 and
+            if ( length == 6 and
                 intersect[1] == 2 and
                 intersect[4] == 3 and
                 intersect[7] == 3):
