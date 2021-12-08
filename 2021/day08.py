@@ -28,11 +28,9 @@ def part2(numbers):
             
             string = "".join(sorted(string))
             intersect = [ count_common(string, digits[i]) if i in [1,4,7] else 0 for i in range(10) ]
+            matches = lambda idx, len: all([ intersect[a] == b for a, b in zip(idx, len)])
 
-            if ( length == 6 and
-                intersect[1] == 2 and
-                intersect[4] == 3 and
-                intersect[7] == 3):
+            if length == 6 and matches([1,4,7],[2,3,3]):
                 digits[0] = string
 
             elif (length == 5 and intersect[4] == 2):
@@ -44,10 +42,7 @@ def part2(numbers):
             elif (length == 5 and intersect[4] == 3):
                 digits[5] = string
 
-            elif (length == 6 and 
-                  intersect[1] == 1 and
-                  intersect[4] == 3 and
-                  intersect[7] == 2):
+            elif (length == 6 and matches([1,4,7],[1,3,2])):
                 digits[6] = string
 
             elif (length == 6 and intersect[4] == 4):
