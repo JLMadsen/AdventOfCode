@@ -27,7 +27,7 @@ def part2(numbers):
                 continue
 
             string = "".join(sorted(s))
-            intersect = [ count_common(string, digits[i]) if i in [1,4,7,8] else 0 for i in range(10) ]
+            intersect = [ count_common(string, digits[i]) if i in [1,4,7] else 0 for i in range(10) ]
 
             if (intersect[1] == 2 and
                 intersect[4] == 3 and
