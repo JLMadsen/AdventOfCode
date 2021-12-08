@@ -29,34 +29,28 @@ def part2(numbers):
             string = "".join(sorted(s))
             intersect = [ count_common(string, digits[i]) if i in [1,4,7] else 0 for i in range(10) ]
 
-            if (intersect[1] == 2 and
+            if ( (length := len(string) ) == 6 and
+                intersect[1] == 2 and
                 intersect[4] == 3 and
-                intersect[7] == 3 and
-                len(string) == 6):
+                intersect[7] == 3):
                 digits[0] = string
 
-            elif (intersect[1] == 1 and
-                  intersect[4] == 2 and
-                  len(string) == 5):
+            elif (length == 5 and intersect[4] == 2):
                 digits[2] = string
 
-            elif (intersect[1] == 2 and 
-                  len(string) == 5):
+            elif (length == 5 and intersect[1] == 2):
                 digits[3] = string
 
-            elif (intersect[1] == 1 and
-                  intersect[4] == 3 and
-                  len(string) == 5):
+            elif (length == 5 and intersect[4] == 3):
                 digits[5] = string
 
-            elif (intersect[1] == 1 and
+            elif (length == 6 and 
+                  intersect[1] == 1 and
                   intersect[4] == 3 and
-                  intersect[7] == 2 and
-                  len(string) == 6):
+                  intersect[7] == 2):
                 digits[6] = string
 
-            elif (intersect[4] == 4 and 
-                  len(string) == 6):
+            elif (length == 6 and intersect[4] == 4):
                 digits[9] = string
 
         buffer = ""
