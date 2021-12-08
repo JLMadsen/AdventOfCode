@@ -8,7 +8,7 @@ def part2(numbers):
     total = 0
 
     for line in numbers:
-        digits = ["" for i in range(10)]
+        digits = [""]*10
         signal, output = line.split('|')
 
         for s in signal.split(' '):
