@@ -46,9 +46,19 @@ def calc_basin(grid):
     basins = sorted( [*map(lambda x: len(x), basins)], reverse=True)
     return basins[0] * basins[1] * basins[2]
 
+from PIL import Image
+def visualize(grid):
+    im= Image.new('RGB', (100, 100))
+    for i, row in enumerate(grid):
+        for j, value in enumerate(row):
+            value = 10-value
+            im.putpixel((i,j),(25*value, 25*value, 25*value))
+    im.save('day09.png')
+
 if __name__ == "__main__":
     with open('input/day09.txt') as f:
         content = [*map(lambda x: [*map(lambda y: int(y), [c for c in x])] , f.read().split('\n')[:-1])]
 
         print(calc_risk(content)) # 436
         print(calc_basin(content)) # 1317792
+        #visualize(content)
