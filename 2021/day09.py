@@ -1,12 +1,10 @@
 def get_adjacent(grid, i, j, pos=False):
     adjacent = []
-
     for neighbor in [(1,0), (0,1), (-1,0),(0,-1)]:
         x, y = j + neighbor[0], i + neighbor[1]
         if x < 0 or y < 0 or x >= len(grid[0]) or y >= len(grid) :
             continue
         adjacent.append(grid[y][x] if not pos else [y, x])
-    
     return adjacent
 
 low_points = []
@@ -45,8 +43,8 @@ def calc_basin(grid):
 
         basins.append(visited)
     
-    basins = sorted(basins, key=len)
-    return len(basins[-1]) * len(basins[-2]) * len(basins[-3])
+    basins = sorted( [*map(lambda x: len(x), basins)], reverse=True)
+    return basins[0] * basins[1] * basins[2]
 
 if __name__ == "__main__":
     with open('input/day09.txt') as f:
