@@ -21,7 +21,6 @@ def calc_basin(grid):
         if any([point in basin for basin in basins]):
             continue
 
-        # ​breadth-first search 
         visited, queue = [point], [point]
 
         while queue:
