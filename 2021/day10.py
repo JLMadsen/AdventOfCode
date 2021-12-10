@@ -10,21 +10,14 @@ def get_stack(line):
         if char in opening_brackets:
             stack.append(char)
         else:
-            last = stack.pop()
-            idx = closing_brackets.index(char)
-            expected = closing_brackets[ opening_brackets.index(last) ]
-            if char != expected:
+            if char != closing_brackets[ opening_brackets.index( stack.pop() ) ]:
                 return char
     incomplete_lines.append(stack)
 
 def parse(lines):
-    error = []
-
-    for line in lines:
-        if (char:=get_stack(line)):
-            error.append(char)
-    
+    error = [ char for line in lines if (char:=get_stack(line)) ]    
     points = 0
+
     for idx, char in enumerate(closing_brackets):
         points += score[idx] * error.count(char)
 
@@ -34,13 +27,11 @@ def finish_lines():
     global incomplete_lines
     points = []
     for stack in incomplete_lines:
-        
         points.append(0)
         for char in reversed(stack):
             points[-1] = points[-1] * 5 + opening_brackets.index(char) + 1
 
-    points = sorted(points)
-    return points[ (len(points) -1 )// 2 ]
+    return sorted(points)[ (len(points) -1 )// 2 ]
 
 if __name__ == "__main__":
     with open('input/day10.txt') as f:
