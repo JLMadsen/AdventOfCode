@@ -1,7 +1,7 @@
-opening          = ['(', '[', '{', '<']
-closing          = [')', ']', '}', '>']
-score            = [3, 57, 1197, 25137]
-incomplete_lines = []
+opening    = ['(', '[', '{', '<']
+closing    = [')', ']', '}', '>']
+score      = [3, 57, 1197, 25137]
+incomplete = []
 
 def get_stack(line):
     stack = []
@@ -11,15 +11,15 @@ def get_stack(line):
         else:
             if char != closing[ opening.index( stack.pop() ) ]:
                 return char
-    incomplete_lines.append(stack)
+    incomplete.append(stack)
 
 def parse(lines):
-    error = [ char for line in lines if (char:=get_stack(line)) ]    
+    error = [ char for line in lines if (char:=get_stack(line)) ]
     return sum([ score[idx] * error.count(char) for idx, char in enumerate(closing)])
 
 def finish_lines():
     points = []
-    for stack in incomplete_lines:
+    for stack in incomplete:
         points.append(0)
         for char in reversed(stack):
             points[-1] = points[-1] * 5 + opening.index(char) + 1
