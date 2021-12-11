@@ -5,19 +5,19 @@ def flash(grid, y, x, flashed):
         flashes += 1
         flashed.add((y, x))
 
-        for dy in [1, 0, -1]:
-            for dx in [1, 0, -1]:
+        for delta_y in [1, 0, -1]:
+            for delta_x in [1, 0, -1]:
 
-                my, mx = dy + y, dx + x
-                if ( my < 0 or 
-                     mx < 0 or 
-                     my >= len(grid) or 
-                     mx >= len(grid[0]) or (
-                     dy == 0 and dx == 0 )):
+                next_y, next_x = delta_y + y, delta_x + x
+                if ( next_y < 0 or 
+                     next_x < 0 or 
+                     next_y >= len(grid) or 
+                     next_x >= len(grid[0]) or (
+                     delta_y == 0 and delta_x == 0 )):
                     continue
 
-                grid[my][mx] += 1
-                flashes += flash(grid, my, mx, flashed)
+                grid[next_y][next_x] += 1
+                flashes += flash(grid, next_y, next_x, flashed)
 
     return flashes
 
