@@ -1,8 +1,7 @@
 def flash(grid, y, x, flashed):
     flashes = 0
-    value = grid[y][x]
     
-    if value > 9 and (y, x) not in flashed:
+    if grid[y][x] > 9 and (y, x) not in flashed:
         flashes += 1
         flashed.add((y, x))
 
@@ -10,7 +9,11 @@ def flash(grid, y, x, flashed):
             for dx in [1, 0, -1]:
 
                 my, mx = dy + y, dx + x
-                if my < 0 or my >= len(grid) or mx < 0 or mx >= len(grid[0]):
+                if ( my < 0 or 
+                     mx < 0 or 
+                     my >= len(grid) or 
+                     mx >= len(grid[0]) or (
+                     dy == 0 and dx == 0 )):
                     continue
 
                 grid[my][mx] += 1
