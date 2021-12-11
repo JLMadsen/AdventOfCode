@@ -25,7 +25,7 @@ def simulate(grid, steps = 100, sync = False):
     flashes = 0
     h, w = len(grid), len(grid[0])
 
-    for step in range(steps if steps > 0 else int(9E10)):
+    for step in range(steps if steps > 0 else 10_000):
 
         if sync:
             if sum( [ sum(row) for row in grid ] ) == 0:
