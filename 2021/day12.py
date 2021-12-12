@@ -3,23 +3,23 @@ from collections import defaultdict
 def create_graph(connections):
     graph = defaultdict(lambda: [])
     for a, b in connections:
-        graph[a].append(b)
-        graph[b].append(a)
+        if b != 'start':
+            graph[a].append(b)
+        if a != 'start':
+            graph[b].append(a)
     graph['end'] = []
     return graph
 
 paths = set()
 
-def explore(graph, node, path, small_once):
-    if node == 'start' and len(path) != 0:
-        return
-
+def explore(graph, node, path, small_once, has_two_lower=False):
     if node in path and node.islower():
         if small_once:
             return
         else:
-            if any( [ path.count(n) == 2 for n in path if n.islower() ] ):
+            if has_two_lower:
                 return
+            has_two_lower = True
     
     path.append(node)
 
@@ -28,17 +28,19 @@ def explore(graph, node, path, small_once):
         return
     
     for next_node in graph[node]:
-        explore(graph, next_node, path[:], small_once)
+        explore(graph, next_node, path[:], small_once, has_two_lower)
 
 def find_path(graph, small_once=True):
-
+    global paths
+    paths = set()
     explore(graph, 'start', [], small_once)
 
     counter = 0
     for path in paths:
-        if any( [ cave.islower() for cave in list(path)[1:-1] ] ):
-            counter += 1
-
+        for cave in path:
+            if cave.islower():
+                counter += 1
+                break
     return counter
 
 if __name__ == "__main__":
