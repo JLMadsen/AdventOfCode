@@ -3,31 +3,24 @@ from collections import defaultdict
 def create_graph(connections):
     graph = defaultdict(lambda: [])
     for a, b in connections:
-        if b != 'start':
-            graph[a].append(b)
-        if a != 'start':
-            graph[b].append(a)
-    graph['end'] = []
+        graph[a].append(b)
+        graph[b].append(a)
     return graph
-
-paths = set()
 
 def explore(graph, node, path, small_once, has_two_lower=False):
     if node == 'end':
-        paths.add( tuple(path) )
-        return
+        return paths.add( tuple(path) )
 
-    if node in path and node.islower():
-        if small_once:
+    if (node in path and node.islower()):
+        if small_once or has_two_lower: 
             return
-        else:
-            if has_two_lower:
-                return
-            has_two_lower = True
+        has_two_lower = True
     
     path.append(node)
     
     for next_node in graph[node]:
+        if next_node == 'start': 
+            continue
         explore(graph, next_node, path[:], small_once, has_two_lower)
 
 def find_path(graph, small_once=True):
@@ -41,6 +34,7 @@ def find_path(graph, small_once=True):
             if cave.islower():
                 counter += 1
                 break
+
     return counter
 
 if __name__ == "__main__":
