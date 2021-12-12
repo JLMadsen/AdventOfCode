@@ -37,7 +37,7 @@ def find_path(graph, small_once=True):
 
     counter = 0
     for path in paths:
-        for cave in path:
+        for cave in path[1:]:
             if cave.islower():
                 counter += 1
                 break
