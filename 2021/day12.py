@@ -26,6 +26,7 @@ def explore(graph, node, path, small_once, has_two_lower=False):
 def find_path(graph, small_once=True):
     global paths
     paths = set()
+    
     explore(graph, 'start', [], small_once)
 
     counter = 0
