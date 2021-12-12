@@ -13,6 +13,10 @@ def create_graph(connections):
 paths = set()
 
 def explore(graph, node, path, small_once, has_two_lower=False):
+    if node == 'end':
+        paths.add( tuple(path) )
+        return
+
     if node in path and node.islower():
         if small_once:
             return
@@ -22,10 +26,6 @@ def explore(graph, node, path, small_once, has_two_lower=False):
             has_two_lower = True
     
     path.append(node)
-
-    if node == 'end':
-        paths.add( tuple(path) )
-        return
     
     for next_node in graph[node]:
         explore(graph, next_node, path[:], small_once, has_two_lower)
