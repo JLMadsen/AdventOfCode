@@ -5,23 +5,18 @@ def print_paper(_paper):
         print()
 
 def fold_paper(paper, folds):
-
-    for it, fold in enumerate(folds):
+    for step, fold in enumerate(folds):
         fold_idx = int(fold.split('=')[-1])
         new_paper = set()
 
         for dot_y, dot_x in paper:
-            if 'x' in fold and dot_x > fold_idx:
-                new_paper.add((dot_y, fold_idx - abs(fold_idx - dot_x)))
-            elif 'y' in fold and dot_y > fold_idx:
-                new_paper.add((fold_idx - abs(fold_idx - dot_y), dot_x))
-            else:
-                new_paper.add((dot_y, dot_x))
+            new_y = fold_idx - abs(fold_idx - dot_y) if 'y' in fold else dot_y
+            new_X = fold_idx - abs(fold_idx - dot_x) if 'x' in fold else dot_x
+            new_paper.add((new_y, new_X))
 
         paper = new_paper
     
-        if it == 0:
-            print(len(paper), '\n') # 661
+        if step == 0: print(len(paper), '\n') # 661
 
     print_paper(paper) # PFKLKCFP
 
@@ -32,8 +27,7 @@ if __name__ == "__main__":
         idx = content.index('')
         dots, folds = [*map(lambda x: [*map(int, x.split(','))], content[:idx])], content[idx+1:]
 
-        paper = set()
-        for x, y in dots:
-            paper.add((y, x))
+        paper = set([(y, x) for x, y in dots])
+
 
         fold_paper(paper, folds)
