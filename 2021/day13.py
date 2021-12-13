@@ -1,35 +1,34 @@
-
 def print_paper(_paper):
-    for i in range(10):
+    h, w = max([*zip(*_paper)][0]), max([*zip(*_paper)][1])
+    for i in range(h + 1):
+        for j in range(w + 1):
+            print( '#' if (i, j) in _paper else ' ', end="" )
         print()
-        for j in range(60):
-            print( '#' if (i, j) in _paper.keys() else '.', end="" )
-    print()
 
 def fold_paper(paper, folds):
-    for fold in folds:
 
-        fold_x, fold_y = 0, 0
-        if 'x' in fold:
-            fold_x = int(fold.split('=')[-1])
-        else:
-            fold_y = int(fold.split('=')[-1])
+    for it, fold in enumerate(folds):
+        fold_idx = int(fold.split('=')[-1])
+        new_paper = set()
 
-        new_paper = {}
-        for dot_y, dot_x in paper.keys():
-
-            if fold_y != 0 and dot_y > fold_y:
-                new_paper[(fold_y - abs(fold_y - dot_y), dot_x)] = 1
-
-            elif fold_x != 0 and dot_x > fold_x:
-                new_paper[(dot_y, fold_x - abs(fold_x - dot_x))] = 1
-
+        for dot_y, dot_x in paper:
+            if 'x' in fold:
+                if dot_x > fold_idx:
+                    new_paper.add((dot_y, fold_idx - abs(fold_idx - dot_x)))
+                else:
+                    new_paper.add((dot_y, dot_x))
             else:
-                new_paper[(dot_y, dot_x)] = 1
+                if dot_y > fold_idx:
+                    new_paper.add((fold_idx - abs(fold_idx - dot_y), dot_x))
+                else:
+                    new_paper.add((dot_y, dot_x))
 
         paper = new_paper
-    print_paper(paper)
+    
+        if it == 0:
+            print(len(paper), '\n') # 661
 
+    print_paper(paper) # PFKLKCFP
 
 if __name__ == "__main__":
     with open('input/day13.txt') as f:
@@ -38,8 +37,8 @@ if __name__ == "__main__":
         idx = content.index('')
         dots, folds = [*map(lambda x: [*map(int, x.split(','))], content[:idx])], content[idx+1:]
 
-        paper = {}
+        paper = set()
         for x, y in dots:
-            paper[(y, x)] = 1
+            paper.add((y, x))
 
         fold_paper(paper, folds)
