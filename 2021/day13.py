@@ -12,16 +12,12 @@ def fold_paper(paper, folds):
         new_paper = set()
 
         for dot_y, dot_x in paper:
-            if 'x' in fold:
-                if dot_x > fold_idx:
-                    new_paper.add((dot_y, fold_idx - abs(fold_idx - dot_x)))
-                else:
-                    new_paper.add((dot_y, dot_x))
+            if 'x' in fold and dot_x > fold_idx:
+                new_paper.add((dot_y, fold_idx - abs(fold_idx - dot_x)))
+            elif 'y' in fold and dot_y > fold_idx:
+                new_paper.add((fold_idx - abs(fold_idx - dot_y), dot_x))
             else:
-                if dot_y > fold_idx:
-                    new_paper.add((fold_idx - abs(fold_idx - dot_y), dot_x))
-                else:
-                    new_paper.add((dot_y, dot_x))
+                new_paper.add((dot_y, dot_x))
 
         paper = new_paper
     
