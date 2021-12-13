@@ -11,7 +11,7 @@ def explore(graph, node, path, small_once, has_two_lower=False):
     if node == 'end':
         return paths.add( tuple(path) )
 
-    if (node in path and node.islower()):
+    if (node.islower() and node in path):
         if small_once or has_two_lower: 
             return
         has_two_lower = True
