@@ -1,8 +1,7 @@
 def print_paper(_paper):
-    h, w = max([*zip(*_paper)][0]), max([*zip(*_paper)][1])
-    for i in range(h + 1):
-        for j in range(w + 1):
-            print( '#' if (i, j) in _paper else ' ', end="" )
+    for i in range(max([*zip(*_paper)][0]) + 1):
+        for j in range(max([*zip(*_paper)][1]) + 1):
+            print( '█' if (i, j) in _paper else ' ', end="" )
         print()
 
 def fold_paper(paper, folds):
