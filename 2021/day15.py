@@ -42,10 +42,7 @@ if __name__ == "__main__":
 
         for i in range(1, 5):
             for j in range(len(grid)):
-                big_grid.append([])
-                for l in range(len(big_grid[0])):
-                    value = big_grid[j][l]
-                    big_grid[-1].append(value + i if (value + i) < 10 else (value + i) % 10 + 1)
+                big_grid.append([value + i if (value + i) < 10 else (value + i) % 10 + 1 for value in big_grid[j]])
 
         dist, goal = dijkstra(big_grid)
         print(dist[goal]) # 2914
