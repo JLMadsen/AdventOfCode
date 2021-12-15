@@ -27,34 +27,25 @@ def dijkstra(grid):
                 dist[(y2, x2)] = new_distance
                 Q.put((new_distance, (y2, x2)))
 
-test = """1163751742
-1381373672
-2136511328
-3694931569
-7463417111
-1319128137
-1359912421
-3125421639
-1293138521
-2311944581"""
-
 if __name__ == "__main__":
     with open('input/day15.txt') as f:
-        #content = f.read().split('\n')[:-1]
-        content = test.split('\n')
+        content = f.read().split('\n')[:-1]
         grid = [[*map(int, line)] for line in content]
 
         dist, goal = dijkstra(grid)
         print(dist[goal]) # 595
 
-        # expand grid
         big_grid = [line[:] for line in grid]
         for i in range(len(grid)):
-            for j in range(1, 4):
-                big_grid[i] += [ value + j if (value + j) < 10 else 1 for value in big_grid[i] ]
+            for j in range(1, 5):
+                big_grid[i] += [ value + j if (value + j) < 10 else (value + j) % 10 + 1 for value in grid[i] ]
 
-        for line in big_grid:
-            print("".join([*map(str, line)]))
+        for i in range(1, 5):
+            for j in range(len(grid)):
+                big_grid.append([])
+                for l in range(len(big_grid[0])):
+                    value = big_grid[j][l]
+                    big_grid[-1].append(value + i if (value + i) < 10 else (value + i) % 10 + 1)
 
         dist, goal = dijkstra(big_grid)
-        print(dist[goal]) # 
+        print(dist[goal]) # 2914
