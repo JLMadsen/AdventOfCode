@@ -2,7 +2,12 @@ from collections import defaultdict
 from queue import PriorityQueue
 
 def adjacent(size, i, j, ):
-    return [[y, x] for a, b in [(1,0), (0,1), (-1,0),(0,-1)] if not ( (x := a + j) < 0 or (y := b + i) < 0 or x >= size[0] + 1 or y >= size[1] + 1 )]
+    return [[y, x] for a, b in [(1,0), (0,1), (-1,0),(0,-1)]
+     if not ( 
+         (x := a + j) < 0 or 
+         (y := b + i) < 0 or 
+          x >= size[0] + 1 or
+          y >= size[1] + 1 )]
 
 def dijkstra(grid):
     size = goal = (len(grid) - 1, len(grid[0]) - 1)
