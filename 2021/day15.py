@@ -7,9 +7,7 @@ def adjacent(grid, i, j, ):
 def dijkstra(grid):
     w, h = len(grid), len(grid[0])
     Q = PriorityQueue()
-
     dist = defaultdict(lambda: float('inf'))
-
     start = (0, 0)
     dist[start] = 0
     Q.put((0, start))
