@@ -16,30 +16,21 @@ def djikstra(grid):
     Q.put((0, start))
     
     while not Q.empty():
-        #print('queue size', Q.qsize())
-
-        weight, (y1, x1) = Q.get()
-        #print('current', y1, x1)
+        _, (y1, x1) = Q.get()
 
         if y1 == h - 1 and x1 == w - 1:
             return dist, prev, (y1, x1)
 
         for y2, x2 in adjacent(grid, y1, x1):
-            #print('next', y2, x2)
             
-            #print(dist[(y1, x1)], grid[y2][x2])
             new_distance = dist[(y1, x1)] + grid[y2][x2]
 
             if new_distance < dist[(y2, x2)]:
-                #print('has shorter distance')
 
                 dist[(y2, x2)] = new_distance
                 prev[(y2, x2)] = (y1, y2)
 
                 Q.put((new_distance, (y2, x2)))
-
-    print('Did not find goal')
-    return None, None
 
 test = """1163751742
 1381373672
@@ -59,11 +50,16 @@ if __name__ == "__main__":
         grid = [[*map(int, line)] for line in content]
 
         dist, prev, goal = djikstra(grid)
-        print(dist[goal]) # x < 604
+        print(dist[goal]) # x < 595
 
         # expand grid
-        
+        big_grid = [line[:] for line in grid]
+        for i in range(len(grid)):
+            for j in range(1, 4):
+                big_grid[i] += [ value + j if (value + j) < 10 else 1 for value in big_grid[i] ]
 
+        for line in big_grid:
+            print("".join([*map(str, line)]))
 
-        dist, prev, goal = djikstra(grid[:])
+        dist, prev, goal = djikstra(big_grid)
         print(dist[goal]) # x < 604
