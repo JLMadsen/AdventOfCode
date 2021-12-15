@@ -9,7 +9,6 @@ def dijkstra(grid):
     Q = PriorityQueue()
 
     dist = defaultdict(lambda: float('inf'))
-    prev = {}
 
     start = (0, 0)
     dist[start] = 0
@@ -19,17 +18,13 @@ def dijkstra(grid):
         _, (y1, x1) = Q.get()
 
         if y1 == h - 1 and x1 == w - 1:
-            return dist, prev, (y1, x1)
+            return dist, (y1, x1)
 
         for y2, x2 in adjacent(grid, y1, x1):
-            
             new_distance = dist[(y1, x1)] + grid[y2][x2]
 
             if new_distance < dist[(y2, x2)]:
-
                 dist[(y2, x2)] = new_distance
-                prev[(y2, x2)] = (y1, y2)
-
                 Q.put((new_distance, (y2, x2)))
 
 test = """1163751742
@@ -49,7 +44,7 @@ if __name__ == "__main__":
         content = test.split('\n')
         grid = [[*map(int, line)] for line in content]
 
-        dist, prev, goal = dijkstra(grid)
+        dist, goal = dijkstra(grid)
         print(dist[goal]) # 595
 
         # expand grid
@@ -61,5 +56,5 @@ if __name__ == "__main__":
         for line in big_grid:
             print("".join([*map(str, line)]))
 
-        dist, prev, goal = dijkstra(big_grid)
+        dist, goal = dijkstra(big_grid)
         print(dist[goal]) # 
