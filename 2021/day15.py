@@ -1,24 +1,25 @@
 from collections import defaultdict
 from queue import PriorityQueue
 
-def adjacent(grid, i, j, ):
-    return [[y, x] for a, b in [(1,0), (0,1), (-1,0),(0,-1)] if not ( (x := a + j) < 0 or (y := b + i) < 0 or x >= len(grid[0]) or y >= len(grid) )]
+def adjacent(size, i, j, ):
+    return [[y, x] for a, b in [(1,0), (0,1), (-1,0),(0,-1)] if not ( (x := a + j) < 0 or (y := b + i) < 0 or x >= size[0] + 1 or y >= size[1] + 1 )]
 
 def dijkstra(grid):
-    w, h = len(grid), len(grid[0])
-    Q = PriorityQueue()
-    dist = defaultdict(lambda: float('inf'))
+    size = goal = (len(grid) - 1, len(grid[0]) - 1)
     start = (0, 0)
-    dist[start] = 0
+
+    Q = PriorityQueue()
     Q.put((0, start))
+    dist = defaultdict(lambda: float('inf'))
+    dist[start] = 0
     
     while not Q.empty():
         _, (y1, x1) = Q.get()
 
-        if y1 == h - 1 and x1 == w - 1:
-            return dist, (y1, x1)
+        if (y1, x1) == goal:
+            return dist[goal]
 
-        for y2, x2 in adjacent(grid, y1, x1):
+        for y2, x2 in adjacent(size, y1, x1):
             new_distance = dist[(y1, x1)] + grid[y2][x2]
 
             if new_distance < dist[(y2, x2)]:
@@ -30,8 +31,7 @@ if __name__ == "__main__":
         content = f.read().split('\n')[:-1]
         grid = [[*map(int, line)] for line in content]
 
-        dist, goal = dijkstra(grid)
-        print(dist[goal]) # 595
+        print(dijkstra(grid)) # 595
 
         big_grid = [line[:] for line in grid]
         for i in range(len(grid)):
@@ -42,5 +42,4 @@ if __name__ == "__main__":
             for j in range(len(grid)):
                 big_grid.append([value + i if (value + i) < 10 else (value + i) % 10 + 1 for value in big_grid[j]])
 
-        dist, goal = dijkstra(big_grid)
-        print(dist[goal]) # 2914
+        print(dijkstra(big_grid)) # 2914
