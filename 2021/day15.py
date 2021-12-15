@@ -4,7 +4,7 @@ from queue import PriorityQueue
 def adjacent(grid, i, j, ):
     return [[y, x] for a, b in [(1,0), (0,1), (-1,0),(0,-1)] if not ( (x := a + j) < 0 or (y := b + i) < 0 or x >= len(grid[0]) or y >= len(grid) )]
 
-def djikstra(grid):
+def dijkstra(grid):
     w, h = len(grid), len(grid[0])
     Q = PriorityQueue()
 
@@ -49,8 +49,8 @@ if __name__ == "__main__":
         content = test.split('\n')
         grid = [[*map(int, line)] for line in content]
 
-        dist, prev, goal = djikstra(grid)
-        print(dist[goal]) # x < 595
+        dist, prev, goal = dijkstra(grid)
+        print(dist[goal]) # 595
 
         # expand grid
         big_grid = [line[:] for line in grid]
@@ -61,5 +61,5 @@ if __name__ == "__main__":
         for line in big_grid:
             print("".join([*map(str, line)]))
 
-        dist, prev, goal = djikstra(big_grid)
-        print(dist[goal]) # x < 604
+        dist, prev, goal = dijkstra(big_grid)
+        print(dist[goal]) # 
