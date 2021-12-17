@@ -1,15 +1,14 @@
 def simulate(target_area):
-    x_target = target_area[0]
-    y_target = target_area[1]
+    x_target, y_target = target_area
     vecs = set()
     y_max = 0
 
-    for dy in range(200, -200, -1):
-        for dx in range(x_target[1]+1, 0, -1):
+    for dy in range(-200, 200):
+        for dx in range(x_target[1] + 1):
             vy, vx = dy, dx
             local_y_max = y = x = 0
 
-            for step in range(400):
+            while 1:
                 x += vx
                 y += vy
 
