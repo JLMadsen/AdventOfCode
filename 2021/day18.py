@@ -1,144 +1,173 @@
-"""
-The homework assignment involves adding up a list of snailfish numbers (your puzzle input). 
-The snailfish numbers are each listed on a separate line. 
-* Add the first snailfish number and the second, 
-* then add that result and the third, 
-* then add that result and the fourth, 
-* and so on until all numbers in the list have been used once.
-"""
-
-import re
 import math
+import re
 
-# If any pair is nested inside four pairs, the leftmost such pair explodes.
-def explode(cell):
-    print('explode', cell)
-    a, b = [*map(int, re.findall(r'\d+', cell))]
-    return a, b
+class Side:
+    LEFT = 0
+    RIGHT = 1
 
-# If any regular number is 10 or greater, the leftmost such regular number splits.
-def split(num):
-    print('split', num)
-    a, b = [*map(int, re.findall(r'\d+', cell))]
-    res = ""
-    if a < b and a > 9:
-        div = a / 2
-        res = f"[[{math.floor(div)},{math.ceil(div)}], {b}]"
-    elif b > 9:
-        div = b / 2
-        res = f"[{a}, [{math.floor(div)},{math.ceil(div)}]]"
+class Node:
+    def __init__(self, value=None, left=None, right=None, depth=1, parent=None):
+        self.value = value
+        self.left = left
+        self.right = right
+        self.depth = depth
+        self.parent = parent
 
-def split2(num):
-    print('split', num)
-    div = num/2
-    return f"[{math.floor(div)},{math.ceil(div)}]"
+    def increase_depth(self):
+        self.depth += 1
+        if self.left: self.left.increase_depth()
+        if self.right: self.right.increase_depth()
+
+    def explode(self):
+        if self.depth > 4 and self.value == None:
+            self.parent.__explode__(self, Side.RIGHT, self.left.value)
+            self.parent.__explode__(self, Side.LEFT, self.right.value)
+            self.left = self.right = None
+            self.value = 0
+            return True
+        if self.left: 
+            if self.left.explode():
+                return True
+        if self.right: 
+            if self.right.explode():
+                return True
+        return False
+
+    def __explode__(self, caller, target, value):
+        if caller == self.right and target == Side.RIGHT:
+
+            self.left.traverse_and_add(value, target)
+
+        elif caller == self.left and target == Side.LEFT:
+
+            self.right.traverse_and_add(value, target)
+        else:
+            if self.parent != None:
+                self.parent.__explode__(self, target, value)
+
+    def traverse_and_add(self, value, side):
+        if self.value != None:
+            self.value += value
+            return
+
+        elif side == Side.RIGHT:
+            self.right.traverse_and_add(value, side)
+        else:
+            self.left.traverse_and_add(value, side)
+
+    def split(self):
+        if self.value != None and self.value >= 10:
+            div = self.value / 2
+            self.value = None
+            self.left = Node(math.floor(div), depth=self.depth+1, parent=self)
+            self.right = Node(math.ceil(div), depth=self.depth+1, parent=self)
+            return True
+        else:
+            if self.left: 
+                if self.left.split():
+                    return True
+            if self.right: 
+                if self.right.split():
+                    return True
+        return False
+
+    def append(self, node):
+        node.increase_depth()
+        node.parent = self
+        if not self.left:
+            self.left = node
+        else:
+            self.right = node
+
+    def magnitude(self):
+        if self.value != None:
+            return self.value
+
+        return 3 * self.left.magnitude() + 2 * self.right.magnitude()
+
+    def __str__(self):
+        if self.value != None:
+            return self.value
+        
+        left = self.left.__str__()
+        right = self.right.__str__()
+        return f"[{left},{right}]"
+
+    def __repr__(self):
+        return ( "\nNode:" + 
+                 "\nValue " + str(self.value) +
+                 "\nDepth " + str(self.depth) + 
+                 "\nChildren " + str(self.left != None) + " " + str(self.right != None) +
+                 "\nParent " + str(self.parent != None) )
 
 def add(a, b):
-    return f"[{a},{b}]"
+    parent = Node()
+    parent.append(a)
+    parent.append(b)
+    return parent
 
+def parse(string):
+    numbers = [*map(int, re.findall(r'\d+', string))]
+    if len(numbers) == 1:
+        return Node( int(numbers[0]) )
 
-def parse(numbers):
-    
-    value = numbers[0]
-    for num in numbers[1:]:
-        value = add(num, value)
-        done = False
-        while not done:
-            nest = 0
-            new_value = ""
-            
-            for idx, char in enumerate(value):
-                if char == '[': 
-                    nest += 1
+    left = ""
+    buffer = ""
+    nest = 0
+    for i, char in enumerate(string[1:-1]):
+        if char == '[': nest += 1
+        if char == ']': nest -= 1
 
-                    if nest == 5:
-                        print(value)
-                        print((' '*(idx))+'^ explode')
+        if char == ',' and nest == 0:
+            left = buffer
+            buffer = ""
+        else:
+            buffer += char
 
-                        end = idx + value[idx:].index(']') + 1
-                        left, right = explode( value[idx:end] )
-
-                        left_string = value[:idx]
-                        left_numbers = [*map(int, re.findall(r'\d+', left_string))]
-                        
-                        if len(left_numbers) > 0:
-                            left += left_numbers[-1]
-                            i = len(left_string) - 1 - left_string[::-1].index( str(left_numbers[-1]) )
-
-                            prefix   = left_string[:i]
-                            left_num = str(left)
-                            suffix   = left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] if i != len(left_string) - 2 else ""
-                            left_string = prefix + left_num + (',' if not suffix.startswith(',') else '') + suffix
-
-                        right_string = value[end:]
-                        right_numbers = [*map(int, re.findall(r'\d+', right_string))]
-                        
-                        if len(right_numbers) > 0:
-                            right += right_numbers[0]
-                            i = right_string.index( str(right_numbers[0]) )
-                            right_string = right_string[:i] +     str(right) +     right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):]
-                            print('right', right_string[:i] +'|'+ str(right) +'|'+ right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):] )
-
-                        mid = "0"
-
-                        value = f"{left_string}{mid}{right_string}"
-                        break
-
-                if char == ']': nest -= 1
-            else:
-                nn = [*map(int, re.findall(r'\d+', value))]
-
-                if all([n < 10 for n in nn]):
-                    done = True
-                    break
-
-                for n in nn:
-                    if n > 9:
-                        i = value.find(str(n))
-                        print(value)
-                        print((' '*(i))+'^ split')
-
-                        l = len(str(n))
-                        res = split2(n)
-                        value = value[:i] + res + value[i+l:]
-                        break
-        print(value)
-
+    node = Node()
+    node.append( parse(left) )
+    node.append( parse(buffer) )
+    return node
 
 if __name__ == "__main__":
-
     with open('input/day18.txt') as f:
-        print()
-
         content = f.read().split('\n')
-        parse(content)
-        #parse(["[1,1]", "[[[[4,3],4],4],[7,[[8,4],9]]]"])
 
-        print()
+        tree = None
 
-r"""
-current error:
-[[[[4,9],6,6],[[9,0],[15,0]]],[[[12,13,[0,[8,2]]],[[[9,4],[5,8]],6]]]
-                                       ^ explode
-explode [0,[8,2]
-Traceback (most recent call last):
-  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 127, in <module>
-    parse(content)
-  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 59, in parse
-    left, right = explode( value[idx:end] )
-  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 16, in explode
-    a, b = [*map(int, re.findall(r'\d+', cell))]
-ValueError: too many values to unpack (expected 2)
+        for line in content:
+            if not line:
+                continue
+        
+            if tree == None:
+                tree = parse(line)
+            else:
+                node = parse(line)
+                tree = add(tree, node)
+
+            done = False
+            while not done:            
+                if not tree.explode():
+                    if not tree.split():
+                        break
+
+        result = tree.magnitude()
+        print(result) # 4116
+
+        tree = None
+        numbers = []
+
+        for l1 in content:
+            for l2 in content:
+                if not l1 or not l2 or l1 == l2: continue
+                tree = add(parse(l1), parse(l2))
+                while 1:
+                    if not tree.explode():
+                        if not tree.split():
+                            break
+                numbers.append( tree.magnitude() )
+                
+        print( max(numbers) ) # 4638
+                
 
 
-
-
-
-[[[[0,7],4],[15,[0,13]]],[1,1]]
-[[[[0,7],4],[15,[0,13]]],[1,1]]
-
-[[[[0,7],4],[[7,8],[6,0]]],[8,1]]
-[[[[0,7],4],[[7,8],[6,0]]],[8,1]]
-
-
-"""
