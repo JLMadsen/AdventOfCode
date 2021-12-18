@@ -56,7 +56,6 @@ def parse(numbers):
                         print((' '*(idx))+'^ explode')
 
                         end = idx + value[idx:].index(']') + 1
-
                         left, right = explode( value[idx:end] )
 
                         left_string = value[:idx]
@@ -65,21 +64,38 @@ def parse(numbers):
                         if len(left_numbers) > 0:
                             left += left_numbers[-1]
                             i = len(left_string) - 1 - left_string[::-1].index( str(left_numbers[-1]) )
-                            left_string = left_string[:i] + str(left) + ',' + left_string[i+(j if (j:=len(str(left))) > 1 else j ):]
-                            print( 'left', left_string[:i] +'|'+ str(left) +'|'+ ',' +'|'+ left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] )
+
+                            prefix   = left_string[:i]
+                            left_num = str(left)
+                            suffix   = left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] if i != len(left_string) - 2 else ""
+
+
+
+                            #print('left b', left_string)
+                            #left_string = left_string[:i] +     str(left) + ',' +         left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):]
+
+                            #print('prefix', prefix)
+                            #print('left_n', left_num)
+                            #print('suffix', suffix)
+
+                            left_string = prefix + left_num + (',' if not suffix.startswith(',') else '') + suffix
+
+                            #print('left  a', left_string)
+
+                            #print('left', left_string[:i] +'|'+ str(left) +'|'+ ',' +'|'+ left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] )
 
                         right_string = value[end:]
                         right_numbers = [*map(int, re.findall(r'\d+', right_string))]
                         
-                        print('middle', 0)
-
                         if len(right_numbers) > 0:
                             right += right_numbers[0]
                             i = right_string.index( str(right_numbers[0]) )
-                            right_string = right_string[:i] + str(right) + right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):]
-                            print( 'right', right_string[:i] +'|'+ str(right) +'|'+ right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):])
+                            right_string = right_string[:i] +     str(right) +     right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):]
+                            print('right', right_string[:i] +'|'+ str(right) +'|'+ right_string[i+(j-1 if (j:=len(str(right))) > 1 else j ):] )
 
-                        value = f"{left_string}0{right_string}"
+                        mid = "0"
+
+                        value = f"{left_string}{mid}{right_string}"
                         break
 
                 if char == ']': nest -= 1
@@ -108,18 +124,34 @@ if __name__ == "__main__":
         print()
 
         content = f.read().split('\n')
-        #parse(content)
-        parse(["[1,1]", "[[[[4,3],4],4],[7,[[8,4],9]]]"])
+        parse(content)
+        #parse(["[1,1]", "[[[[4,3],4],4],[7,[[8,4],9]]]"])
 
         print()
-"""
+
+r"""
+current error:
+[[[[4,9],6,6],[[9,0],[15,0]]],[[[12,13,[0,[8,2]]],[[[9,4],[5,8]],6]]]
+                                       ^ explode
+explode [0,[8,2]
+Traceback (most recent call last):
+  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 127, in <module>
+    parse(content)
+  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 59, in parse
+    left, right = explode( value[idx:end] )
+  File "c:\Users\Jakob\Documents\GitHub\AdventOfCode\2021\day18.py", line 16, in explode
+    a, b = [*map(int, re.findall(r'\d+', cell))]
+ValueError: too many values to unpack (expected 2)
+
+
+
+
+
 [[[[0,7],4],[15,[0,13]]],[1,1]]
 [[[[0,7],4],[15,[0,13]]],[1,1]]
 
 [[[[0,7],4],[[7,8],[6,0]]],[8,1]]
-[[[[0,7],4],[[7,8],[6,0,0]]],[8,1]]
-
-
+[[[[0,7],4],[[7,8],[6,0]]],[8,1]]
 
 
 """
