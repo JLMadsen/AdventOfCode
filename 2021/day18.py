@@ -106,7 +106,7 @@ def parse(string):
     left = ""
     buffer = ""
     nest = 0
-    for i, char in enumerate(string[1:-1]):
+    for char in string[1:-1]:
         if char == '[': nest += 1
         if char == ']': nest -= 1
 
@@ -134,13 +134,12 @@ if __name__ == "__main__":
             else:
                 tree = add(tree, parse(line))
 
-            while not done:            
+            while 1:            
                 if not tree.explode():
                     if not tree.split():
                         break
 
         result = tree.magnitude()
-        print(tree)
         print(result) # 4116
 
         tree = None
