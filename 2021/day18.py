@@ -93,13 +93,6 @@ class Node:
         right = self.right.__str__()
         return f"[{left},{right}]"
 
-    def __repr__(self):
-        return ( "\nNode:" + 
-                 "\nValue " + str(self.value) +
-                 "\nDepth " + str(self.depth) + 
-                 "\nChildren " + str(self.left != None) + " " + str(self.right != None) +
-                 "\nParent " + str(self.parent != None) )
-
 def add(a, b):
     parent = Node()
     parent.append(a)
