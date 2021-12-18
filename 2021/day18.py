@@ -120,6 +120,7 @@ def parse(numbers):
 
 
 if __name__ == "__main__":
+    
     with open('input/day18.txt') as f:
         print()
 
