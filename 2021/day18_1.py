@@ -45,7 +45,6 @@ class Node:
             if self.parent != None:
                 self.parent.__explode__(self, target, value)
 
-
     def traverse_and_add(self, value, side):
         if self.value != None:
             self.value += value
