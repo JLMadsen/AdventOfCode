@@ -82,7 +82,6 @@ class Node:
     def magnitude(self):
         if self.value != None:
             return self.value
-
         return 3 * self.left.magnitude() + 2 * self.right.magnitude()
 
     def __str__(self):
@@ -125,30 +124,27 @@ def parse(string):
 if __name__ == "__main__":
     with open('input/day18.txt') as f:
         content = f.read().split('\n')
-
         tree = None
 
         for line in content:
-            if not line:
-                continue
+            if not line: continue
         
             if tree == None:
                 tree = parse(line)
             else:
-                node = parse(line)
-                tree = add(tree, node)
+                tree = add(tree, parse(line))
 
-            done = False
             while not done:            
                 if not tree.explode():
                     if not tree.split():
                         break
 
         result = tree.magnitude()
+        print(tree)
         print(result) # 4116
 
         tree = None
-        numbers = []
+        max_magnitude = 0
 
         for l1 in content:
             for l2 in content:
@@ -158,9 +154,8 @@ if __name__ == "__main__":
                     if not tree.explode():
                         if not tree.split():
                             break
-                numbers.append( tree.magnitude() )
-                
-        print( max(numbers) ) # 4638
-                
 
-
+                if (magnitude := tree.magnitude()) > max_magnitude:
+                    max_magnitude = magnitude
+                
+        print( max_magnitude ) # 4638
