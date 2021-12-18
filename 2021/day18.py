@@ -68,21 +68,7 @@ def parse(numbers):
                             prefix   = left_string[:i]
                             left_num = str(left)
                             suffix   = left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] if i != len(left_string) - 2 else ""
-
-
-
-                            #print('left b', left_string)
-                            #left_string = left_string[:i] +     str(left) + ',' +         left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):]
-
-                            #print('prefix', prefix)
-                            #print('left_n', left_num)
-                            #print('suffix', suffix)
-
                             left_string = prefix + left_num + (',' if not suffix.startswith(',') else '') + suffix
-
-                            #print('left  a', left_string)
-
-                            #print('left', left_string[:i] +'|'+ str(left) +'|'+ ',' +'|'+ left_string[i+(j if (j:=len(str(left))) > 1 else j-1 ):] )
 
                         right_string = value[end:]
                         right_numbers = [*map(int, re.findall(r'\d+', right_string))]
@@ -120,7 +106,7 @@ def parse(numbers):
 
 
 if __name__ == "__main__":
-    
+
     with open('input/day18.txt') as f:
         print()
 

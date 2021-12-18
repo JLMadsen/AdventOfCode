@@ -20,7 +20,6 @@ class Node:
 
     def explode(self):
         if self.depth > 4 and self.value == None:
-            #print('explode pair', self, 'with depth', self.depth)
             self.parent.__explode__(self, Side.RIGHT, self.left.value)
             self.parent.__explode__(self, Side.LEFT, self.right.value)
             self.left = self.right = None
@@ -43,7 +42,6 @@ class Node:
 
             self.right.traverse_and_add(value, target)
         else:
-            # parent is none if there are no numbers in that direction from origin
             if self.parent != None:
                 self.parent.__explode__(self, target, value)
 
@@ -60,7 +58,6 @@ class Node:
 
     def split(self):
         if self.value != None and self.value >= 10:
-            #print('split at value', self.value)
             div = self.value / 2
             self.value = None
             self.left = Node(math.floor(div), depth=self.depth+1, parent=self)
@@ -101,24 +98,21 @@ class Node:
         return ( "\nNode:" + 
                  "\nValue " + str(self.value) +
                  "\nDepth " + str(self.depth) + 
-                 "\nChildres " + str(self.left != None) + " " + str(self.right != None) +
+                 "\nChildren " + str(self.left != None) + " " + str(self.right != None) +
                  "\nParent " + str(self.parent != None) )
 
 def add(a, b):
-    #print('add', a, ' + ', b)
     parent = Node()
     parent.append(a)
     parent.append(b)
     return parent
 
 def parse(string):
-
     numbers = [*map(int, re.findall(r'\d+', string))]
     if len(numbers) == 1:
         return Node( int(numbers[0]) )
 
     left = ""
-    right = ""
     buffer = ""
     nest = 0
     for i, char in enumerate(string[1:-1]):
@@ -128,16 +122,12 @@ def parse(string):
         if char == ',' and nest == 0:
             left = buffer
             buffer = ""
-
         else:
             buffer += char
 
-    right = buffer
-
     node = Node()
     node.append( parse(left) )
-    node.append( parse(right) )
-
+    node.append( parse(buffer) )
     return node
 
 if __name__ == "__main__":
@@ -153,23 +143,32 @@ if __name__ == "__main__":
             if tree == None:
                 tree = parse(line)
             else:
-                try:
-                    node = parse(line)
-                except:
-                    print('crashed parsing', line)
-                    exit()
-
+                node = parse(line)
                 tree = add(tree, node)
 
             done = False
-            while not done:
-                #print('tree', tree)
-            
+            while not done:            
                 if not tree.explode():
                     if not tree.split():
-                        done = True
+                        break
 
-        print(tree)
         result = tree.magnitude()
         print(result) # 4116
+
+        tree = None
+        numbers = []
+
+        for l1 in content:
+            for l2 in content:
+                if not l1 or not l2 or l1 == l2: continue
+                tree = add(parse(l1), parse(l2))
+                while 1:
+                    if not tree.explode():
+                        if not tree.split():
+                            break
+                numbers.append( tree.magnitude() )
+                
+        print( max(numbers) ) # 4638
+                
+
 
