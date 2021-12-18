@@ -20,7 +20,7 @@ class Node:
 
     def explode(self):
         if self.depth > 4 and self.value == None:
-            print('explode pair', self, 'with depth', self.depth)
+            #print('explode pair', self, 'with depth', self.depth)
             self.parent.__explode__(self, Side.RIGHT, self.left.value)
             self.parent.__explode__(self, Side.LEFT, self.right.value)
             self.left = self.right = None
@@ -60,7 +60,7 @@ class Node:
 
     def split(self):
         if self.value != None and self.value >= 10:
-            print('split at value', self.value)
+            #print('split at value', self.value)
             div = self.value / 2
             self.value = None
             self.left = Node(math.floor(div), depth=self.depth+1, parent=self)
@@ -105,7 +105,7 @@ class Node:
                  "\nParent " + str(self.parent != None) )
 
 def add(a, b):
-    print('add', a, ' + ', b)
+    #print('add', a, ' + ', b)
     parent = Node()
     parent.append(a)
     parent.append(b)
@@ -140,29 +140,11 @@ def parse(string):
 
     return node
 
-test = """[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]]
-[7,[[[3,7],[4,3]],[[6,3],[8,8]]]]
-[[2,[[0,8],[3,4]]],[[[6,7],1],[7,[1,6]]]]
-[[[[2,4],7],[6,[0,5]]],[[[6,8],[2,8]],[[2,1],[4,5]]]]
-[7,[5,[[3,8],[1,4]]]]
-[[2,[2,2]],[8,[8,1]]]
-[2,9]
-[1,[[[9,3],9],[[9,0],[0,7]]]]
-[[[5,[7,4]],7],1]
-[[[[4,2],2],6],[8,7]]"""
-
 if __name__ == "__main__":
     with open('input/day18.txt') as f:
         content = f.read().split('\n')
 
-
-
-
-        #test = "[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]"
-
-        #content = test.split('\n')
-
-        tree = parse(content[0])
+        tree = None
 
         for line in content:
             if not line:
@@ -181,26 +163,13 @@ if __name__ == "__main__":
 
             done = False
             while not done:
-                print('tree', tree)
+                #print('tree', tree)
             
                 if not tree.explode():
                     if not tree.split():
                         done = True
 
+        print(tree)
         result = tree.magnitude()
-        print(result)
-
-        # start = Node()
-        # start.append(Node(5))
-        # start.append(Node(6))
-        # new = Node()
-        # new.append(Node(11))
-        # new.append(Node(12))
-        # res = add(start, new)
-        # print(res)
-        # res.split()
-        # print(res)
-        # res.right.left.explode()
-        # print(res)
-
+        print(result) # 4116
 
