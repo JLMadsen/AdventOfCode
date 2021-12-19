@@ -83,7 +83,7 @@ class Node:
     def __str__(self):
         if self.value != None:
             return str(self.value)
-        return f"[{ str(self.left) },{ str(self.right) }]"
+        return f"[{ self.left },{ self.right }]"
 
 def add(a, b):
     parent = Node()
