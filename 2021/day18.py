@@ -122,12 +122,9 @@ if __name__ == "__main__":
                     if not tree.split():
                         break
 
-        print(tree)
         print(tree.magnitude()) # 4116
 
-        tree = None
         max_magnitude = 0
-
         for l1 in content:
             for l2 in content:
                 if not l1 or not l2 or l1 == l2: continue
