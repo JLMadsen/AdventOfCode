@@ -33,11 +33,9 @@ class Node:
 
     def __explode__(self, caller, target, value):
         if caller == self.right and target == Side.RIGHT:
-
             self.left.traverse_and_add(value, target)
 
         elif caller == self.left and target == Side.LEFT:
-
             self.right.traverse_and_add(value, target)
         else:
             if self.parent != None:
@@ -48,10 +46,7 @@ class Node:
             self.value += value
             return
 
-        elif side == Side.RIGHT:
-            self.right.traverse_and_add(value, side)
-        else:
-            self.left.traverse_and_add(value, side)
+        (self.right if side == Side.RIGHT else self.left).traverse_and_add(value, side)
 
     def split(self):
         if self.value != None and self.value >= 10:
@@ -117,14 +112,11 @@ def parse(string):
 if __name__ == "__main__":
     with open('input/day18.txt') as f:
         content = f.read().split('\n')
-        tree = None
+        tree = parse(content.pop(0))
 
         for line in content:
             if not line: continue
-            if tree == None:
-                tree = parse(line)
-            else:
-                tree = add(tree, parse(line))
+            tree = add(tree, parse(line))
             while 1:
                 if not tree.explode():
                     if not tree.split():
