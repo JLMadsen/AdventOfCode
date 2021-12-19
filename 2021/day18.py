@@ -125,7 +125,7 @@ if __name__ == "__main__":
                 tree = parse(line)
             else:
                 tree = add(tree, parse(line))
-            while 1:            
+            while 1:
                 if not tree.explode():
                     if not tree.split():
                         break
