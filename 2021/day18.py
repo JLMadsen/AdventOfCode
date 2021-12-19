@@ -25,12 +25,10 @@ class Node:
             self.left = self.right = None
             self.value = 0
             return True
-        if self.left: 
-            if self.left.explode():
-                return True
-        if self.right: 
-            if self.right.explode():
-                return True
+        if self.left and self.left.explode():
+            return True
+        if self.right and self.right.explode(): 
+            return True
         return False
 
     def __explode__(self, caller, target, value):
@@ -63,12 +61,10 @@ class Node:
             self.right = Node(math.ceil(div), depth=self.depth+1, parent=self)
             return True
         else:
-            if self.left: 
-                if self.left.split():
-                    return True
-            if self.right: 
-                if self.right.split():
-                    return True
+            if self.left and self.left.split(): 
+                return True
+            if self.right and self.right.split(): 
+                return True
         return False
 
     def append(self, node):
@@ -98,7 +94,7 @@ def add(a, b):
 def parse(string):
     numbers = [*map(int, re.findall(r'\d+', string))]
     if len(numbers) == 1:
-        return Node( int(numbers[0]) )
+        return Node( numbers[0] )
 
     left = ""
     buffer = ""
@@ -125,20 +121,17 @@ if __name__ == "__main__":
 
         for line in content:
             if not line: continue
-        
             if tree == None:
                 tree = parse(line)
             else:
                 tree = add(tree, parse(line))
-
             while 1:            
                 if not tree.explode():
                     if not tree.split():
                         break
 
-        result = tree.magnitude()
         print(tree)
-        print(result) # 4116
+        print(tree.magnitude()) # 4116
 
         tree = None
         max_magnitude = 0
