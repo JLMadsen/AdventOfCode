@@ -1,4 +1,4 @@
-import math
+from math import floor, ceil
 import re
 
 class Side:
@@ -52,8 +52,8 @@ class Node:
         if self.value != None and self.value >= 10:
             div = self.value / 2
             self.value = None
-            self.left = Node(math.floor(div), depth=self.depth+1, parent=self)
-            self.right = Node(math.ceil(div), depth=self.depth+1, parent=self)
+            self.left = Node(floor(div), depth=self.depth+1, parent=self)
+            self.right = Node(ceil(div), depth=self.depth+1, parent=self)
             return True
         else:
             if self.left and self.left.split(): 
@@ -109,30 +109,29 @@ def parse(string):
     node.append( parse(buffer) )
     return node
 
+def reduce(tree):
+    while 1:
+        if not tree.explode():
+            if not tree.split():
+                break
+
 if __name__ == "__main__":
     with open('input/day18.txt') as f:
-        content = f.read().split('\n')
+        content = f.read().split('\n')[:-1]
+        
         tree = parse(content.pop(0))
-
         for line in content:
-            if not line: continue
             tree = add(tree, parse(line))
-            while 1:
-                if not tree.explode():
-                    if not tree.split():
-                        break
+            reduce(tree)
 
         print(tree.magnitude()) # 4116
 
         max_magnitude = 0
         for l1 in content:
             for l2 in content:
-                if not l1 or not l2 or l1 == l2: continue
+                if l1 == l2: continue
                 tree = add(parse(l1), parse(l2))
-                while 1:
-                    if not tree.explode():
-                        if not tree.split():
-                            break
+                reduce(tree)
 
                 if (magnitude := tree.magnitude()) > max_magnitude:
                     max_magnitude = magnitude
