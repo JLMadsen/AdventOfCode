@@ -86,11 +86,8 @@ class Node:
 
     def __str__(self):
         if self.value != None:
-            return self.value
-        
-        left = self.left.__str__()
-        right = self.right.__str__()
-        return f"[{left},{right}]"
+            return str(self.value)
+        return f"[{ str(self.left) },{ str(self.right) }]"
 
 def add(a, b):
     parent = Node()
@@ -140,6 +137,7 @@ if __name__ == "__main__":
                         break
 
         result = tree.magnitude()
+        print(tree)
         print(result) # 4116
 
         tree = None
