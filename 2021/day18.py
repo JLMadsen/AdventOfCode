@@ -91,8 +91,7 @@ def parse(string):
     if len(numbers) == 1:
         return Node( numbers[0] )
 
-    left = ""
-    buffer = ""
+    left = buffer = ""
     nest = 0
     for char in string[1:-1]:
         if char == '[': nest += 1
@@ -104,10 +103,7 @@ def parse(string):
         else:
             buffer += char
 
-    node = Node()
-    node.append( parse(left) )
-    node.append( parse(buffer) )
-    return node
+    return add(parse(left), parse(buffer))
 
 def reduce(tree):
     while 1:
