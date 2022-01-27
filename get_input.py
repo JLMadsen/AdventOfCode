@@ -20,7 +20,7 @@ def get_input(year, day):
 # run as main to download todays input
 if __name__ == "__main__":
     today = datetime.today()
-    get_input(today.year, today.day)
-    #get_input(2021, 16)
+    #get_input(today.year, today.day)
+    get_input(2021, 25)
 
 sys.modules[__name__] = get_input

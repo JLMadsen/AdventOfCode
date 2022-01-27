@@ -28,6 +28,7 @@ one where the outcome of the roll was 1, one where it was 2, and one where it wa
 """
 games = {}
 
+# cache game to speed up execution
 @lru_cache(maxsize=None)
 def doctor_strange(pos_a, pos_b, score_a=0, score_b=0):
     global games
