@@ -86,24 +86,29 @@ def add(a, b):
     parent.append(b)
     return parent
 
-def parse(string):
-    numbers = [*map(int, re.findall(r'\d+', string))]
-    if len(numbers) == 1:
-        return Node( numbers[0] )
+# def parse(string):
+#     numbers = [*map(int, re.findall(r'\d+', string))]
+#     if len(numbers) == 1:
+#         return Node( numbers[0] )
 
-    left = buffer = ""
-    nest = 0
-    for char in string[1:-1]:
-        if char == '[': nest += 1
-        if char == ']': nest -= 1
+#     left = buffer = ""
+#     nest = 0
+#     for char in string[1:-1]:
+#         if char == '[': nest += 1
+#         if char == ']': nest -= 1
 
-        if char == ',' and nest == 0:
-            left = buffer
-            buffer = ""
-        else:
-            buffer += char
+#         if char == ',' and nest == 0:
+#             left = buffer
+#             buffer = ""
+#         else:
+#             buffer += char
 
-    return add(parse(left), parse(buffer))
+#     return add(parse(left), parse(buffer))
+
+def parse(value):
+    if type(value) == int:
+        return Node(value)
+    return add( *map(parse, value) )
 
 def reduce(tree):
     while 1:
@@ -113,8 +118,13 @@ def reduce(tree):
 
 if __name__ == "__main__":
     with open('input/day18.txt') as f:
-        content = f.read().split('\n')[:-1]
+        content = eval(str(f.read().split('\n')[:-1]))
         
+        # node = content[0]
+        # print(node)
+        # print(eval(node))
+        # print( parse(eval(node)) )
+
         tree = parse(content.pop(0))
         for line in content:
             tree = add(tree, parse(line))
