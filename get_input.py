@@ -8,14 +8,19 @@ import sys
 TOKEN = os.environ['AOC_TOKEN']
 CREATE_SCRIPT_FILE = True
 SCRIPT_CONTENT = """
-                 def part1(content):
-                     pass
+import math
+import re
+from collections import defaultdict
+nth = lambda arr, n: [*zip(*arr)][n-1]
 
-                 if __name__ == "__main__":
-                     with open('input/day{}.txt') as f:
-                         content = f.read().split('\\n')[:-1]
-                         part1(content)
-                 """
+def part1(content):
+    pass
+
+if __name__ == "__main__":
+    with open('input/day{}.txt') as f:
+        content = f.read().split('\\n')[:-1]
+        part1(content)
+"""
 
 def get_input(year, day):
     url = f"https://adventofcode.com/{year}/day/{day}/input"
@@ -41,7 +46,7 @@ def get_input(year, day):
 # run as main to download todays input
 if __name__ == "__main__":
     today = datetime.today()
-    #get_input(today.year, today.day)
-    get_input(2015, 11)
+    get_input(today.year, today.day)
+    # get_input(2015, 11)
 
 sys.modules[__name__] = get_input
