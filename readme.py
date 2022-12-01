@@ -40,7 +40,7 @@ if __name__ == "__main__":
         for day in (arr := me['completion_day_level']):
             stats[yr][int(day) - 1] = len(arr[day])
     
-    t = PrettyTable([' ', *[str(yr-1) for yr in range(current_year, start_year - (1 if is_des else 0), -1)]])
+    t = PrettyTable([' ', *[str(yr) for yr in range(current_year, start_year - (1 if is_des else 0), -1)]])
     
     for i in range(1, 26):
         t.add_row( [str(i), * map(lambda x: emoji[x], reversed(nth( stats.values() ,i))) ] )
