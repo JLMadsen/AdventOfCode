@@ -5,4 +5,4 @@ def solve(content, elves = [0]):
 
 if __name__ == "__main__":
     with open('input/day01.txt') as f:
-        solve(f.read().split('\n')[:-1])
+        solve(f.read().splitlines())
