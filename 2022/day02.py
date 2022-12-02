@@ -6,7 +6,7 @@ beats = lambda a, b: b == moves[ idx(a) - 1 ]
 def play(a, b):
     if beats(a, b):   return 0
     elif beats(b, a): return 6
-    else:             return 3
+    return 3
 
 def part1(content):
     score = 0
@@ -14,7 +14,7 @@ def part1(content):
         a, b = hands.split()
         b = decrypt(b)
         score += play(a, b) + idx(b) + 1
-    print(score) # 15632
+    print(score)
 
 def part2(content):
     score = 0
@@ -24,10 +24,10 @@ def part2(content):
              a if tactic == 'Y' else
              moves[ idx(a) - 1 ])
         score += play(a, b) + idx(b) + 1
-    print(score) # 14416
+    print(score)
 
 if __name__ == "__main__":
     with open('input/day02.txt') as f:
         content = f.read().splitlines()
-        part1(content)
-        part2(content)
+        part1(content) # 15632
+        part2(content) # 14416
