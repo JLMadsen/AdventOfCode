@@ -1,30 +1,24 @@
 moves = ['A', 'B', 'C']
 idx     = lambda x: ord(x) - ord('A')
-decrypt = lambda x: chr(ord(x) - ord('X') + ord('A'))
+decrypt = lambda _, x: chr(ord(x) - ord('X') + ord('A'))
 beats   = lambda a, b: b == moves[ idx(a) - 1 ]
+tactic  = lambda x, t: (moves[idx(x) - 2] if t == 'Z' else
+                        moves[idx(x) - 1] if t == 'X' else x)
 
 def play(a, b):
     if   beats(a, b): return 0
     elif beats(b, a): return 6
     return 3
 
-def part1(content, score = 0):
+def solve(content, b_function, score = 0):
     for hands in content:
         a, b = hands.split()
-        b = decrypt(b)
-        score += play(a, b) + idx(b) + 1
-    print(score)
-
-def part2(content, score = 0):
-    for hands in content:
-        a, tactic = hands.split()
-        b = ( moves[idx(a) - 2] if tactic == 'Z' else
-              moves[idx(a) - 1] if tactic == 'X' else a )
+        b = b_function(a, b)
         score += play(a, b) + idx(b) + 1
     print(score)
 
 if __name__ == "__main__":
     with open('input/day02.txt') as f:
         content = f.read().splitlines()
-        part1(content) # 15632
-        part2(content) # 14416
+        solve(content, decrypt) # 15632
+        solve(content, tactic) # 14416
