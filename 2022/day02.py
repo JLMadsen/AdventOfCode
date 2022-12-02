@@ -21,8 +21,7 @@ def part2(content):
     for hands in content:
         a, tactic = hands.split()
         b = (moves[(idx(a) + 1) % len(moves)] if tactic == 'Z' else
-             a if tactic == 'Y' else
-             moves[ idx(a) - 1 ])
+             moves[ idx(a) - 1 ] if tactic == 'X' else a )
         score += play(a, b) + idx(b) + 1
     print(score)
 
