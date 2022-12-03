@@ -1,18 +1,12 @@
-value = lambda char: ord(char.lower()) - ord('a') + 1 + (26 if char.isupper() else 0)
+value     = lambda char: ord(char.lower()) - ord('a') + 1 + (26 if char.isupper() else 0)
+split     = lambda _, x: (x[:len(x)//2], x[len(x)//2:])
+intersect = lambda xs: set.intersection(*map(set, xs)).pop()
 
-def part1(content, priorities = 0):
-    for line in content:
-        a, b = line[:len(line)//2], line[len(line)//2:]
-        priorities += [value(c) for c in a if c in b][0]
-    print(priorities) # 8139
-        
-def part2(content, priorities = 0):
-    for i in range(0, len(content), 3):
-        priorities += value(set.intersection(*map(set, content[i:i+3])).pop())
-    print(priorities) # 2668
+def solve(content, func, loop):
+    print(sum([value(intersect(func(content, line))) for line in loop]))
 
 if __name__ == "__main__":
     with open('input/day03.txt') as f:
         content = f.read().splitlines()
-        part1(content)
-        part2(content)
+        solve(content, split, content) # 8139
+        solve(content, lambda x, i:x[i:i+3], range(0, len(content), 3)) # 2668
