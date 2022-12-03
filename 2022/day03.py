@@ -6,13 +6,9 @@ def part1(content, priorities = 0):
         priorities += [value(c) for c in a if c in b][0]
     print(priorities) # 6256
         
-def part2(content, priorities = 0, group = []):
-    for line in content:
-        group.append(line)
-        if len(group) == 3:
-            char = set.intersection(*map(set, group)).pop()
-            priorities += value(char)
-            group = []
+def part2(content, priorities = 0):
+    for i in range(0, len(content), 3):
+        priorities += value(set.intersection(*map(set, content[i:i+3])).pop())
     print(priorities) # 2668
 
 if __name__ == "__main__":
