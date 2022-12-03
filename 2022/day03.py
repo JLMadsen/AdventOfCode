@@ -10,10 +10,7 @@ def part2(content, priorities = 0, group = []):
     for line in content:
         group.append(line)
         if len(group) == 3:
-            for c in group[0]:
-                if c in group[1] and c in group[2]:
-                    priorities  += value(c)
-                    break
+            priorities += value( set.intersection(*map(set, group)).pop() )
             group = []
     print(priorities) # 2668
 
