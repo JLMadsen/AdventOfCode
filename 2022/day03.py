@@ -4,7 +4,7 @@ def part1(content, priorities = 0):
     for line in content:
         a, b = line[:len(line)//2], line[len(line)//2:]
         priorities += [value(c) for c in a if c in b][0]
-    print(priorities) # 6256
+    print(priorities) # 8139
         
 def part2(content, priorities = 0):
     for i in range(0, len(content), 3):
