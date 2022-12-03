@@ -1,12 +1,9 @@
 value = lambda char: ord(char.lower()) - ord('a') + 1 + (26 if char.isupper() else 0)
 
-def part1(content, priorities  = 0):
+def part1(content, priorities = 0):
     for line in content:
         a, b = line[:len(line)//2], line[len(line)//2:]
-        for c in a:
-            if c in b:
-                priorities  += value(c)
-                break
+        priorities += [value(c) for c in a if c in b][0]
     print(priorities) # 6256
         
 def part2(content, priorities = 0, group = []):
