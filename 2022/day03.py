@@ -1,4 +1,4 @@
-value     = lambda char: ord(char.lower()) - ord('a') + 1 + (26 if char.isupper() else 0)
+value     = lambda char: ord(char.lower()) - ord('a') + 1 + (26 * char.isupper())
 split     = lambda x: (x[:len(x)//2], x[len(x)//2:])
 intersect = lambda xs: set.intersection(*map(set, xs)).pop()
 
