@@ -4,7 +4,7 @@ def solve(content, includes = 0, value = 0):
         value += ((ax>=bx and ay<=by) or 
                   (bx>=ax and by<=ay) or 
                   (bx>=ay and by<=ax and includes) or
-                  (by>=ax and bx<=ay and includes)) * 1
+                  (by>=ax and bx<=ay and includes))
     print(value)
 
 if __name__ == "__main__":
