@@ -1,10 +1,9 @@
-def solve(content, includes = 0, value = 0):
+def solve(content, pt2 = 0, value = 0):
     for line in content:
         ax, ay, bx, by = map(int, line.replace('-', ',').split(','))
         value += ((ax>=bx and ay<=by) or 
                   (bx>=ax and by<=ay) or 
-                  (bx>=ay and by<=ax and includes) or
-                  (by>=ax and bx<=ay and includes))
+                  (max(ax,bx) <= min(ay,by) and pt2))
     print(value)
 
 if __name__ == "__main__":
