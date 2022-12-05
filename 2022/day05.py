@@ -4,14 +4,12 @@ def solve(content, pt2 = 0, boxes = [], setup = True):
             setup = False
             boxes = [*map(lambda x: x[::-1], boxes)]
             continue
-
         if setup:
             if not boxes:
                 boxes = [[] for _ in range(len(line)//4+1)]
-            for i in range(0, len(line), 4):
-                box = line[i:i+4]
-                if '[' not in box: continue
-                boxes[i // 4].append(box.strip()[1:-1])
+            for idx, char in enumerate(line[1::4]):
+                if char==' ' or char.isdigit(): continue
+                boxes[idx].append(char)
         else:
             n, source, dest = map(int, line.split(' ')[1::2])
             n = min(len(boxes[(source := source-1)]), n)
