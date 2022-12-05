@@ -14,7 +14,11 @@ from collections import defaultdict
 nth = lambda arr, n: [*zip(*arr)][n-1]
 
 def part1(content):
-    pass
+    value = 0
+    for line in content:
+        print(line)
+
+    print(value)
 
 def part2(content):
     pass
