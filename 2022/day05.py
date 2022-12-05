@@ -13,9 +13,9 @@ def solve(content, crateMover = 0, boxes = [], setup = True):
                 if '[' not in box: continue
                 boxes[i // 4].append(box.strip()[1:-1])
         else:
-            _, n, _, source, _, dest = line.split(' ')
-            n = min(len(boxes[(source := int(source)-1)]), int(n))
-            boxes[int(dest) - 1] += boxes[source][-n:][::(1 if crateMover else -1)]
+            n, source, dest = map(int, line.split(' ')[1::2])
+            n = min(len(boxes[(source := source-1)]), n)
+            boxes[dest - 1] += boxes[source][-n:][::(1 if crateMover else -1)]
             [boxes[source].pop() for _ in range(n)]
 
     print(''.join([stack[-1] for stack in boxes]))
