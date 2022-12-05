@@ -1,4 +1,4 @@
-def solve(content, crateMover = 0, boxes = [], setup = True):
+def solve(content, pt2 = 0, boxes = [], setup = True):
     for line in content:
         if not line:
             setup = False
@@ -15,8 +15,8 @@ def solve(content, crateMover = 0, boxes = [], setup = True):
         else:
             n, source, dest = map(int, line.split(' ')[1::2])
             n = min(len(boxes[(source := source-1)]), n)
-            boxes[dest - 1] += boxes[source][-n:][::(1 if crateMover else -1)]
-            [boxes[source].pop() for _ in range(n)]
+            boxes[dest - 1] += boxes[source][-n:][::(1 if pt2 else -1)]
+            del boxes[source][-n:]
 
     print(''.join([stack[-1] for stack in boxes]))
 
