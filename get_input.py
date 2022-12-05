@@ -16,10 +16,14 @@ nth = lambda arr, n: [*zip(*arr)][n-1]
 def part1(content):
     pass
 
+def part2(content):
+    pass
+
 if __name__ == "__main__":
     with open('input/day{}.txt') as f:
         content = f.read().splitlines()
         part1(content)
+        part2(content)
 """
 
 def get_input(year, day):
