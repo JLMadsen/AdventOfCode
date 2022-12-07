@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-def solve2(content, directories = defaultdict(lambda: 0), path = ['/']):
+def solve(content, directories = defaultdict(lambda: 0), path = ['/']):
     for command in content:
         if '$' in (args := command.split(' ')):
             if args[1] == 'cd':
