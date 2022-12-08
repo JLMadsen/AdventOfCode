@@ -1,41 +1,25 @@
-def part1(content):
-    value = 0
-    grid = []
-
-    for line in content:
-        grid.append([int(c) for c in line])
-        
+def part1(grid, value = 0):
     for y, row in enumerate(grid):
         for x, tree in enumerate(row):
 
             for mod in [(0,1),(0,-1),(-1,0),(1,0)]:
                 dx, dy = x, y
                 done = False
-
                 while True:
-                    dx, dy = dx+mod[0], dy+mod[1]
 
+                    dx, dy = dx+mod[0], dy+mod[1]
                     if ((dy == len(grid) or dy == -1) or 
                         (dx == len(row) or dx == -1)):
                         value += 1
                         done = True
                         break
 
-                    # print(dx, dy)
-                    if grid[dy][dx] >= tree:
-                        break
-
+                    if grid[dy][dx] >= tree: break
                 if done:break
 
     print(value) # 1698
 
-def part2(content):
-    value = 0
-    grid = []
-
-    for line in content:
-        grid.append([int(c) for c in line])
-        
+def part2(grid, value = 0):
     for y, row in enumerate(grid):
         for x, tree in enumerate(row):
             scenic_score = 1
@@ -47,13 +31,9 @@ def part2(content):
                 while 0 <= dy < len(grid) and 0 <= dx < len(row):
                     
                     directional_score += 1
-
-                    if grid[dy][dx] >= tree:
-                        break
-
+                    if grid[dy][dx] >= tree: break
                     dx, dy = dx+mod[0], dy+mod[1]
 
-                # if directional_score > 0:
                 scenic_score *= directional_score
             
             if scenic_score > value:
@@ -64,6 +44,5 @@ def part2(content):
 if __name__ == "__main__":
     with open('input/day08.txt') as f:
         content = f.read().splitlines()
-
-        part1(content)
-        part2(content)
+        part1([[int(c) for c in line] for line in content])
+        part2([[int(c) for c in line] for line in content])
