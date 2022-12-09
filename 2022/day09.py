@@ -22,11 +22,9 @@ def solve(content, length = 2):
 
                 if dx > 1 or diag:
                     tx += 1 if hx>tx else -1
-                    # tx += (1-2*hx<tx)
 
                 if dy > 1 or diag:
                     ty += 1 if hy>ty else -1
-                    # ty += (1-2*hx<tx)
 
                 segments[i+1] = (tx, ty)
 
