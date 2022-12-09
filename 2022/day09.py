@@ -1,8 +1,7 @@
 d = {'D':(-1,0),'U':(1,0),'L':(0,-1),'R':(0,1)}
 
-def solve(content, length = 2):
+def solve(content, length = 2, visited = set()):
     rope = [(0,0)] * length
-    visited = set()
 
     for line in content:
         direction, speed = line.split()
@@ -14,17 +13,14 @@ def solve(content, length = 2):
 
             for i in range(len(rope)-1):
                 (hx, hy), (tx, ty) = rope[i:i+2]
-
-                dx = abs(hx-tx)
-                dy = abs(hy-ty)
+                dx, dy = abs(hx-tx), abs(hy-ty)
 
                 diag = hx!=tx and hy!=ty and (dx > 1 or dy > 1)
 
                 if dx > 1 or diag: tx += 1-2*(hx<tx)
                 if dy > 1 or diag: ty += 1-2*(hy<ty)
-
+                
                 rope[i+1] = (tx, ty)
-
                 if i == len(rope) - 2:
                     visited.add((tx, ty))
 
