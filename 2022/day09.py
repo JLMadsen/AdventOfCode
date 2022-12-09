@@ -1,34 +1,31 @@
-d = {'D': (-1, 0), 'L': (0,-1), 'U': (1, 0), 'R': (0,1)}
+d = {'D':(-1,0), 'L':(0,-1), 'U':(1,0), 'R':(0,1)}
 
 def solve(content, length = 2):
-    segments = [(0,0) for _ in range(length)]
-    visited = set([(0,0)])
+    rope = [(0,0) for _ in range(length)]
+    visited = set()
 
     for line in content:
         direction, speed = line.split(' ')
-        delta = d[direction]
+        mod = d[direction]
 
         for _ in range(int(speed)):
-            head = segments[0]
-            segments[0] = (head[0] + delta[0], head[1] + delta[1])
+            head = rope[0]
+            rope[0] = (head[0] + mod[0], head[1] + mod[1])
 
-            for i in range(len(segments)-1):
-                (hx, hy), (tx, ty) = segments[i:i+2]
+            for i in range(len(rope)-1):
+                (hx, hy), (tx, ty) = rope[i:i+2]
 
                 dx = abs(hx-tx)
                 dy = abs(hy-ty)
 
-                diag = (hx!=tx and  hy!=ty and (dx > 1 or dy > 1))
+                diag = hx!=tx and hy!=ty and (dx > 1 or dy > 1)
 
-                if dx > 1 or diag:
-                    tx += 1 if hx>tx else -1
+                if dx > 1 or diag: tx += 1-2*(hx<tx)
+                if dy > 1 or diag: ty += 1-2*(hy<ty)
 
-                if dy > 1 or diag:
-                    ty += 1 if hy>ty else -1
+                rope[i+1] = (tx, ty)
 
-                segments[i+1] = (tx, ty)
-
-                if i ==  len(segments) - 2:
+                if i == len(rope) - 2:
                     visited.add((tx, ty))
 
     print(len(visited))
