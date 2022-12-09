@@ -10,7 +10,7 @@ def solve(content, length = 2):
 
         for _ in range(int(speed)):
             head = segments[0]
-            segments[0] = (head[0] + delta[1], head[1] + delta[0])
+            segments[0] = (head[0] + delta[0], head[1] + delta[1])
 
             for i in range(len(segments)-1):
                 (hx, hy), (tx, ty) = segments[i:i+2]
@@ -22,9 +22,11 @@ def solve(content, length = 2):
 
                 if dx > 1 or diag:
                     tx += 1 if hx>tx else -1
+                    # tx += (1-2*hx<tx)
 
                 if dy > 1 or diag:
                     ty += 1 if hy>ty else -1
+                    # ty += (1-2*hx<tx)
 
                 segments[i+1] = (tx, ty)
 
