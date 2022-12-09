@@ -1,16 +1,16 @@
-d = {'D':(-1,0), 'L':(0,-1), 'U':(1,0), 'R':(0,1)}
+d = {'D':(-1,0),'U':(1,0),'L':(0,-1),'R':(0,1)}
 
 def solve(content, length = 2):
-    rope = [(0,0) for _ in range(length)]
+    rope = [(0,0)] * length
     visited = set()
 
     for line in content:
-        direction, speed = line.split(' ')
+        direction, speed = line.split()
         mod = d[direction]
 
         for _ in range(int(speed)):
-            head = rope[0]
-            rope[0] = (head[0] + mod[0], head[1] + mod[1])
+            rope[0] = (rope[0][0] + mod[0], 
+                       rope[0][1] + mod[1])
 
             for i in range(len(rope)-1):
                 (hx, hy), (tx, ty) = rope[i:i+2]
