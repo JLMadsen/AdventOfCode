@@ -13,13 +13,9 @@ def solve(content, value = 0, register = 1,
             if cycle in p: value += cycle * register
             monitor += '#' if pxl() else '.'
 
-        if line == "noop":
-            cycle_once()
-
-        else:
-            cycle_once()
-            cycle_once()
-            
+        cycle_once()
+        if 'addx' in line:
+            cycle_once()            
             register += int(line.split()[1])
 
     print(value) # 14720
