@@ -11,7 +11,7 @@ def solve(content, value = 0, register = 1,
             nonlocal cycle, value, monitor
             cycle += 1
             if cycle in p: value += cycle * register
-            monitor += '#' if pxl() else '.'
+            monitor += '#' if pxl() else ' '
 
         cycle_once()
         if 'addx' in line:
