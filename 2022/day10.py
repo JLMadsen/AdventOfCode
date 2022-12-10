@@ -19,11 +19,11 @@ def solve(content, value = 0, register = 1,
             register += int(line.split()[1])
 
     print(value) # 14720
-    print('', *[''.join([ c + ('.' if (i+1)%5==0 else '') 
+    print('', *[''.join([ c + (' ' if (i+1)%5==0 else '') 
         for i,c in enumerate(monitor[i*40:i*40+40])]) + '\n' 
             for i in range(6)]) # FZBPBFZF
 
 if __name__ == '__main__':
-    with open('./input.txt') as f:
+    with open('./input/day10.txt') as f:
         content = f.read().splitlines()
         solve(content)
