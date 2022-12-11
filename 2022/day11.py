@@ -1,3 +1,5 @@
+from math import prod
+
 def solve(content, rounds, pt2 = False, n=7, mod=1, monkeys={}):
     for idx in range(( len(content)//n) +1 ):
         monkey = content[idx*n:idx*n+n]
@@ -16,30 +18,12 @@ def solve(content, rounds, pt2 = False, n=7, mod=1, monkeys={}):
 
             for item in [*m['items']]:
                 monkeys[str(idx)]['count'] += 1
-                new_worry = 0
-
-                value = v
-                if value == 'old':
-                    value = item
-
-                new_worry = eval(f'{item}{op}{value}')
-
+                new_worry = eval(f'{item}{op}{(v if v != "old" else item)}')
                 new_worry = (new_worry // 3) if not pt2 else (new_worry % mod)
-
-                if new_worry % m['test'] == 0:
-                    monkeys[m['throw_true']]['items'].append(new_worry)
-                else:
-                    monkeys[m['throw_false']]['items'].append(new_worry)
-
+                monkeys[m['throw_true' if new_worry % m['test'] == 0 else 'throw_false']]['items'].append(new_worry)
                 monkeys[str(idx)]['items'].remove(item)
 
-
-    counts = []
-    for values in monkeys.values():
-        counts.append(values['count'])
-
-    counts = sorted(counts, reverse = True)
-    print((counts[0])*(counts[1]))
+    print(prod(sorted([v['count'] for v in monkeys.values()], reverse=True)[:2]))
 
 if __name__ == "__main__":
     with open('input/day11.txt') as f:
