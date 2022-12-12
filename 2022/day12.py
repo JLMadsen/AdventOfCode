@@ -23,11 +23,10 @@ def dijkstra(grid, pt2 = False, start = (0,0), goal = (0,0), pt2_start = []):
     dist = defaultdict(lambda: float('inf'))
 
     if not pt2: Q.put((0, start))
-    else: [Q.put((0, p)) for p in pt2_start ]           
+    else: [Q.put((0, p)) for p in pt2_start ]
 
     if not pt2: dist[start] = 0
-    else: [dist.__setitem__(p, 0) for p in pt2_start ]  
-
+    else: [dist.__setitem__(p, 0) for p in pt2_start ]
 
     while not Q.empty():
         _, (y1, x1) = Q.get()
