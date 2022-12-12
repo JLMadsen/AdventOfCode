@@ -34,9 +34,6 @@ def dijkstra(grid, pt2 = False, start = (0,0), goal = (0,0), pt2_start = []):
             return print(dist[goal])
             
         for y2, x2 in adjacent(size, y1, x1):
-            if y2 > size[0] or x2 > size[1]:
-                continue  
-
             new_distance = dist[(y1, x1)] + 1
             next_height = grid[y2][x2]
 
