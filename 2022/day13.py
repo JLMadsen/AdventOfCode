@@ -25,9 +25,8 @@ def part2(content):
     packets.append([[6]])
 
     # https://stackoverflow.com/questions/16362744
-    sorted_packets = sorted(packets, key=functools.cmp_to_key(compare))
-    decoder_key = (sorted_packets.index([[2]]) + 1) * (sorted_packets.index([[6]]) + 1)
-    print(decoder_key)
+    packets = sorted(packets, key=functools.cmp_to_key(compare))
+    print((packets.index([[2]]) + 1) * (packets.index([[6]]) + 1))
 
 if __name__ == "__main__":
     with open('input/day13.txt') as f:
