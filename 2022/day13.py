@@ -1,6 +1,6 @@
 import functools
 
-def compare(a, b):
+def compare(a, b, *_):
     if isinstance(a, int) and isinstance(b, int):
         return (1-2*(a<b))*(a!=b)
 
@@ -14,19 +14,13 @@ def compare(a, b):
 
 def part1(content, value = 0):
     for i in range(0, len(content), 3):
-        a, b, *_ = content[i:i+3]
-        if compare(eval(a), eval(b)) == -1:
+        if compare(*map(eval, content[i:i+3][:2])) == -1:
             value += i//3+1
 
     print(value)
 
 def part2(content):
-    packets = []
-
-    for line in content:
-        if not line: continue
-        packets.append(eval(line))
-
+    packets = [eval(line) for line in content if line]
     packets.append([[2]])
     packets.append([[6]])
 
