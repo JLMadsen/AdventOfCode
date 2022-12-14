@@ -25,11 +25,15 @@ def print_waterfall(walls):
 def part1(content):
 
     walls = set()
+    sands = set()
     value = 0
 
 
     for line in content:
-        steps = [*map(lambda n: [*map(int, n.split(','))], line.split(' -> '))]
+        steps = [*map(lambda n: 
+                [*map(int, n.split(','))], 
+                line.split(' -> '))]
+
         print(steps)
 
         for i in range(len(steps) - 1):
@@ -51,6 +55,24 @@ def part1(content):
 
     print(walls)
     print_waterfall(walls)
+
+    while 1:
+
+        sand = (500, 0)
+        rest = False
+
+        while not rest:
+            down        = (sand[0],     sand[1] + 1)
+            down_left   = (sand[0] - 1, sand[1] + 1)
+            down_right  = (sand[0] + 1, sand[1] + 1)
+
+            for next_pos in [down, down_left, down_right]:
+                if next_pos not in walls or next_pos not in sands:
+                    pass
+
+
+            break
+        break
 
     print(value)
 
