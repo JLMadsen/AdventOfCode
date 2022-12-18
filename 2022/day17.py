@@ -46,6 +46,7 @@ def solve(content, n_rocks):
                     rock.add((x + 2, y + highest_point + 3))
 
         while True:
+            # print_tetris(grid | rock)
             direction = content[direction_idx % len(content)]
             direction_idx += 1
 
@@ -77,6 +78,7 @@ def solve(content, n_rocks):
 
                 break
 
+    print_tetris(grid)
     print(highest_point)
 
 def part2(content):
