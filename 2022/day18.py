@@ -13,29 +13,27 @@ def solve(content, drops = set()):
 
     surface_area = 0
     for point in drops:
-        for side in adjacent(*point):
-            if side not in drops:
-                surface_area += 1
+        surface_area += sum([side not in drops for side in adjacent(*point)])
     print(surface_area) # 4604
 
-    explored = set()
-    queue = [(0,0,0)]
+    def bfs():
+        global water, queue
+        water = set()
+        queue = [(0,0,0)]
+        while queue:
+            current = queue.pop()
+            water.add(current)
 
-    while queue:
-        current = queue.pop()
-        explored.add(current)
-
-        for side in adjacent(*current):
-            if (side not in drops and
-                side not in explored and
-                all(-1 <= n <= (max_coordinate + 1) for n in side)):
-                queue.append(side)
+            for side in adjacent(*current):
+                if (side not in drops and
+                    side not in water and
+                    all(-1 <= n <= (max_coordinate + 1) for n in side)):
+                    queue.append(side)
+    bfs()
 
     cooled_area = 0
     for point in drops:
-        for side in adjacent(*point):
-            if side in explored:
-                cooled_area += 1
+        cooled_area += sum([side in water for side in adjacent(*point)])
     print(cooled_area) # 2604
         
 if __name__ == "__main__":
