@@ -17,7 +17,7 @@ def solve(content, drops = set()):
     print(surface_area) # 4604
 
     def bfs():
-        global water, queue
+        global water
         water = set()
         queue = [(0,0,0)]
         while queue:
