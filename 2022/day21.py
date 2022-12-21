@@ -17,8 +17,7 @@ def solve(content, pt2 = False, monkeys = {}):
                             return monkeys[a] - monkeys[b]
 
     yell()
-    print(( root := monkeys["root"])) # 66174565793494
-    monkeys = monkeys_copy.copy()
+    print(monkeys["root"]) # 66174565793494
 
     def setHumnAndCopyMonkeys(n):
         nonlocal monkeys
@@ -31,16 +30,13 @@ def solve(content, pt2 = False, monkeys = {}):
 
     while 1:
         if abs(d1) < abs(d2):
-            v2 = v1 - ( v2 - v1 ) * d1 / (d2 - d1)
-            setHumnAndCopyMonkeys(int(v2))
-            d2 = yell(True)
-            if d2 == 0: print(int(v2) - 1); break
+            v2 = v1 - ( v2 - v1 ) * d1 // (d2 - d1)
+            setHumnAndCopyMonkeys(v2)
+            if (d2 := yell(True)) == 0: print(v2-1); break
         else:
-            v1 = v2 - ( v1 - v2 ) * d2 / (d1 - d2)
-            setHumnAndCopyMonkeys(int(v1))
-            d1 = yell(True)
-            if d1 == 0: print(int(v1) - 1); break
-
+            v1 = v2 - ( v1 - v2 ) * d2 // (d1 - d2)
+            setHumnAndCopyMonkeys(v1)
+            if (d1 := yell(True)) == 0: print(v1-1); break
         # 3327575724809
 
 if __name__ == "__main__":
