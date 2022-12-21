@@ -5,7 +5,8 @@ def solve(content, pt2 = False, monkeys = {}):
         else:                    monkeys[monke] = eq
     monkeys_copy = monkeys.copy()
 
-    def yell(pt2 = False):
+    def yell():
+        nonlocal monkeys
         while not all(isinstance(value, int) for value in monkeys.values()):
             for monkey, value in monkeys.items():
                 if isinstance(value, str):
@@ -13,9 +14,8 @@ def solve(content, pt2 = False, monkeys = {}):
                     if (isinstance(monkeys[a], int) and 
                         isinstance(monkeys[b], int)):
                         monkeys[monkey] = int(eval(f"{monkeys[a]}{op}{monkeys[b]}"))
-                        if monkey == "root" and pt2:
+                        if monkey == "root": 
                             return monkeys[a] - monkeys[b]
-
     yell()
     print(monkeys["root"]) # 66174565793494
 
@@ -24,19 +24,22 @@ def solve(content, pt2 = False, monkeys = {}):
         monkeys = monkeys_copy.copy()
         monkeys['humn'] = n
 
-    v1, v2 = 0, 100
-    setHumnAndCopyMonkeys(v1); d1 = yell(True)
-    setHumnAndCopyMonkeys(v2); d2 = yell(True)
+    def gradient_descent(x1, y1, x2, y2): 
+        return y1 - ( y2 - y1 ) * x1 // (x2 - x1)
+
+    v1, v2 = 0, 100 
+    setHumnAndCopyMonkeys(v1); d1 = yell()
+    setHumnAndCopyMonkeys(v2); d2 = yell()
 
     while 1:
         if abs(d1) < abs(d2):
-            v2 = v1 - ( v2 - v1 ) * d1 // (d2 - d1)
+            v2 = gradient_descent(d1, v1, d2, v2)
             setHumnAndCopyMonkeys(v2)
-            if (d2 := yell(True)) == 0: print(v2-1); break
+            if (d2 := yell()) == 0: print(v2-1); break
         else:
-            v1 = v2 - ( v1 - v2 ) * d2 // (d1 - d2)
+            v1 = gradient_descent(d2, v2, d1, v1)
             setHumnAndCopyMonkeys(v1)
-            if (d1 := yell(True)) == 0: print(v1-1); break
+            if (d1 := yell()) == 0: print(v1-1); break
         # 3327575724809
 
 if __name__ == "__main__":
