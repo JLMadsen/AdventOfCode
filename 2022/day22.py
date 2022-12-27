@@ -8,7 +8,14 @@ def print_map():
             print(s, end='')
         print()
 
-def part1(content):
+""" cube
+    ⬛⬜⬜
+    ⬛⬜⬛
+    ⬜⬜⬛
+    ⬜⬛⬛
+"""
+
+def solve(content, pt2 = False):
     global grid, walls, xmax, ymax, x, y
     value = 0
     moves = re.findall(r'(\d+|R|L)', content[-1])
@@ -30,6 +37,8 @@ def part1(content):
         if ty == 0:
             x = min(tx, x)
 
+    side_length = (xmax + 1) // 3
+
     #         right   down    left     up
     deltas = [(1, 0), (0, 1), (-1, 0), (0, -1)]
     direction = 0
@@ -43,19 +52,20 @@ def part1(content):
                 if (dx, dy) in walls:
                     break
 
-                if (dx, dy) not in grid:
-                    point = (0, 0)
-                    for n in range(max(ymax, xmax)):
-                        ax = x - (n * deltas[direction][0])
-                        ay = y - (n * deltas[direction][1]) 
-
-                        if (ax, ay) in grid:
-                            point = (ax, ay)
-                        else: 
-                            break
-
-                    if point not in walls and point in grid:
-                        dx, dy = point
+                if not pt2:
+                    if (dx, dy) not in grid:
+                        point = (0, 0)
+                        for n in range(max(ymax, xmax)):
+                            ax = x - (n * deltas[direction][0])
+                            ay = y - (n * deltas[direction][1]) 
+                            if (ax, ay) in grid:
+                                point = (ax, ay)
+                            else: 
+                                break
+                        if point not in walls and point in grid:
+                            dx, dy = point
+                else:
+                    pass
 
                 if (dx, dy) in grid:
                     x = dx
@@ -64,10 +74,6 @@ def part1(content):
             direction = (direction + (1 if move == 'R' else -1)) % len(deltas)
 
     print((1000 * (y+1)) + (4 * (x+1)) + direction )
-
-
-def part2(content):
-    pass
 
 ex = """        ...#
         .#..
@@ -89,5 +95,5 @@ if __name__ == "__main__":
         content = f.read().splitlines()
         # content = ex.splitlines()
 
-        part1(content)
-        part2(content)
+        # solve(content) # 165094
+        solve(content, 1)
