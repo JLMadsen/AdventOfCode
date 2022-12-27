@@ -4,29 +4,19 @@ def adjacent(x, y):
     return [(x + 1, y    ), (x - 1, y    ),
             (x    , y + 1), (x    , y - 1)]
 
-directions = {
-    '^': (0, -1),
-    'v': (0,  1),
-    '<': (-1, 0),
-    '>': ( 1, 0)}
+directions = {'^': (0, -1), 'v': (0,  1),
+              '<': (-1, 0), '>': ( 1, 0)}
 
 def print_blizzard():
     for y in range(ymax + 1):
         for x in range(xmax + 1):
-            point = (x, y)
-            char = '.'
-            if point in walls: char = '#'
-            if point in elves: char = 'P'
-            if point == goal:  char = 'E'
-            if point in tornado_set:
-                dirs = tornado_dir[point]
-                char = dirs[0] if len(dirs) < 2 else len(dirs)
-            print(char, end='')
+            print((((point := (x, y)) in walls and '#') or (point in elves and 'P') or (point == goal  and 'E') or 
+            (point in tornado_set and (dirs[0] if len((dirs := tornado_dir[point])) < 2 else len(dirs))) or '.'), end='')
         print()
     print()
 
 def solve(content, pt2 = False, minute = 0):
-    global walls, start, goal, tornado_set, tornado_dir, xmax, ymax, elves
+    global walls, goal, tornado_set, tornado_dir, xmax, ymax, elves
     walls = set()
     goal = start = (0, 0)
     tornado_set = set()
@@ -94,6 +84,7 @@ def solve(content, pt2 = False, minute = 0):
 
         start, goal = [start, goal][::(1-(2*pt2))]
 
+    print_blizzard()
     print(minute)
 
 if __name__ == "__main__":
