@@ -26,7 +26,7 @@ def print_blizzard():
         print()
     print()
 
-def solve(content, steps = 0):
+def solve(content, pt2 = False, steps = 0):
     global walls, start, goal, tornado_set, tornado_dir, xmax, ymax, elves
     walls = set()
     goal = start = (0, 0)
@@ -34,17 +34,15 @@ def solve(content, steps = 0):
     tornado_set = set()
     tornado_dir = defaultdict(lambda: []) # (x, y): ['<','V']
 
-    ymax = xmax = 0
+    ymax, xmax = (len(content)-1) , (len(content[0])-1)
     for y, line in enumerate(content):
-        ymax = max(ymax, y)
         for x, value in enumerate(line):
-            xmax = max(xmax, x)
             point = (x, y)
 
             if y == 0 and value == '.':
                 start = point
 
-            if y == (len(content) -1) and value == '.':
+            if y == (len(content)-1) and value == '.':
                 goal = point
 
             if value == '#':
@@ -90,7 +88,9 @@ def solve(content, steps = 0):
             for delta_elf in adjacent(*elf):
                 if delta_elf == goal: return True
                 if (delta_elf not in walls and 
-                    delta_elf not in tornado_set):
+                    delta_elf not in tornado_set and
+                    delta_elf[0] >= 0 and delta_elf[0] <= xmax and 
+                    delta_elf[1] >= 0 and delta_elf[1] <= ymax):
                     new_elves.add(delta_elf)
         
         elves = new_elves
@@ -106,7 +106,6 @@ def solve(content, steps = 0):
         minute += 1
 
     print(minute)
-    # 153 < 
 
 ex = """#.######
 #>>.<^<#
@@ -118,5 +117,5 @@ ex = """#.######
 if __name__ == "__main__":
     with open('input/day24.txt') as f:
         content = f.read().splitlines()
-        content = ex.splitlines()
-        solve(content)
+        solve(content) # 266
+        solve(content, True) # 853
