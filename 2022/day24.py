@@ -52,8 +52,6 @@ def solve(content, pt2 = False, steps = 0):
                 tornado_set.add(point)
                 tornado_dir[point].append(value)
 
-    elves = set([start])
-
     def step_blizzard():
         global tornado_dir, tornado_set
         new_tornado_set = set()
@@ -92,27 +90,23 @@ def solve(content, pt2 = False, steps = 0):
                     delta_elf[0] >= 0 and delta_elf[0] <= xmax and 
                     delta_elf[1] >= 0 and delta_elf[1] <= ymax):
                     new_elves.add(delta_elf)
-        
         elves = new_elves
         return False
 
-    reached_goal = False
+    start, goal = [start, goal][::(1-(2*pt2))]
     minute = 0
+    
+    for d in range(1 if not pt2 else 3):
+        start, goal = [start, goal][::(1-(2*pt2))]
+        elves = set([start])
+        reached_goal = False
 
-    while not reached_goal:
-        # print_blizzard()
-        step_blizzard()
-        reached_goal = step_elves()
-        minute += 1
+        while not reached_goal:
+            step_blizzard()
+            reached_goal = step_elves()
+            minute += 1
 
     print(minute)
-
-ex = """#.######
-#>>.<^<#
-#.<..<<#
-#>v.><>#
-#<^v^^>#
-######.#"""
 
 if __name__ == "__main__":
     with open('input/day24.txt') as f:
