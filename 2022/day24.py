@@ -1,19 +1,10 @@
 from collections import defaultdict
 
-def adjacent(x, y):
-    return [(x + 1, y    ), (x - 1, y    ),
-            (x    , y + 1), (x    , y - 1)]
-
-directions = {'^': (0, -1), 'v': (0,  1),
-              '<': (-1, 0), '>': ( 1, 0)}
+def adjacent(x, y): return [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
+directions = {'^': (0, -1), 'v': (0,  1),'<': (-1, 0), '>': ( 1, 0)}
 
 def print_blizzard():
-    for y in range(ymax + 1):
-        for x in range(xmax + 1):
-            print((((point := (x, y)) in walls and '#') or (point in elves and 'P') or (point == goal  and 'E') or 
-            (point in tornado_set and (dirs[0] if len((dirs := tornado_dir[point])) < 2 else len(dirs))) or '.'), end='')
-        print()
-    print()
+    [[print((((point := (x, y)) in walls and '#') or (point in elves and 'P') or (point == goal  and 'E') or (point in tornado_set and (dirs[0] if len((dirs := tornado_dir[point])) < 2 else len(dirs))) or '.'), end='') if x<xmax+1 else print() for x in range(xmax + 2)]for y in range(ymax + 1)]
 
 def solve(content, pt2 = False, minute = 0):
     global walls, goal, tornado_set, tornado_dir, xmax, ymax, elves
