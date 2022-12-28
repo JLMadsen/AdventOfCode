@@ -36,7 +36,7 @@ def solve(content, pt2 = False, minute = 0):
                 elif dx >= xmax: dx = 1
                 elif dy == 0:    dy = ymax - 1
                 elif dy >= ymax: dy = 1
-                
+
                 new_tornado[(dx, dy)].append(dir)
         tornado = new_tornado
 
@@ -57,16 +57,15 @@ def solve(content, pt2 = False, minute = 0):
         elves = new_elves
         return False
 
-    for d in range(1 if not pt2 else 3):
+    for d in range(1+2*pt2):
         elves = set([start])
-        reached_goal = False
 
-        while not reached_goal:
-            step_blizzard()
-            reached_goal = step_elves()
+        while True:
             minute += 1
+            step_blizzard()
+            if step_elves(): break
 
-        start, goal = [start, goal][::(1-(2*pt2))]
+        start, goal = goal, start
 
     print_blizzard()
     print(minute)
