@@ -26,12 +26,11 @@ def to_markdown_table(pt):
 
 if __name__ == "__main__":
     today = datetime.today()
-    current_year = today.year
-    is_des = today.month == 12
+    current_year = today.year - 1 * (today.month != 12)
     start_year = 2015
 
     stats = {}
-    for yr in range(start_year, current_year + (1 if is_des else 0)):
+    for yr in range(start_year, current_year + 1):
         stats[yr] = [0 for _ in range(25)]
 
         res = requests.get(f"https://adventofcode.com/{yr}/leaderboard/private/view/639017.json", cookies={'session': TOKEN}).json()
@@ -40,7 +39,7 @@ if __name__ == "__main__":
         for day in (arr := me['completion_day_level']):
             stats[yr][int(day) - 1] = len(arr[day])
     
-    t = PrettyTable([' ', *[str(yr) for yr in range(current_year, start_year - (1 if is_des else 0), -1)]])
+    t = PrettyTable([' ', *[str(yr) for yr in range(current_year, start_year - 1, -1)]])
     
     for i in range(1, 26):
         t.add_row( [str(i), * map(lambda x: emoji[x], reversed(nth( stats.values() ,i))) ] )

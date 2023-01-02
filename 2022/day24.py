@@ -17,10 +17,10 @@ def solve(content, pt2 = False, minute = 0):
         for x, value in enumerate(line):
             point = (x, y)
 
-            if y == 0 and value == '.':    start = point
+            if y == 0    and value == '.': start = point
             if y == ymax and value == '.': goal = point
             if value == '#':               walls.add(point)
-            if value in '<v>^':            tornado[point].append(value)
+            if value in directions:        tornado[point].append(value)
 
     def step_blizzard():
         global tornado
@@ -67,7 +67,7 @@ def solve(content, pt2 = False, minute = 0):
 
         start, goal = goal, start
 
-    print_blizzard()
+    # print_blizzard()
     print(minute)
 
 if __name__ == "__main__":
