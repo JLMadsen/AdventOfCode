@@ -1,5 +1,5 @@
 """
-Fetches leaderboard from AoC and selects three random winners with 10 gold stars
+Fetches leaderboard from AoC and selects three random winners with at least 10 gold stars
 
 """
 import os
@@ -14,19 +14,16 @@ def get_leaderboard(year):
 
 if __name__ == "__main__":
     pool = []
-    content = get_leaderboard('2022')['members']
+    leaderboard = get_leaderboard('2022')['members']
 
-    for user in content.values():
+    for user in leaderboard.values():
         name = user['name']
 
-        # remove hosts
         if name in ['TrongTheAlpaca', 'JLMadsen']:
             continue
 
-        # if user has 10 gold stars
         if user['stars'] / 2 >= 10:
             pool.append(name)
 
-    # select three random winners 
     winners = random.sample(pool, 3)
     print(winners)
