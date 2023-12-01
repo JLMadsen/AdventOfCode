@@ -1,10 +1,10 @@
 import re
-lit = ['one','two','three','four','five','six','seven','eight','nine','ten']
+lit = [r'\d','one','two','three','four','five','six','seven','eight','nine']
 
 def solve(content, pt2=0, value=0):
     for line in content:
-        nums = re.findall(r'(\d|'+'|'.join(lit if pt2 else '\d')+')', line)
-        parse = lambda x: str(lit.index(x) + 1) if not x.isdigit() and pt2 else x
+        nums   = re.findall(f"({'|'.join(lit[:len(lit)*pt2+1])})", line)
+        parse  = lambda x: str(lit.index(x)) if(not x.isdigit())*pt2 else x
         value += int(parse(nums[0]) + parse(nums[-1]))
     print(value)
 
