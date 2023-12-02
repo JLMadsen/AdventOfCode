@@ -3,15 +3,15 @@ cubes = ['red','green','blue']
 
 def solve(content, idsum=0, power=0):
     for line in content:
-        pairs = line.split()
+        _, id, *pairs = line.split()
         count = {c: 0 for c in cubes}
 
-        for num, col in zip(pairs[2::2], pairs[3::2]):
-            col = col.replace(',','').replace(';','')
+        for num, col in zip(pairs[::2], pairs[1::2]):
+            if col[-1] in ';,': col = col[:-1]
             count[col] = max(count[col], int(num))
 
         if all(v <= cubes.index(k)+12 for k,v in count.items()):
-            idsum += int(pairs[1][:-1])
+            idsum += int(id[:-1])
         power += math.prod(count.values())
 
     print(idsum) # 2105
