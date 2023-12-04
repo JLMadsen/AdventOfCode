@@ -1,13 +1,11 @@
-import re
 scratch = lambda a,b: len(a.intersection(b))
 
 def card(line):
     id, numbers = line.split(':')
     wins, bets = numbers.split('|')
-    wins = set(map(int, re.findall(r'\d+', wins)))
-    bets = set(map(int, re.findall(r'\d+', bets)))
-    id = int(id.split()[-1])
-    return (id, wins, bets)
+    return (int(id.split()[-1]),
+            set(map(int,wins.split())),
+            set(map(int,bets.split())))
 
 def part1(content, value=0):
     for line in content:
@@ -17,18 +15,16 @@ def part1(content, value=0):
 
 def part2(content):
     alg = {}
-    value = len(content)
     for line in content:
         id, wins, bets = card(line)
-        alg[id] = [1, [*range(id+1, id+scratch(wins,bets)+1)]]
+        alg[id]=[1,[*range(id+1,id+scratch(wins,bets)+1)]]
     
     for i in range(len(content)):
         count, to = alg[i+1]
         for target in to:
-            obj = alg[target]
-            alg[target] = [obj[0] + count, obj[1]]
-            value += count
-    print(value)
+            alg[target][0] += count
+
+    print(sum(a for a,b in alg.values()))
 
 if __name__ == "__main__":
     with open('input/day04.txt') as f:
