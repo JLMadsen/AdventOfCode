@@ -12,7 +12,7 @@ def solve(content, pt2=0, hands={}):
     cards = 'J'*pt2+'23456789TJQKA'.replace('J'*pt2,'')
 
     def parse_hand(hand):
-        hand = [hand.replace('J'*pt2+'_'*(not pt2),c) for c in cards]
+        hand = [hand.replace('J'*pt2,c*pt2) for c in cards]
         return [any(func(h) for h in hand) for func in types.values()].index(1)
 
     for line in content:
