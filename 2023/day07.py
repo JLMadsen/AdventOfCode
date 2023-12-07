@@ -15,9 +15,7 @@ def solve(content, pt2=0, hands={}):
         hand = [hand.replace('J'*pt2,c*pt2) for c in cards]
         return [any(func(h) for h in hand) for func in types.values()].index(1)
 
-    for line in content:
-        hand, bid = line.split()
-        hands[hand] = [int(bid), parse_hand(hand)]
+    hands = {h: [int(b), parse_hand(h)] for h, b in map(str.split, content)}
 
     def compare(a, b):
         a_type = hands[a][1]
