@@ -1,34 +1,20 @@
-
 import math
-import re
-from collections import defaultdict
-nth = lambda arr, n: [*zip(*arr)][n-1]
 
-def part1(content, value=0, ways={}):
-    lr = content.pop(0)
+def part1(content, value=0):
+    lr = content[0]
+    ways = {s: [l[1:-1], r[:-1]] for s,_,l,r in map(str.split, content[2:])}
     position = 'AAA'
 
-    for line in content[1:]:
-        start, _, left, right = line.split()
-        ways[start] = [left[1:-1], right[:-1]]
-
-    while position != 'ZZZ':
-        direction = lr[value % len(lr)]
+    while position != 'ZZZ':       
+        position = ways[position][lr[value % len(lr)] == 'R']
         value += 1
-        position = ways[position][direction == 'R']
 
     print(value)
 
-def part2(content, value=0, ways={}):
-    lr = content.pop(0)
-    ghosts = []
-    
-    for line in content[1:]:
-        start, _, left, right = line.split()
-        ways[start] = [left[1:-1], right[:-1]]
-        if start[-1] == 'A':
-            ghosts.append(start)
-
+def part2(content, value=0):
+    lr = content[0]
+    ways = {s: [l[1:-1], r[:-1]] for s,_,l,r in map(str.split, content[2:])}
+    ghosts = [node for node in ways.keys() if node[-1] == 'A']
     steps = []
 
     while len(ghosts) > 0:
@@ -48,5 +34,5 @@ def part2(content, value=0, ways={}):
 if __name__ == "__main__":
     with open('input/day08.txt') as f:
         content = f.read().splitlines()
-        part1([*content]) # 17287
-        part2([*content]) # 18625484023687
+        part1(content) # 17287
+        part2(content) # 18625484023687
