@@ -1,8 +1,9 @@
 import math
 
+
 def part1(content, value=0):
     lr = content[0]
-    ways = {s: [l[1:-1], r[:-1]] for s,_,l,r in map(str.split, content[2:])}
+    ways = {s:[l[1:-1],r[:-1]]for s,_,l,r in map(str.split,content[2:])}
     position = 'AAA'
 
     while position != 'ZZZ':       
@@ -11,22 +12,17 @@ def part1(content, value=0):
 
     print(value)
 
-def part2(content, value=0):
+def part2(content, value=0, steps=[]):
     lr = content[0]
-    ways = {s: [l[1:-1], r[:-1]] for s,_,l,r in map(str.split, content[2:])}
+    ways = {s:[l[1:-1],r[:-1]]for s,_,l,r in map(str.split,content[2:])}
     ghosts = [node for node in ways.keys() if node[-1] == 'A']
-    steps = []
 
     while len(ghosts) > 0:
-        direction = lr[value % len(lr)]
         value += 1
         new_ghosts = []
         for node in ghosts:
-            new = ways[node][direction == 'R']
-            if new[-1] != 'Z':
-                new_ghosts.append(new)
-            else:
-                steps.append(value)
+            new = ways[node][lr[(value-1) % len(lr)]=='R']
+            [new_ghosts,steps][l:=new[-1]=='Z'].append([new,value][l])
         ghosts = new_ghosts
 
     print(math.lcm(*steps))
