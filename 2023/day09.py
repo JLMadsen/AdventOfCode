@@ -6,8 +6,8 @@ def solve(content, pt2=0, value=0):
             diff.append([b-a for a,b in zip(diff[-1], diff[-1][1:])])
 
         for i in range(len(diff)-1, 0, -1):
-            if pt2: diff[i-1].insert(0, diff[i-1][0] - diff[i][0])
-            else:   diff[i-1].append(   diff[i][-1]  + diff[i-1][-1])
+            if pt2: diff[i-1].insert(0, diff[i-1][ 0] - diff[i  ][ 0])
+            else:   diff[i-1].append(   diff[i  ][-1] + diff[i-1][-1])
         value += diff[0][0 if pt2 else -1]
 
     print(value)
