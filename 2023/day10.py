@@ -1,15 +1,10 @@
 N,E,S,W = (-1,0),(0,1),(1,0),(0,-1)
-pipes = {'|': [N, S],
-         '-': [E, W],
-         'L': [N, E],
-         'J': [N, W],
-         '7': [S, W],
-         'F': [S, E]}
+pipes = {'|': [N, S], '-': [E, W],
+         'L': [N, E], 'J': [N, W],
+         '7': [S, W], 'F': [S, E]}
 
-def solve(grid):
+def solve(grid, area=0):
     start = (0, 0)
-    area = 0
-
     for y,line in enumerate(grid):
         for x,char in enumerate(line):
             if char == 'S': start = (y, x)
@@ -30,15 +25,14 @@ def solve(grid):
                         area += x * dy
                         break
         else:
-            pipe = grid[y][x]
-            (ay, ax),(by, bx) = pipes[pipe]
+            (ay, ax), (by, bx) = pipes[grid[y][x]]
             a, b = (y+ay, x+ax), (y+by, x+bx)
             target = a if a != path[-2] else b
             area += x * (ay if target == a else by)
             path.append(target)
 
     print(len(path)//2)            # 6979
-    print(area - len(path)//2 + 1) # 442
+    print(area - len(path)//2 + 1) # 443
 
 if __name__ == "__main__":
     with open('input/day10.txt') as f:
