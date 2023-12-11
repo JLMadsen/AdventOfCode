@@ -1,28 +1,17 @@
 nth = lambda arr, n: [*zip(*arr)][n-1]
 
-def solve(content, mul, value=0):
-    cosmos=[]
-    galaxies = set()
-
-    for line in content:
-        row = ""
-        for i in range(len(line)):
-            row += '@'*('#' not in nth(content, i))
-            row += line[i]
-
-        if '#' not in line: 
-            cosmos.append('@')
-        cosmos.append(row)
-
+def solve(content, distance, value=0):
     y_times = 0
-    for y, row in enumerate(cosmos):
-        if row == '@': y_times += 1; continue
+    galaxies = set()
+    for y, row in enumerate(content):
+        y_times += '#' not in row
         x_times = 0
         for x, char in enumerate(row):
-            if char == '@': x_times += 1
-            if char == '#': galaxies.add((y+((mul-2)*y_times), 
-                                          x+((mul-2)*x_times)))
-
+            x_times += '#' not in nth(content, x)
+            if char == '#':
+                galaxies.add((y+((distance-1)*y_times), 
+                              x+((distance-1)*x_times)))
+            
     for ay, ax in galaxies:
         for by, bx in galaxies:
             if (ay, ax) == (by, bx): continue
