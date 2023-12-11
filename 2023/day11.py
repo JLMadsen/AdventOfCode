@@ -2,19 +2,17 @@ nth = lambda arr, n: [*zip(*arr)][n-1]
 
 def solve(content, distance, value=0):
     y_times = 0
+    x_times = ['#'not in nth(content,x)for x in range(len(content[0]))]
     galaxies = set()
     for y, row in enumerate(content):
         y_times += '#' not in row
-        x_times = 0
         for x, char in enumerate(row):
-            x_times += '#' not in nth(content, x)
             if char == '#':
                 galaxies.add((y+((distance-1)*y_times), 
-                              x+((distance-1)*x_times)))
+                              x+((distance-1)*sum(x_times[:x+1]))))
             
     for ay, ax in galaxies:
-        for by, bx in galaxies:
-            if (ay, ax) == (by, bx): continue
+        for by, bx in galaxies - {(ay, ax)}:
             value += (abs(by-ay)+abs(bx-ax))/2
     print(int(value))
 
