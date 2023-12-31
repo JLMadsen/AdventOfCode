@@ -6,6 +6,7 @@ import os
 import requests 
 import json
 import random
+import datetime
 
 TOKEN = os.environ['AOC_TOKEN']
 hosts = ['TrongTheAlpaca', 'JLMadsen']
@@ -17,6 +18,10 @@ if __name__ == "__main__":
     pool = []
     leaderboard = get_leaderboard('2023')['members']
     first, second = None, None
+
+    # tidsstempel
+    time = datetime.datetime.now()
+    print('Trekning kjørt:', time.strftime("%B %d. %Y - %H:%M:%S"))
 
     # Første- og andreplass
     users = [(user['name'], user["completion_day_level"]['25']['2']['get_star_ts']) 
