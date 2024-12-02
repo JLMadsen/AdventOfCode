@@ -48,8 +48,9 @@ def get_input(year, day):
 
     if CREATE_SCRIPT_FILE:
         filename = f"{year}/day{day}.py"
-        with open(filename, "w") as f:
-            f.write(SCRIPT_CONTENT.format(day))
+        if not os.path.isfile(filename):
+            with open(filename, "w") as f:
+                f.write(SCRIPT_CONTENT.format(day))
 
 
 # run as main to download todays input
