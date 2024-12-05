@@ -1,16 +1,17 @@
-
 from collections import defaultdict
 
-def check(pages, before):
-    viewed_pages = []
-    for page in pages:
-        if any(b in viewed_pages for b in before[page]):
-            return False
-        viewed_pages.append(page)
-    return True
+def valid(pages, before):
+    return not any(
+        any(
+            preceding in pages[:i]
+            for preceding in before[page]
+        )
+        for i, page in enumerate(pages)
+    )
 
 def solve(content, p1=0, p2=0):
     before = defaultdict(list)
+
     for line in content:
         if '|' in line:
             a, b = line.split('|')
@@ -18,31 +19,25 @@ def solve(content, p1=0, p2=0):
 
         if ',' in line:
             pages = line.split(',')
-            if check(pages, before):
+            if valid(pages, before):
                 p1 += int(pages[ len(pages) // 2 ])
                 continue
-            
-            corrected = pages
-            while not check(corrected, before):
-                viewed_pages = []
-                edited = False
-                
-                for page in corrected:
+
+            while not valid(pages, before):
+                for i, page in enumerate(pages):
                     for preceding in before[page]:
-                        if preceding in viewed_pages:
+                        if preceding in pages[:i]:
 
-                            index = corrected.index(preceding)
-                            corrected.remove(page)
-                            corrected[index:index] = [page]
+                            index = pages.index(preceding)
+                            pages.remove(page)
+                            pages[index:index] = [page]
 
-                            edited = True
                             break
-                    if edited:
-                        break
-
-                    viewed_pages.append(page)
+                    else:
+                        continue
+                    break
             
-            p2 += int(corrected[ len(corrected) // 2 ])
+            p2 += int(pages[ len(pages) // 2 ])
 
     print(p1) # 6051
     print(p2) # 5093
