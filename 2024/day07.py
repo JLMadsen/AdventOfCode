@@ -4,12 +4,11 @@ def solve(content, p2=False, value=0):
     for line in content:
         target, numbers = line.split(':')
         numbers = [*map(int,numbers.split())]
-
         ops = '*+' if not p2 else '*+|'
-        for perm in ["".join(seq) for seq in product(ops, repeat=(len(numbers) - 1))]:
+        for perm in product(ops, repeat=(len(numbers) - 1)):
             sum = numbers[0]
             
-            for number, op in zip(numbers[1:], perm):
+            for number, op in zip(numbers[1:], "".join(perm)):
                 if op == '*':
                     sum *= number
                 elif op == '+':
