@@ -48,11 +48,8 @@ def solve(content, pt2 = False):
                             antinodes.add(node_b)
                 else:
                     node_a = (ax + dx, ay + dy)
-                    node_b = (bx + dx, by + dy)
                     if node_a != a and node_a != b and inside(node_a, content):
                         antinodes.add(node_a)
-                    if node_b != a and node_b != b and inside(node_b, content):
-                        antinodes.add(node_b)
 
     print(len(antinodes))
         # 278
