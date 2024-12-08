@@ -1,11 +1,8 @@
-import math
 from collections import defaultdict
 
 def inside(node, content):
-    return (
-        node[1] >= 0 and node[1] < len(content[0]) and
-        node[0] >= 0 and node[0] < len(content)
-    )
+    return (0 <= node[1] < len(content) and
+            0 <= node[0] < len(content[0]))
 
 def solve(content, pt2 = False):
     frequencies = defaultdict(list)
@@ -18,40 +15,31 @@ def solve(content, pt2 = False):
 
     for nodes in frequencies.values():
         for a in nodes:
-            for b in nodes:
-                if a == b:
-                    continue
-
+            for b in [n for n in nodes if n != a]:
                 ax, ay = a
                 bx, by = b
                 dx = ax - bx
                 dy = ay - by
 
                 if pt2:
-                    gcd = math.gcd(dx, dy)
-                    gcdx = dx // gcd
-                    gcdy = dy // gcd
-
                     while 1:
                         node_a = (ax + dx, ay + dy)
                         node_b = (bx + dx, by + dy)
-                        dx += gcdx
-                        dy += gcdy
+                        dx += ax - bx
+                        dy += ay - by
 
                         if (not inside(node_a, content) and 
                             not inside(node_b, content)):
                             break
 
-                        if inside(node_a, content):
-                            antinodes.add(node_a)
-                        if inside(node_b, content):
-                            antinodes.add(node_b)
+                        antinodes.add(node_a)
+                        antinodes.add(node_b)
                 else:
                     node_a = (ax + dx, ay + dy)
-                    if node_a != a and node_a != b and inside(node_a, content):
+                    if node_a != a and node_a != b:
                         antinodes.add(node_a)
 
-    print(len(antinodes))
+    print(len([*filter(lambda n: inside(n, content), antinodes)]))
         # 278
         # 1067
 
