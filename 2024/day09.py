@@ -38,39 +38,33 @@ def part2(content):
         else:
             files.append((-1, int(n)))
 
-    # print(''.join(map(str,files)))
-    while 1:
-        block = (-1, 0)
-        while block[0] == -1:
-            block = files.pop()
-            # files = files[:-1]
-        b_id, b_size = block
+    ffiles = [*files]
+    [print( (str(id) if id != -1 else '.') *size, end='') for id, size in ffiles]
+    print()
 
-        for index, f in enumerate(files):
-            id, size = f
-            if id >= 0:
+    for id, size in [*files[::-1]]:
+        if id == -1:
+            continue
+        
+        for i, (iid, isize) in enumerate(ffiles):
+            if iid > 0:
                 continue
-            if size <= b_size:
-                files[index:index + 1] = [(-1, size-b_size)]
-                files[index:index] = [block]
-                break
 
-        for i,v in files:
-            if i < 0:
-                print('.' * v, end='')
-            else:
-                print(str(i) * v, end='')
-        print(block)
+            if size <= isize:
+                # del ffiles[i]
+                new_files = [((id, size))]
+                if size < isize:
+                    new_files.append((iid, isize - size))
+                ffiles[i:i + 1] = new_files
+                ffiles = [f for f in ffiles if f[0] != id]
+                continue
+        [print( (str(id) if id != -1 else '.') *size, end='') for id, size in ffiles]
+        print()
 
-    #     print(''.join(map(str,files)))
-    # print(''.join(map(str,files)))
+    # print(ffiles)
 
-    # print(sum(
-    #     i * int(n)
-    #     for i, n in
-    #     enumerate(files)
-    #     if n != '.'
-    # )) # 6370402949053
+
+
 
 t1 = "12345"
 t2 = "2333133121414131402"
@@ -79,6 +73,6 @@ if __name__ == "__main__":
     with open('input/day09.txt') as f:
         content = f.read().splitlines()
         # part1(content[0])
-        part1(t2)
+        # part1(t2)
         # part2(content[0])
         part2(t2)
