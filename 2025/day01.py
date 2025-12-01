@@ -1,38 +1,22 @@
-def part1(content):
-    value = 50
-    zeros = 0
+import math
 
-    for line in content:
-        d, n = line[0], int(line[1:])
+def part1(content, value = 50, zeros = 0):
 
-        if d == 'R':
-            value += n
-        else:
-            value -= n
-
-        value = value % 100
-        if value == 0:
-            zeros += 1
+    for d, n in map(lambda l: (l[0], int(l[1:])), content):
+        value = (value + (n * (1 if d == 'R' else -1))) % 100
+        zeros += not value
 
     print(zeros)
 
-def part2(content):
-    value = 50
-    zeros = 0
+def part2(content, value = 50, zeros = 0):
 
-    for line in content:
-        d, n = line[0], int(line[1:])
-
-        for _ in range(n):
-            if d == 'R':
-                value += 1
-            else:
-                value -= 1
-
-            value = value % 100
-
-            if value == 0:
-                zeros += 1
+    for d, n in map(lambda l: (l[0], int(l[1:])), content):
+        r = math.floor(n / 100)
+        O = value == 0
+        zeros += r
+        value += ((n - (100 * r)) * (1 if d == 'R' else -1))
+        zeros += (value <= 0 and not O) or value > 99
+        value = value % 100
 
     print(zeros)
 
