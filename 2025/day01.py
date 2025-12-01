@@ -1,5 +1,3 @@
-import math
-
 def part1(content, value = 50, zeros = 0):
 
     for d, n in map(lambda l: (l[0], int(l[1:])), content):
@@ -11,7 +9,7 @@ def part1(content, value = 50, zeros = 0):
 def part2(content, value = 50, zeros = 0):
 
     for d, n in map(lambda l: (l[0], int(l[1:])), content):
-        r = math.floor(n / 100)
+        r = int(n / 100)
         O = value == 0
         zeros += r
         value += ((n - (100 * r)) * (1 if d == 'R' else -1))
