@@ -3,8 +3,7 @@ def part1(content, value = 0):
     for line in content:
         a, b = map(int, line.split('-'))
 
-        for id in range(a, b + 1):
-            id = str(id)
+        for id in map(str, range(a, b + 1)):
             middle = len(id) // 2
             if id[:middle] == id[middle:]:
                 value += int(id)
@@ -12,13 +11,11 @@ def part1(content, value = 0):
     print(value)
 
 def part2(content, value = 0):
-    
+
     for line in content:
         a, b = map(int, line.split('-'))
 
-        for id in range(a, b + 1):
-            id = str(id)
-
+        for id in map(str, range(a, b + 1)):
             for length in range(1, (len(id)//2 + 1)):
                 for index in range(0, len(id), length):
                     if id[index: index + length] != id[:length]:
