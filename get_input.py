@@ -23,11 +23,16 @@ def part1(content):
 def part2(content):
     pass
 
+testdata = \"\"\"\"\"\"
+    
 if __name__ == "__main__":
     with open('input/day{}.txt') as f:
         content = f.read().splitlines()
+        test = testdata.splitlines()
         part1(content)
+        part1(test)
         part2(content)
+        part2(test)
 """
 
 def get_input(year, day):
