@@ -27,10 +27,11 @@ def part2(content):
             for j in range(length):
                 potential_batteries = batteries[:j] + batteries[j+1:]
 
-                if joltage <= int(potential_batteries):
-                    batteries = potential_batteries
-
-            batteries = batteries[:length]
+                if joltage < int(potential_batteries):
+                    batteries = potential_batteries[:length]
+                    break
+            else:
+                batteries = batteries[:-1]
 
         value += int(batteries)
 
@@ -39,5 +40,5 @@ def part2(content):
 if __name__ == "__main__":
     with open('input/day03.txt') as f:
         content = f.read().splitlines()
-        part1(content)
-        part2(content)
+        part1(content) # 17435
+        part2(content) # 172886048065379
