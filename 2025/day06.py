@@ -1,28 +1,20 @@
+import re
 nth = lambda arr, n: [*zip(*arr)][n]
 
-def part1(content):
-    value = 0
-    problems = [[] for _ in content]
+def part1(content, value = 0, problems = []):
 
-    for i, line in enumerate(content):
-        buffer = ''
-        for char in line + ' ':
-            if char == ' ':
-                if buffer != '':
-                    problems[i].append(buffer)
-                    buffer = ''
-            else:
-                buffer += char
-        
-    for problem in [nth(problems, i) for i in range(len(problems[0]))]:
-        value += eval( problem[-1].join(problem[:-1]) )
+    for line in content[:-1]:
+        problems.append(re.findall(r'\d+', line))
+    
+    ops = content[-1].replace(' ', '')
+
+    for i in range(len(problems[0])):
+        numbers = nth(problems, i)
+        value += eval(ops[i].join(numbers))
 
     print(value)
 
-def part2(content):
-    value = 0
-    numbers = []
-    operand = ''
+def part2(content, value = 0, numbers = [], operand = ''):
     content = [line + ' ' for line in content] # to trigger the all == ' ' check
 
     for index in range(len(content[0])):
