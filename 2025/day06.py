@@ -15,15 +15,15 @@ def part1(content, value = 0, problems = []):
     print(value)
 
 def part2(content, value = 0, numbers = [], operand = ''):
-    content = [line + ' ' for line in content] # to trigger the all == ' ' check
+    content = [line + ' ' for line in content] # to trigger the last space check
 
     for index in range(len(content[0])):
         line = nth(content, index)
 
-        if line[-1] != ' ':
+        if not line[-1].isspace():
             operand = line[-1]
 
-        if all(char == ' ' for char in line):
+        if all(char.isspace() for char in line):
             value += eval(operand.join(numbers))
             numbers = []
         else:

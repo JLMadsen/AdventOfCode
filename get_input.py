@@ -11,7 +11,7 @@ SCRIPT_CONTENT = """
 import math
 import re
 from collections import defaultdict
-nth = lambda arr, n: [*zip(*arr)][n-1]
+nth = lambda arr, n: [*zip(*arr)][n]
 
 def part1(content):
     value = 0
