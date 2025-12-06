@@ -3,8 +3,6 @@ from prettytable import PrettyTable
 
 import os
 import requests 
-import sys
-import json
 
 TOKEN = os.environ['AOC_TOKEN']
 

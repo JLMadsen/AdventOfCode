@@ -21,10 +21,8 @@ def part2(content):
     ranges = []
 
     for line in content:
-        if line == '':
-            break
-
-        ranges.append([*map(int, line.split('-'))])
+        if '-' in line:
+            ranges.append([*map(int, line.split('-'))])
 
     ranges.sort(key=lambda x: x[0])
     new_ranges = [ranges[0]]
